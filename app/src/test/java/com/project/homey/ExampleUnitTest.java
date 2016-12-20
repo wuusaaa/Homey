@@ -1,4 +1,4 @@
-package com.israwords.homey;
+package com.project.homey;
 
 import org.junit.Test;
 

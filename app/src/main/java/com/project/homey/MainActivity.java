@@ -1,4 +1,4 @@
-package com.israwords.homey;
+package com.project.homey;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
