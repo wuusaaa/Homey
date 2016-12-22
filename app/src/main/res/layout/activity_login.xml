@@ -98,8 +98,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-
-
     <LinearLayout
         android:layout_weight="4"
         android:orientation="vertical"
