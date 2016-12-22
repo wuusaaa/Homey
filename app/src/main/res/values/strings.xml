@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Homey</string>
+    <string name="header">Header</string>
+    <string name="body">Body</string>
+    <string name="footer">Footer</string>
 </resources>
