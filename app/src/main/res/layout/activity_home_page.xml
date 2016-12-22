@@ -13,26 +13,29 @@
     android:weightSum="12">
 
     <LinearLayout
-        android:id="@+id/header"
+        android:id="@string/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:orientation="vertical">
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/body"
+        android:id="@string/body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="8">
+        android:layout_weight="8"
+        android:orientation="vertical">
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/footer"
+        android:id="@string/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:orientation="vertical">
 
     </LinearLayout>
 
