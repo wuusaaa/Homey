@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu>
-    <!--<item-->
-    <!--android:id="@+id/recent_item"-->
-    <!--android:icon="@drawable/ic_action_assignment"-->
-    <!--android:title="Recents" />-->
-    <!--<item-->
-    <!--android:id="@+id/location_item"-->
-    <!--android:icon="@drawable/ic_action_settings"-->
-    <!--android:title="Location" />-->
-    <!--<item-->
-    <!--android:id="@+id/favorite_item"-->
-    <!--android:icon="@drawable/ic_action_today"-->
-    <!--android:title="Favorire" />-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/assignment"
+        android:icon="@drawable/ic_action_assignment"
+        android:title="Assignment" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/today"
+        android:icon="@drawable/ic_action_today"
+        android:title="Calendar" />
 </menu>
