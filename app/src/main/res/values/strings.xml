@@ -5,4 +5,5 @@
     <string name="footer">Footer</string>
     <string name="user_name">User Name:</string>
     <string name="email">Email:</string>
+    <string name="profile_picture">ProfilePicture</string>
 </resources>

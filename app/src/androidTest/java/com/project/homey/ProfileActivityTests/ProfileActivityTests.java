@@ -1,7 +1,10 @@
-package com.project.homey;
+package com.project.homey.ProfileActivityTests;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.project.homey.ProfileActivity;
+import com.project.homey.R;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +14,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by barakm on 23/12/2016.
@@ -26,20 +30,30 @@ public class ProfileActivityTests {
     @Test
     public void hasUserNameTextView() {
         onView(withId(R.id.textViewUserName)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewUserName)).check(matches(withText("User Name:")));
+
     }
 
     @Test
-    public void hasUserNameEditText() {
-        onView(withId(R.id.editTextUserName)).check(matches(isDisplayed()));
+    public void hasUsersUserName() {
+        onView(withId(R.id.textViewUsersUserName)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewUsersUserName)).check(matches(withText("")));
     }
 
     @Test
     public void hasEmailTextView() {
         onView(withId(R.id.textViewEmail)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewEmail)).check(matches(withText("Email:")));
     }
 
     @Test
-    public void hasEmaillEditText() {
-        onView(withId(R.id.editTextEmail)).check(matches(isDisplayed()));
+    public void hasUsersEmailTextView() {
+        onView(withId(R.id.textViewUsersEmail)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewUsersEmail)).check(matches(withText("")));
+    }
+
+    @Test
+    public void hasUsersProfilePicture() {
+        onView(withId(R.id.imageButtonUsersProfilePicture)).check(matches(isDisplayed()));
     }
 }
