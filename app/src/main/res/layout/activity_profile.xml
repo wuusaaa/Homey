@@ -10,6 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="12"
     tools:context="com.project.homey.ProfileActivity">
 
@@ -17,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <TextView
@@ -30,7 +31,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="10"
+        android:layout_weight="9"
         android:isScrollContainer="false">
 
         <GridLayout
@@ -93,17 +94,14 @@
 
         </GridLayout>
     </ScrollView>
-
-    <RelativeLayout
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/color_states"
+        app:itemTextColor="@color/colorGray"
+        app:menu="@menu/three_buttons_menu" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/footer" />
-    </RelativeLayout>
 </LinearLayout>
