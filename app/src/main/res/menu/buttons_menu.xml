@@ -12,4 +12,12 @@
         android:id="@+id/today"
         android:icon="@drawable/ic_action_today"
         android:title="Calendar" />
+    <item
+        android:id="@+id/groups"
+        android:icon="@drawable/ic_action_today"
+        android:title="Groups" />
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_action_today"
+        android:title="Home" />
 </menu>

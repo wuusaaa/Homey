@@ -40,5 +40,5 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@color/color_states"
         app:itemTextColor="@color/colorGray"
-        app:menu="@menu/three_buttons_menu" />
+        app:menu="@menu/buttons_menu" />
 </LinearLayout>

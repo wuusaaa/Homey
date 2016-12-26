@@ -26,6 +26,6 @@
         app:itemBackground="@color/colorPrimaryDark"
         app:itemIconTint="@color/colorPrimary"
         app:itemTextColor="@color/colorPrimary"
-        app:menu="@menu/three_buttons_menu" />
+        app:menu="@menu/buttons_menu" />
 
 </RelativeLayout>
