@@ -30,10 +30,10 @@
             android:id="@+id/imageButtonUsersProfilePicture"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/Transparent"
             android:contentDescription="@string/profile_picture"
-            app:srcCompat="@drawable/profilepicturetest"
-            android:layout_weight="1" />
+            app:srcCompat="@drawable/profilepicturetest" />
 
     </LinearLayout>
 
@@ -95,15 +95,20 @@
         </GridLayout>
     </ScrollView>
 
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/color_states"
-        app:itemTextColor="@color/colorGray"
-        app:menu="@menu/buttons_menu" />
+        android:layout_weight="3">
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@color/color_states"
+            app:itemTextColor="@color/colorGray"
+            app:menu="@menu/buttons_menu" />
+    </LinearLayout>
 
 </LinearLayout>
