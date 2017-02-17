@@ -58,7 +58,18 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewUsersUserName"
+                    android:id="@+id/textViewUserNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="1"
+                    android:padding="@dimen/text_margin"
+                    android:text="@string/user_name"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewUserNameValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -69,7 +80,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/textViewEmail"
+                    android:id="@+id/textViewEmailLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
@@ -80,7 +91,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/textViewUsersEmail"
+                    android:id="@+id/textViewEmailValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -91,15 +102,74 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/textViewUserName"
+                    android:id="@+id/textViewFirstNameLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_marginTop="0dp"
-                    android:layout_row="1"
+                    android:layout_row="3"
                     android:padding="@dimen/text_margin"
-                    android:text="@string/user_name"
+                    android:text="@string/first_name"
                     android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewFirstNameValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="3"
+                    android:ems="10"
+                    android:text=""
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewLastNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="4"
+                    android:ems="10"
+                    android:padding="@dimen/text_margin"
+                    android:text="@string/last_name"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewLastNameValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="4"
+                    android:ems="10"
+                    android:text=""
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDateOfBirthLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="5"
+                    android:ems="10"
+                    android:padding="@dimen/text_margin"
+                    android:text="@string/date_of_birth"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDateOfBirthValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="5"
+                    android:ems="10"
+                    android:text=""
+                    android:textSize="12sp" />
+
+
             </GridLayout>
         </ScrollView>
 
@@ -123,17 +193,21 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingActionButtonProfileActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_gravity="top|left"
         android:layout_margin="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="18dp"
         android:clickable="true"
-        app:layout_anchor="@id/imageButtonUsersProfilePicture"
-        app:layout_anchorGravity="bottom|right|end"
+        android:onClick="editButton_onClick"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_anchor="@+id/activity_profile"
+        app:layout_anchorGravity="center_vertical|right"
         app:srcCompat="@android:drawable/ic_menu_edit" />
+
 </android.support.design.widget.CoordinatorLayout>
