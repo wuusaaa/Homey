@@ -19,7 +19,8 @@
         <activity android:name=".HomePageActivity" />
         <activity android:name=".PlusActivity" />
         <activity android:name=".TestActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".AddTaskActivity" />
     </application>
 
 </manifest>
