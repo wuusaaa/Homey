@@ -29,27 +29,27 @@ public class ProfileActivityTests {
 
     @Test
     public void hasUserNameTextView() {
-        onView(withId(R.id.textViewUserName)).check(matches(isDisplayed()));
-        onView(withId(R.id.textViewUserName)).check(matches(withText("User Name:")));
+        onView(withId(R.id.textViewUserNameLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewUserNameLabel)).check(matches(withText("User Name:")));
 
     }
 
     @Test
     public void hasUsersUserName() {
-        onView(withId(R.id.textViewUsersUserName)).check(matches(isDisplayed()));
-        onView(withId(R.id.textViewUsersUserName)).check(matches(withText("")));
+        onView(withId(R.id.textViewUserNameValue)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewUserNameValue)).check(matches(withText("")));
     }
 
     @Test
     public void hasEmailTextView() {
-        onView(withId(R.id.textViewEmail)).check(matches(isDisplayed()));
-        onView(withId(R.id.textViewEmail)).check(matches(withText("Email:")));
+        onView(withId(R.id.textViewEmailLabel)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewEmailLabel)).check(matches(withText("Email:")));
     }
 
     @Test
     public void hasUsersEmailTextView() {
-        onView(withId(R.id.textViewUsersEmail)).check(matches(isDisplayed()));
-        onView(withId(R.id.textViewUsersEmail)).check(matches(withText("")));
+        onView(withId(R.id.textViewEmailValue)).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewEmailValue)).check(matches(withText("")));
     }
 
     @Test
