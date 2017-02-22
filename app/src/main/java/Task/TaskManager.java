@@ -1,8 +1,8 @@
-package lib;
+package Task;
 
 /**
  * Created by Raz on 12/20/2016.
  */
 
-public class Services {
+public class TaskManager {
 }

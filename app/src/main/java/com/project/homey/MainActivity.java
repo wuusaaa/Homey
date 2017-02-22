@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 import db.SQLiteHandler;
-import helper.SessionManager;
+import services.SessionManager;
 
 public class MainActivity extends Activity {
 

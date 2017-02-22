@@ -21,10 +21,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import lib.EnvironmentManager;
+import services.EnvironmentManager;
 import app.AppController;
 import db.SQLiteHandler;
-import helper.SessionManager;
+import services.SessionManager;
 
 public class RegistrationActivity extends Activity {
     private static final String TAG = RegistrationActivity.class.getSimpleName();
