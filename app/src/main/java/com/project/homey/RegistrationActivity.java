@@ -21,9 +21,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.AppConfig;
+import lib.EnvironmentManager;
 import app.AppController;
-import helper.SQLiteHandler;
+import db.SQLiteHandler;
 import helper.SessionManager;
 
 public class RegistrationActivity extends Activity {
@@ -110,7 +110,7 @@ public class RegistrationActivity extends Activity {
         showDialog();
 
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_REGISTER, new Response.Listener<String>() {
+                EnvironmentManager.URL_REGISTER, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

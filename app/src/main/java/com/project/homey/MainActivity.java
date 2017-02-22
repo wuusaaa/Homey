@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-import helper.SQLiteHandler;
+import db.SQLiteHandler;
 import helper.SessionManager;
 
 public class MainActivity extends Activity {

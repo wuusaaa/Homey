@@ -21,9 +21,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.AppConfig;
+import lib.EnvironmentManager;
 import app.AppController;
-import helper.SQLiteHandler;
+import db.SQLiteHandler;
 import helper.SessionManager;
 
 public class LoginActivity extends Activity {
@@ -109,7 +109,7 @@ public class LoginActivity extends Activity {
         showDialog();
 
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_LOGIN, new Response.Listener<String>() {
+                EnvironmentManager.URL_LOGIN, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
