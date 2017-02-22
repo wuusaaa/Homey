@@ -110,7 +110,7 @@ public class RegistrationActivity extends Activity {
         showDialog();
 
         StringRequest strReq = new StringRequest(Method.POST,
-                EnvironmentManager.URL_REGISTER, new Response.Listener<String>() {
+                EnvironmentManager.GetInstance().GetRegistrationURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

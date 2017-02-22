@@ -109,7 +109,7 @@ public class LoginActivity extends Activity {
         showDialog();
 
         StringRequest strReq = new StringRequest(Method.POST,
-                EnvironmentManager.URL_LOGIN, new Response.Listener<String>() {
+                EnvironmentManager.GetInstance().GetLoginURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
