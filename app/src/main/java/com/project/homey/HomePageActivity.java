@@ -1,5 +1,6 @@
 package com.project.homey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -28,7 +29,8 @@ public class HomePageActivity extends AppCompatActivity {
 
                         break;
                     case R.id.settings:
-
+                        Intent intent = new Intent(HomePageActivity.this, SettingsActivity.class);
+                        startActivity(intent);
                         break;
                     default:
                         break;

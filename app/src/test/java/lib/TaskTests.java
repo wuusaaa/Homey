@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import Task.Task;
+import task.Task;
 
 import static org.junit.Assert.assertEquals;
 

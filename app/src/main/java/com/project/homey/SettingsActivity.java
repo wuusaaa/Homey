@@ -1,11 +1,7 @@
 package com.project.homey;
 
-/**
- * Created by razze on 18/02/2017.
- */
-
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +12,7 @@ import java.util.HashMap;
 import db.SQLiteHandler;
 import services.SessionManager;
 
-public class MainActivity extends Activity {
-
+public class SettingsActivity extends AppCompatActivity {
     private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;
@@ -28,7 +23,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
 
         txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
@@ -74,7 +69,7 @@ public class MainActivity extends Activity {
         db.deleteUsers();
 
         // Launching the login activity
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
