@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Date;
 
 import task.Task;
+import task.TaskDate;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +18,7 @@ public class TaskTests {
 
     @Before
     public void beforeTest() {
-        Task.TaskDate taskDate = new Task.TaskDate();
+        TaskDate taskDate = new TaskDate();
         Date date = new Date(24102017);
         m_Task = new Task(taskDate, "testTask", "Barak");
     }
