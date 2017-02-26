@@ -22,10 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop" />
+
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".PlusActivity" />

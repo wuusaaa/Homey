@@ -5,32 +5,131 @@
     android:id="@+id/activity_home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.project.homey.HomePageActivity"
     android:orientation="vertical"
     android:weightSum="12">
 
-    <LinearLayout
-        android:id="@string/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:orientation="vertical">
-
-    </LinearLayout>
 
     <LinearLayout
-        android:id="@string/body"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="9"
-        android:orientation="vertical">
+        android:layout_height="404dp"
+        android:layout_weight="12"
+        android:weightSum="1"
+        android:id="@+id/Body">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:id="@+id/WelcomeMsg"
+            android:layout_height="50dp">
+
+            <TextView
+                android:text="Welcome Barak"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView11"
+                android:layout_weight="1.00"
+                android:textAlignment="center"
+                tools:gravity="center" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:id="@+id/imageView6"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Tasks"
+            android:layout_weight="1.00">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/TasksHolder">
+
+                <TextView
+                    android:text="task1"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task1" />
+
+                <TextView
+                    android:text="task2"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task2" />
+
+                <TextView
+                    android:text="task3"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task3" />
+
+                <TextView
+                    android:text="task4"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task4" />
+
+                <TextView
+                    android:text="task5"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task5" />
+
+                <TextView
+                    android:text="task6"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task6" />
+
+                <TextView
+                    android:text="task7"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task7" />
+
+                <TextView
+                    android:text="task8"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:id="@+id/task8" />
+            </LinearLayout>
+        </ScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="87dp"
+            android:id="@+id/Groups">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/GroupsHolder">
+
+                <ImageButton
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_action_settings"
+                    android:id="@+id/Group1"
+                    android:layout_width="100dp" />
+
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_action_assignment"
+                    android:id="@+id/Group2" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
     </LinearLayout>
-
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
