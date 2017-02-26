@@ -2,7 +2,7 @@ package services;
 
 /**
  * Created by Raz on 2/22/2017.
- * A singelton to set all the environment variables
+ * A singleton to set all the environment variables
  */
 
 public class EnvironmentManager {
