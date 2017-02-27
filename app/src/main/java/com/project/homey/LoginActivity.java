@@ -17,10 +17,11 @@ import services.SessionManager;
 
 public class LoginActivity extends Activity {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private Button btnLogin;
-    private Button btnLinkToRegister;
-    private EditText inputEmail;
-    private EditText inputPassword;
+    private Button loginButton;
+    private Button forgotPassButton;
+    private Button linkToRegisterButton;
+    private EditText inputEmailEditText;
+    private EditText inputPasswordEditText;
     private ProgressDialog pDialog;
     private SQLiteHandler db;
 
@@ -29,10 +30,11 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        inputEmailEditText = (EditText) findViewById(R.id.email);
+        inputPasswordEditText = (EditText) findViewById(R.id.password);
+        loginButton = (Button) findViewById(R.id.btnLogin);
+        linkToRegisterButton = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        forgotPassButton = (Button) findViewById(R.id.buttonLinkToforgotPasswordScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -51,12 +53,22 @@ public class LoginActivity extends Activity {
             finish();
         }
 
+        //forgot password click event
+        forgotPassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),
+                        ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Login button Click Event
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                String email = inputEmailEditText.getText().toString().trim();
+                String password = inputPasswordEditText.getText().toString().trim();
 
                 // Check for empty data in the form
                 if (!email.isEmpty() && !password.isEmpty()) {
@@ -73,7 +85,7 @@ public class LoginActivity extends Activity {
         });
 
         // Link to Register Screen
-        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
+        linkToRegisterButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
