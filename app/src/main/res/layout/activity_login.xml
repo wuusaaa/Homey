@@ -64,6 +64,18 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15dp" />
+
+
+        <Button
+            android:id="@+id/buttonLinkToforgotPasswordScreen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dip"
+            android:background="@null"
+            android:text="@string/btn_link_to_forgot_pass"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
     </LinearLayout>
 
 </LinearLayout>

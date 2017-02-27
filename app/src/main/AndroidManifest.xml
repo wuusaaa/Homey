@@ -22,14 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".PlusActivity" />
         <activity android:name=".TestActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".AddTaskActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>
