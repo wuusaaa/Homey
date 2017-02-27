@@ -23,7 +23,6 @@ public class RegistrationActivity extends Activity {
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
-    private SessionManager session;
     private SQLiteHandler db;
 
     @Override
@@ -41,14 +40,11 @@ public class RegistrationActivity extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        // Session manager
-        session = new SessionManager(getApplicationContext());
-
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+        if (SessionManager.GetInstance().isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(RegistrationActivity.this,
                     HomePageActivity.class);

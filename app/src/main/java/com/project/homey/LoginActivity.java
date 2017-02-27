@@ -22,7 +22,6 @@ public class LoginActivity extends Activity {
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
-    private SessionManager session;
     private SQLiteHandler db;
 
     @Override
@@ -39,14 +38,13 @@ public class LoginActivity extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
+        SessionManager.GetInstance().set_context(getApplicationContext());
+
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
-        // Session manager
-        session = new SessionManager(getApplicationContext());
-
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+        if (SessionManager.GetInstance().isLoggedIn()) {
             // User is already logged in. Take him to HomePage activity
             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
             startActivity(intent);
@@ -100,7 +98,9 @@ public class LoginActivity extends Activity {
                 // user successfully logged in
                 Toast.makeText(getApplicationContext(), "Successfully logged in!", Toast.LENGTH_LONG).show();
                 // Create login session
-                session.setLogin(true);
+                SessionManager.GetInstance().setLogin(true);
+
+                SessionManager.GetInstance().setUser(user);
 
                 db.addUser(user.getName(), user.getEmail(), user.getUid(), user.getCreatedAt());
 

@@ -9,15 +9,49 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
+import java.util.HashMap;
+
+import db.SQLiteHandler;
+import lib.User;
+
 public class SessionManager {
+
+    private SessionManager() {
+    }
+
+    public void set_context(Context _context) {
+        this._context = _context;
+        this.pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        this.editor = pref.edit();
+    }
+
+    // Instance holder
+    private static class SessionManagerHolder {
+        public static final SessionManager INSTANCE = new SessionManager();
+
+        private SessionManagerHolder() {
+        }
+    }
+
+    /**
+     * provide the instance of this class
+     *
+     * @return EnvironmentManager
+     */
+    public static SessionManager GetInstance() {
+        return SessionManagerHolder.INSTANCE;
+    }
+
+    private User user;
+
     // LogCat tag
     private static String TAG = SessionManager.class.getSimpleName();
 
     // Shared Preferences
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
-    Editor editor;
-    Context _context;
+    private Editor editor;
+    private Context _context;
 
     // Shared pref mode
     int PRIVATE_MODE = 0;
@@ -26,12 +60,6 @@ public class SessionManager {
     private static final String PREF_NAME = "AndroidHiveLogin";
 
     private static final String KEY_IS_LOGGEDIN = "isLoggedIn";
-
-    public SessionManager(Context context) {
-        this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        editor = pref.edit();
-    }
 
     public void setLogin(boolean isLoggedIn) {
 
@@ -44,6 +72,22 @@ public class SessionManager {
     }
 
     public boolean isLoggedIn() {
-        return pref.getBoolean(KEY_IS_LOGGEDIN, false);
+        boolean res = pref.getBoolean(KEY_IS_LOGGEDIN, false);
+
+        if (res && user == null) {
+            SQLiteHandler db = new SQLiteHandler(_context);
+            HashMap<String, String> userCred = db.getUserDetails();
+            user = new User(userCred.get("name"), userCred.get("email"), userCred.get("uid"), userCred.get("created_at"));
+        }
+
+        return res;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

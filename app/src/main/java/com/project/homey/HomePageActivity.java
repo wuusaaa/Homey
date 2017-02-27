@@ -6,16 +6,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import services.SessionManager;
 
 
 public class HomePageActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
+    private TextView txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        txt = (TextView) findViewById(R.id.textView11);
+        txt.setText("Welcome " + SessionManager.GetInstance().getUser().getName());
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
