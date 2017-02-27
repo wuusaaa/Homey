@@ -7,6 +7,7 @@ import lib.User;
  */
 
 public interface UserCallBack {
+
     void onSuccess(User user);
 
     void onFailure(String error);

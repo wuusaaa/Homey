@@ -12,6 +12,7 @@
     <string name="hint_name">Full Name</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
+    <string name="btn_forgot">REST PASSWORD</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_forgot_pass">Forgot my password.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>

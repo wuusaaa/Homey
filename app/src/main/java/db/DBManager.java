@@ -159,6 +159,61 @@ public class DBManager {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    /**
+     * Function to restore user's password
+     */
+    public void ResetPassword(final String email, final ServerCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_reset_pass";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                EnvironmentManager.GetInstance().GetAPIPassResetURL(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // pass successfully reset
+
+                        callBack.onSuccess(new JSONObject().put("error", "false"));
+
+                    } else {
+
+                        // Error occurred in reset password. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to reset url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     //TODO delete this when finishing testing
     public void test(final ServerCallBack callBack) {
         driver.RunSqlQuery("SELECT * FROM users", new ServerCallBack() {

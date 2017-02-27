@@ -9,6 +9,10 @@ public class EnvironmentManager {
 
     private EnvironmentManager() {}
 
+    public String GetAPIPassResetURL() {
+        return APIPassResetURL;
+    }
+
     // Instance holder
     private static class EnvironmentManagerHolder {
         public static final EnvironmentManager INSTANCE = new EnvironmentManager();
@@ -29,6 +33,8 @@ public class EnvironmentManager {
     private static final String registrationURL = "https://www.crossword-clues.com/homey/register.php";
 
     private final String APIServerURL = "https://www.crossword-clues.com/homey/sql.php";
+
+    private final String APIPassResetURL = "https://www.crossword-clues.com/homey/forgot.php";
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
