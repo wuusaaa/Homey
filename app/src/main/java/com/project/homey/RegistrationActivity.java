@@ -17,12 +17,13 @@ import services.SessionManager;
 
 public class RegistrationActivity extends Activity {
     private static final String TAG = RegistrationActivity.class.getSimpleName();
-    private Button btnRegister;
-    private Button btnLinkToLogin;
-    private EditText inputFullName;
-    private EditText inputEmail;
-    private EditText inputPassword;
+    private Button registerButton;
+    private Button linkToLoginButton;
+    private EditText inputFullNameEditText;
+    private EditText inputEmailEditText;
+    private EditText inputPasswordEditText;
     private ProgressDialog pDialog;
+    private EditText confirmPasswordEditText;
     private SQLiteHandler db;
 
     @Override
@@ -30,11 +31,12 @@ public class RegistrationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        inputFullName = (EditText) findViewById(R.id.name);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        inputFullNameEditText = (EditText) findViewById(R.id.name);
+        inputEmailEditText = (EditText) findViewById(R.id.email);
+        inputPasswordEditText = (EditText) findViewById(R.id.password);
+        registerButton = (Button) findViewById(R.id.btnRegister);
+        linkToLoginButton = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        confirmPasswordEditText = (EditText) findViewById(R.id.confirmPassword);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -53,24 +55,32 @@ public class RegistrationActivity extends Activity {
         }
 
         // Register Button Click event
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String name = inputFullName.getText().toString().trim();
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                String name = inputFullNameEditText.getText().toString().trim();
+                String email = inputEmailEditText.getText().toString().trim();
+                String password = inputPasswordEditText.getText().toString().trim();
+                String confPassword = confirmPasswordEditText.getText().toString().trim();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confPassword.isEmpty()) {
+                    if (confPassword.equals(password)) {
+                        registerUser(name, email, password);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "Your passwords does not match!", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your credentials!", Toast.LENGTH_LONG)
+                            "Please enter all credentials!", Toast.LENGTH_LONG)
                             .show();
                 }
             }
         });
 
         // Link to Login Screen
-        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
+        linkToLoginButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
