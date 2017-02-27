@@ -4,26 +4,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request.Method;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import services.EnvironmentManager;
-import app.AppController;
+import callback.UserCallBack;
+import db.DBManager;
 import db.SQLiteHandler;
+import lib.User;
 import services.SessionManager;
 
 public class RegistrationActivity extends Activity {
@@ -78,7 +67,7 @@ public class RegistrationActivity extends Activity {
                     registerUser(name, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            "Please enter your credentials!", Toast.LENGTH_LONG)
                             .show();
                 }
             }
@@ -98,89 +87,39 @@ public class RegistrationActivity extends Activity {
     }
 
     /**
-     * Function to store user in MySQL database will post params(tag, name,
+     * Function to store user in MySQL database. will post params(name,
      * email, password) to register url
      */
-    private void registerUser(final String name, final String email,
-                              final String password) {
-        // Tag used to cancel the request
-        String tag_string_req = "req_register";
-
+    private void registerUser(final String name, final String email, final String password) {
         pDialog.setMessage("Registering ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Method.POST,
-                EnvironmentManager.GetInstance().GetRegistrationURL(), new Response.Listener<String>() {
+        new DBManager().RegisterUser(name, email, password, new UserCallBack() {
+            @Override
+            public void onSuccess(User user) {
+                hideDialog();
+                db.addUser(user.getName(), user.getEmail(), user.getUid(), user.getCreatedAt());
+
+                Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+
+                // Launch login activity
+                Intent intent = new Intent(
+                        RegistrationActivity.this,
+                        LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
             @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+            public void onFailure(String error) {
                 hideDialog();
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-                    if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        String uid = jObj.getString("uid");
-
-                        JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
-
-                        // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
-
-                        Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
-
-                        // Launch login activity
-                        Intent intent = new Intent(
-                                RegistrationActivity.this,
-                                LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (error.equals("JSON ERROR") || error.equals("Volley ERROR")) {
+                    Toast.makeText(getApplicationContext(), "Connection error, please try again", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
-
             }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("name", name);
-                params.put("email", email);
-                params.put("password", password);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        });
     }
 
     private void showDialog() {

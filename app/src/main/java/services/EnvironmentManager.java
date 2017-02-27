@@ -28,6 +28,11 @@ public class EnvironmentManager {
     // Server user register url
     private static final String registrationURL = "https://www.crossword-clues.com/homey/register.php";
 
+    private final String APIServerURL = "https://www.crossword-clues.com/homey/sql.php";
+
+    private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
+
+
     /**
      * getter for the LoginURL
      * @return String
@@ -38,9 +43,27 @@ public class EnvironmentManager {
 
     /**
      * getter for the registrationURL
-     * @returnString
+     * @return String
      */
     public String GetRegistrationURL(){
         return registrationURL;
+    }
+
+    /**
+     * getter for the APIServerURL
+     *
+     * @return String
+     */
+    public String GetAPIServerURL() {
+        return APIServerURL;
+    }
+
+    /**
+     * getter for the serverSecurityToken
+     *
+     * @return String
+     */
+    public String GetServerSecurityToken() {
+        return serverSecurityToken;
     }
 }

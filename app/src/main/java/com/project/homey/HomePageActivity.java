@@ -21,15 +21,17 @@ public class HomePageActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()) {
                     case R.id.today:
-
+                        intent = new Intent(HomePageActivity.this, TestActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.assignment:
 
                         break;
                     case R.id.settings:
-                        Intent intent = new Intent(HomePageActivity.this, SettingsActivity.class);
+                        intent = new Intent(HomePageActivity.this, SettingsActivity.class);
                         startActivity(intent);
                         break;
                     default:
