@@ -219,15 +219,19 @@ public class DBManager {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void ChangePassword() {
+    private void ChangePassword(int userId) {
 
     }
 
-    public void UpdateUser(User user, ServerCallBack callBack) {
+    public void UpdateUser(int userId, String property, Object value, ServerCallBack callBack) {
 
     }
 
-    public void UpdateTask(Task task, ServerCallBack callBack) {
+    public void UpdateTask(int taskId, String property, Object value, ServerCallBack callBack) {
+
+    }
+
+    public void UpdateGroup(int groupId, String property, Object value, ServerCallBack callBack) {
 
     }
 
