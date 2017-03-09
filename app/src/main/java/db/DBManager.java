@@ -12,10 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.AppController;
+import callback.GroupCallBack;
+import callback.GroupsCallBack;
 import callback.ServerCallBack;
+import callback.TasksCallBack;
 import callback.UserCallBack;
+import lib.Group;
 import lib.User;
 import services.EnvironmentManager;
+import task.Task;
 
 /**
  * Created by Raz on 12/20/2016.
@@ -212,6 +217,46 @@ public class DBManager {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public void ChangePassword() {
+
+    }
+
+    public void UpdateUser(User user, ServerCallBack callBack) {
+
+    }
+
+    public void UpdateTask(Task task, ServerCallBack callBack) {
+
+    }
+
+    public void AddTask(Task task, ServerCallBack callBack) {
+
+    }
+
+    public void GetUser(int userId, UserCallBack callBack) {
+
+    }
+
+    public void AddGroup(Group group, ServerCallBack callBack) {
+
+    }
+
+    public void GetGroup(int groupId, GroupCallBack callBack) {
+
+    }
+
+    public void GetUserTasks(int userId, TasksCallBack callBack) {
+
+    }
+
+    public void GetGroupTasks(int groupId, GroupCallBack callBack) {
+
+    }
+
+    public void GetUserGroups(int groupId, GroupsCallBack callBack) {
+
     }
 
     //TODO delete this when finishing testing
