@@ -235,8 +235,60 @@ public class DBManager {
 
     }
 
-    public void AddTask(Task task, ServerCallBack callBack) {
+    public void AddTask(final Task task, final ServerCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "add_task";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                EnvironmentManager.GetInstance().GetAPIAddTaskURL(), new Response.Listener<String>() {
 
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        callBack.onSuccess(new JSONObject().put("res", "OK"));
+                    } else {
+
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("name", task.GetName());
+                params.put("description", task.GetDescription());
+                params.put("status", task.GetStatus());
+                params.put("creator_id", task.GetCreatorId() + "");
+                params.put("location", task.GetLocation());
+                params.put("start_time", task.GetStartTime().toString());
+                params.put("end_time", task.GetEndTime().toString());
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     public void GetUser(int userId, UserCallBack callBack) {

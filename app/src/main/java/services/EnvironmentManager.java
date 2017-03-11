@@ -13,6 +13,10 @@ public class EnvironmentManager {
         return APIPassResetURL;
     }
 
+    public String GetAPIAddTaskURL() {
+        return APIAddTaskURL;
+    }
+
     // Instance holder
     private static class EnvironmentManagerHolder {
         public static final EnvironmentManager INSTANCE = new EnvironmentManager();
@@ -35,6 +39,8 @@ public class EnvironmentManager {
     private final String APIServerURL = "https://www.crossword-clues.com/homey/sql.php";
 
     private final String APIPassResetURL = "https://www.crossword-clues.com/homey/forgot.php";
+
+    private final String APIAddTaskURL = "https://www.crossword-clues.com/homey/add-task.php";
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 

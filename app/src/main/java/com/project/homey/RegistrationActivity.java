@@ -15,6 +15,8 @@ import db.SQLiteHandler;
 import lib.User;
 import services.SessionManager;
 
+//TODO add birthday
+
 public class RegistrationActivity extends Activity {
     private static final String TAG = RegistrationActivity.class.getSimpleName();
     private Button registerButton;
