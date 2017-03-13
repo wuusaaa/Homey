@@ -223,15 +223,15 @@ public class DBManager {
 
     }
 
-    public void UpdateUser(int userId, String property, Object value, ServerCallBack callBack) {
+    public void UpdateUser(final int userId, final String property, final Object value, final ServerCallBack callBack) {
 
     }
 
-    public void UpdateTask(int taskId, String property, Object value, ServerCallBack callBack) {
+    public void UpdateTask(final int taskId, final String property, final Object value, final ServerCallBack callBack) {
 
     }
 
-    public void UpdateGroup(int groupId, String property, Object value, ServerCallBack callBack) {
+    public void UpdateGroup(final int groupId, final String property, final Object value, final ServerCallBack callBack) {
 
     }
 
@@ -291,27 +291,76 @@ public class DBManager {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void GetUser(int userId, UserCallBack callBack) {
+    public void GetUser(final int userId, final UserCallBack callBack) {
 
     }
 
-    public void AddGroup(Group group, ServerCallBack callBack) {
+    public void AddGroup(final Group group, final ServerCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "add_group";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                EnvironmentManager.GetInstance().GetAPIAddGroupURL(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {// Group successfully stored in MySQL
+                        callBack.onSuccess(new JSONObject().put("res", "OK"));
+                    } else {
+
+                        // Error occurred while adding a group. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", group.GetId()+"");
+                params.put("name", group.GetName());
+                params.put("created", group.GetCreated().toString());
+                params.put("img", group.GetImg().toString());
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public void GetGroup(final int groupId, final GroupCallBack callBack) {
 
     }
 
-    public void GetGroup(int groupId, GroupCallBack callBack) {
+    public void GetUserTasks(final int userId, final TasksCallBack callBack) {
 
     }
 
-    public void GetUserTasks(int userId, TasksCallBack callBack) {
+    public void GetGroupTasks(final int groupId, final GroupCallBack callBack) {
 
     }
 
-    public void GetGroupTasks(int groupId, GroupCallBack callBack) {
-
-    }
-
-    public void GetUserGroups(int groupId, GroupsCallBack callBack) {
+    public void GetUserGroups(final int groupId, final GroupsCallBack callBack) {
 
     }
 
