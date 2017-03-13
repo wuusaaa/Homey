@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.AppController;
+import app.logic.managers.EnvironmentManager;
 import callback.ServerCallBack;
-import services.EnvironmentManager;
 
 /**
  * Created by Raz on 12/20/2016.

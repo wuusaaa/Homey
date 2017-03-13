@@ -1,4 +1,4 @@
-package com.project.homey;
+package app.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,11 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.project.homey.R;
+
+import app.logic.lib.User;
+import app.logic.managers.SessionManager;
 import callback.UserCallBack;
 import db.DBManager;
 import db.SQLiteHandler;
-import lib.User;
-import services.SessionManager;
 
 //TODO add birthday
 

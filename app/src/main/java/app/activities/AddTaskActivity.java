@@ -1,7 +1,9 @@
-package com.project.homey;
+package app.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.project.homey.R;
 
 public class AddTaskActivity extends AppCompatActivity {
 

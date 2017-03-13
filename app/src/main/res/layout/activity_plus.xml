@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="12"
     android:orientation="vertical"
-    tools:context="com.project.homey.PlusActivity">
+    tools:context="app.activities.PlusActivity">
 
     <LinearLayout
         android:id="@string/header"

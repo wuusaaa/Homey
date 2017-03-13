@@ -1,4 +1,4 @@
-package services;
+package app.logic.managers;
 
 /**
  * Created by Raz on 2/22/2017.
@@ -40,7 +40,7 @@ public class EnvironmentManager {
 
     private final String APIPassResetURL = "https://www.crossword-clues.com/homey/forgot.php";
 
-    private final String APIAddTaskURL = "https://www.crossword-clues.com/homey/add-task.php";
+    private final String APIAddTaskURL = "https://www.crossword-clues.com/homey/add-app.task.php";
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 

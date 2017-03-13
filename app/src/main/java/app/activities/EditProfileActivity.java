@@ -1,6 +1,8 @@
-package com.project.homey;
+package app.activities;
 
 import android.os.Bundle;
+
+import com.project.homey.R;
 
 public class EditProfileActivity extends ProfileActivity {
 

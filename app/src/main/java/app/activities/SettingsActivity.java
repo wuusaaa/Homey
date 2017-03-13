@@ -1,4 +1,4 @@
-package com.project.homey;
+package app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.project.homey.R;
+
 import java.util.HashMap;
 
+import app.logic.managers.SessionManager;
 import db.SQLiteHandler;
-import services.SessionManager;
 
 public class SettingsActivity extends AppCompatActivity {
     private TextView txtName;

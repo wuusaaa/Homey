@@ -1,4 +1,4 @@
-package task;
+package app.task;
 
 import android.location.Location;
 

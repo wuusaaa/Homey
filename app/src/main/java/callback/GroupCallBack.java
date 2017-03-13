@@ -1,6 +1,6 @@
 package callback;
 
-import lib.Group;
+import app.logic.lib.Group;
 
 /**
  * Created by razze on 09/03/2017.

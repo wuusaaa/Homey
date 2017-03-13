@@ -1,4 +1,4 @@
-package com.project.homey;
+package app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import services.SessionManager;
+import com.project.homey.R;
+
+import app.logic.managers.SessionManager;
 
 
 public class HomePageActivity extends AppCompatActivity {

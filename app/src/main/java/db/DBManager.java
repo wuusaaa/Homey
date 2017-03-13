@@ -12,15 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.AppController;
+import app.logic.lib.Group;
+import app.logic.lib.User;
+import app.logic.managers.EnvironmentManager;
+import app.task.Task;
 import callback.GroupCallBack;
 import callback.GroupsCallBack;
 import callback.ServerCallBack;
 import callback.TasksCallBack;
 import callback.UserCallBack;
-import lib.Group;
-import lib.User;
-import services.EnvironmentManager;
-import task.Task;
 
 /**
  * Created by Raz on 12/20/2016.
@@ -251,7 +251,7 @@ public class DBManager {
                         callBack.onSuccess(new JSONObject().put("res", "OK"));
                     } else {
 
-                        // Error occurred while adding a task. Get the error
+                        // Error occurred while adding a app.task. Get the error
                         // message
                         String errorMsg = jObj.getString("error_msg");
                         callBack.onFailure(errorMsg);

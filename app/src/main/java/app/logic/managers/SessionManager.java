@@ -1,4 +1,4 @@
-package services;
+package app.logic.managers;
 
 /**
  * Created by razze on 18/02/2017.
@@ -11,8 +11,8 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import app.logic.lib.User;
 import db.SQLiteHandler;
-import lib.User;
 
 public class SessionManager {
 

@@ -1,4 +1,4 @@
-package com.project.homey;
+package app.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.project.homey.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

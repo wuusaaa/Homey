@@ -1,4 +1,4 @@
-package lib;
+package app.logic.lib;
 
 /**
  * Created by Raz on 12/20/2016.
