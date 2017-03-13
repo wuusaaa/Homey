@@ -13,6 +13,12 @@ public class Group {
     private Date created;
     private byte[] img;
 
+    public Group(int id,String name, Date created, byte[] img){
+        this.id = id;
+        this.created = created;
+        this.img = img;
+    }
+
     public int GetId() {
         return id;
     }

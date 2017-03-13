@@ -9,17 +9,6 @@ public class EnvironmentManager {
 
     private EnvironmentManager() {}
 
-    public String GetAPIPassResetURL() {
-        return APIPassResetURL;
-    }
-
-    public String GetAPIAddTaskURL() {
-        return APIAddTaskURL;
-    }
-
-    public String GetAPIAddGroupURL() {
-        return APIAddGroupURL;
-    }
 
     // Instance holder
     private static class EnvironmentManagerHolder {
@@ -47,6 +36,10 @@ public class EnvironmentManager {
     private final String APIAddTaskURL = "https://www.crossword-clues.com/homey/add-app.task.php";
 
     private final String APIAddGroupURL = "https://www.crossword-clues.com/homey/add-group.php";
+
+    private final String APIGetUserURL = "https://www.crossword-clues.com/homey/get-user.php";
+
+    private final String APIGetGroupURL = "https://www.crossword-clues.com/homey/get-group.php";
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
@@ -83,5 +76,45 @@ public class EnvironmentManager {
      */
     public String GetServerSecurityToken() {
         return serverSecurityToken;
+    }
+
+    /**
+     * getter for the GetAPIPassResetURL
+     * @return String
+     */
+    public String GetAPIPassResetURL() {
+        return APIPassResetURL;
+    }
+
+    /**
+     * getter for the GetAPIAddTaskURL
+     * @return String
+     */
+    public String GetAPIAddTaskURL() {
+        return APIAddTaskURL;
+    }
+
+    /**
+     * getter for the GetAPIAddGroupURL
+     * @return String
+     */
+    public String GetAPIAddGroupURL() {
+        return APIAddGroupURL;
+    }
+
+    /**
+     * getter for the GetAPIGetUserURL
+     * @return String
+     */
+    public String GetAPIGetUserURL() {
+        return APIGetUserURL;
+    }
+
+    /**
+     * getter for the GetAPIGetGroupURL
+     * @return String
+     */
+    public String GetAPIGetGroupURL() {
+        return APIGetGroupURL;
     }
 }
