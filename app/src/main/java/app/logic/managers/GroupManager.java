@@ -16,7 +16,7 @@ public class GroupManager extends ManagerBase {
     private ArrayList<Group> groupsList;
 
     public GroupManager() {
-        DBManager dbManager = Services.GetService();
+        DBManager dbManager = (DBManager) Services.GetInstance().GetService(DBManager.GetClass());
         dbManager.GetUserGroups(0, new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {

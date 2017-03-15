@@ -5,7 +5,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.logic.lib.Group;
 import app.logic.managers.GroupManager;
 
 /**
@@ -24,7 +23,6 @@ public class GroupManagerTests {
     @Test
     public void AddGroupToListTest() {
         int howManyGroups = groupManager.GetHowManyGroups();
-        groupManager.AddNewGroup(new Group());
         Assert.assertEquals("Number of group is not as expected", groupManager.GetHowManyGroups(), howManyGroups + 1);
     }
 

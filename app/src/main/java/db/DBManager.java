@@ -16,6 +16,7 @@ import app.AppController;
 import app.logic.lib.Group;
 import app.logic.lib.User;
 import app.logic.managers.EnvironmentManager;
+import app.logic.managers.ManagerBase;
 import app.task.Task;
 import callback.GroupCallBack;
 import callback.GroupsCallBack;
@@ -27,7 +28,7 @@ import callback.UserCallBack;
  * Created by Raz on 12/20/2016.
  */
 
-public class DBManager {
+public class DBManager extends ManagerBase {
 
     private DBDriver driver = new DBDriver();
 

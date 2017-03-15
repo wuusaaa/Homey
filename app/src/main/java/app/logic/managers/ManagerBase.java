@@ -5,4 +5,15 @@ package app.logic.managers;
  */
 
 public abstract class ManagerBase {
+    public ManagerBase() {
+        registerService();
+    }
+
+    protected void registerService() {
+        Services.GetInstance().AddService(this.getClass(), this);
+    }
+
+    public static Class GetClass() {
+        return ManagerBase.class;
+    }
 }
