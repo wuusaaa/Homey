@@ -352,7 +352,7 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void AddGroup(final Group group, final ServerCallBack callBack) {
+    public void AddGroup(final String name, final byte[] img, final Date created, final GroupCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -365,7 +365,11 @@ public class DBManager extends ManagerBase {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {// Group successfully stored in MySQL
-                        callBack.onSuccess(new JSONObject().put("res", "OK"));
+                        String name = jObj.getString("name");
+                        String id = jObj.getString("id");
+                        byte[] img = jObj.getString("img").getBytes();
+                        Date created = new Date(jObj.getString("created"));
+                        callBack.onSuccess(new Group(Integer.parseInt(id), name, created, img));
                     } else {
 
                         // Error occurred while adding a group. Get the error
@@ -391,10 +395,9 @@ public class DBManager extends ManagerBase {
             protected Map<String, String> getParams() {
                 // Posting params to adding group url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", group.GetId()+"");
-                params.put("name", group.GetName());
-                params.put("created", group.GetCreated().toString());
-                params.put("img", group.GetImg().toString());
+                params.put("name", name);
+                params.put("created", created.toString());
+                params.put("img", img.toString());
 
                 return params;
             }
