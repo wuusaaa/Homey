@@ -14,9 +14,9 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+import app.logic.managers.DBManager;
 import app.task.Task;
 import callback.ServerCallBack;
-import db.DBManager;
 
 public class AddTaskActivity extends AppCompatActivity {
 

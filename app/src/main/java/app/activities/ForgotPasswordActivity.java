@@ -12,8 +12,8 @@ import com.project.homey.R;
 
 import org.json.JSONObject;
 
+import app.logic.managers.DBManager;
 import callback.ServerCallBack;
-import db.DBManager;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 

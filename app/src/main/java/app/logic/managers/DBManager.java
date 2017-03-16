@@ -1,4 +1,4 @@
-package db;
+package app.logic.managers;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -15,20 +15,23 @@ import java.util.Map;
 import app.AppController;
 import app.logic.lib.Group;
 import app.logic.lib.User;
-import app.logic.managers.EnvironmentManager;
-import app.logic.managers.ManagerBase;
 import app.task.Task;
 import callback.GroupCallBack;
 import callback.GroupsCallBack;
 import callback.ServerCallBack;
 import callback.TasksCallBack;
 import callback.UserCallBack;
+import db.DBDriver;
 
 /**
  * Created by Raz on 12/20/2016.
  */
 
 public class DBManager extends ManagerBase {
+
+    public DBManager() {
+        super();
+    }
 
     private DBDriver driver = new DBDriver();
 
@@ -37,7 +40,7 @@ public class DBManager extends ManagerBase {
         String tag_string_req = "req_login";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetLoginURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetLoginURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -104,7 +107,7 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetRegistrationURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetRegistrationURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -172,7 +175,7 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_reset_pass";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetAPIPassResetURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIPassResetURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -240,7 +243,7 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "add_task";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetAPIAddTaskURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddTaskURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -296,7 +299,7 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetAPIGetUserURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetUserURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -341,7 +344,7 @@ public class DBManager extends ManagerBase {
             protected Map<String, String> getParams() {
                 // Posting params to getting user url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", userId+"");
+                params.put("id", userId + "");
 
                 return params;
             }
@@ -356,7 +359,7 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetAPIAddGroupURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddGroupURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -412,7 +415,7 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetAPIGetGroupURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -458,7 +461,7 @@ public class DBManager extends ManagerBase {
             protected Map<String, String> getParams() {
                 // Posting params to group url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", groupId+"");
+                params.put("id", groupId + "");
 
                 return params;
             }

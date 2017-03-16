@@ -14,9 +14,10 @@ import java.util.HashMap;
 import app.logic.lib.User;
 import db.SQLiteHandler;
 
-public class SessionManager {
+public class SessionManager extends ManagerBase {
 
-    private SessionManager() {
+    public SessionManager() {
+        super();
     }
 
     public void set_context(Context _context) {
@@ -25,22 +26,12 @@ public class SessionManager {
         this.editor = pref.edit();
     }
 
-    // Instance holder
-    private static class SessionManagerHolder {
-        public static final SessionManager INSTANCE = new SessionManager();
-
-        private SessionManagerHolder() {
-        }
-    }
 
     /**
      * provide the instance of this class
      *
      * @return EnvironmentManager
      */
-    public static SessionManager GetInstance() {
-        return SessionManagerHolder.INSTANCE;
-    }
 
     private User user;
 

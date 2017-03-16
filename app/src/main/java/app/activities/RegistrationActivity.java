@@ -12,9 +12,10 @@ import android.widget.Toast;
 import com.project.homey.R;
 
 import app.logic.lib.User;
+import app.logic.managers.DBManager;
+import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
-import db.DBManager;
 import db.SQLiteHandler;
 
 //TODO add birthday
@@ -50,7 +51,7 @@ public class RegistrationActivity extends Activity {
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (SessionManager.GetInstance().isLoggedIn()) {
+        if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(RegistrationActivity.this,
                     HomePageActivity.class);

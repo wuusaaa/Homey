@@ -11,6 +11,7 @@ import com.project.homey.R;
 
 import java.util.HashMap;
 
+import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import db.SQLiteHandler;
 
@@ -34,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         db = new SQLiteHandler(getApplicationContext());
 
         // session manager
-        if (!SessionManager.GetInstance().isLoggedIn()) {
+        if (!((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
             logoutUser();
         }
 
@@ -63,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
      * preferences Clears the user data from sqlite users table
      */
     private void logoutUser() {
-        SessionManager.GetInstance().setLogin(false);
+        ((SessionManager) (Services.GetService(SessionManager.class))).setLogin(false);
 
         db.deleteUsers();
 

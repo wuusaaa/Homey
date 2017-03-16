@@ -12,9 +12,11 @@ import android.widget.Toast;
 import com.project.homey.R;
 
 import app.logic.lib.User;
+import app.logic.managers.DBManager;
+import app.logic.managers.GroupManager;
+import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
-import db.DBManager;
 import db.SQLiteHandler;
 
 public class LoginActivity extends Activity {
@@ -30,6 +32,7 @@ public class LoginActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         inputEmailEditText = (EditText) findViewById(R.id.email);
@@ -42,13 +45,13 @@ public class LoginActivity extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        SessionManager.GetInstance().set_context(getApplicationContext());
+        ((SessionManager) (Services.GetService(SessionManager.class))).set_context(getApplicationContext());
 
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (SessionManager.GetInstance().isLoggedIn()) {
+        if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
             // User is already logged in. Take him to HomePage activity
             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
             startActivity(intent);
@@ -112,9 +115,9 @@ public class LoginActivity extends Activity {
                 // user successfully logged in
                 Toast.makeText(getApplicationContext(), "Successfully logged in!", Toast.LENGTH_LONG).show();
                 // Create login session
-                SessionManager.GetInstance().setLogin(true);
+                ((SessionManager) (Services.GetService(SessionManager.class))).setLogin(true);
 
-                SessionManager.GetInstance().setUser(user);
+                ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
 
                 db.addUser(user.getName(), user.getEmail(), user.getUid(), user.getCreatedAt());
 
@@ -147,5 +150,12 @@ public class LoginActivity extends Activity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    public void button3_OnClick(View view) {
+        GroupManager gm = (GroupManager) Services.GetService(GroupManager.class);
+        String stam = gm.stam();
+        Button b = (Button) findViewById(R.id.button3);
+        b.setText(stam);
     }
 }

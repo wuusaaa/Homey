@@ -5,23 +5,10 @@ package app.logic.managers;
  * A singleton to set all the environment variables
  */
 
-public class EnvironmentManager {
+public class EnvironmentManager extends ManagerBase {
 
-    private EnvironmentManager() {}
-
-
-    // Instance holder
-    private static class EnvironmentManagerHolder {
-        public static final EnvironmentManager INSTANCE = new EnvironmentManager();
-        private EnvironmentManagerHolder() {}
-    }
-
-    /**
-     * provide the instance of this class
-     * @return EnvironmentManager
-     */
-    public static EnvironmentManager GetInstance() {
-        return EnvironmentManagerHolder.INSTANCE;
+    public EnvironmentManager() {
+        super();
     }
 
     // Server user login url
@@ -46,17 +33,19 @@ public class EnvironmentManager {
 
     /**
      * getter for the LoginURL
+     *
      * @return String
      */
-    public String GetLoginURL(){
+    public String GetLoginURL() {
         return LoginURL;
     }
 
     /**
      * getter for the registrationURL
+     *
      * @return String
      */
-    public String GetRegistrationURL(){
+    public String GetRegistrationURL() {
         return registrationURL;
     }
 
@@ -80,6 +69,7 @@ public class EnvironmentManager {
 
     /**
      * getter for the GetAPIPassResetURL
+     *
      * @return String
      */
     public String GetAPIPassResetURL() {
@@ -88,6 +78,7 @@ public class EnvironmentManager {
 
     /**
      * getter for the GetAPIAddTaskURL
+     *
      * @return String
      */
     public String GetAPIAddTaskURL() {
@@ -96,6 +87,7 @@ public class EnvironmentManager {
 
     /**
      * getter for the GetAPIAddGroupURL
+     *
      * @return String
      */
     public String GetAPIAddGroupURL() {
@@ -104,6 +96,7 @@ public class EnvironmentManager {
 
     /**
      * getter for the GetAPIGetUserURL
+     *
      * @return String
      */
     public String GetAPIGetUserURL() {
@@ -112,6 +105,7 @@ public class EnvironmentManager {
 
     /**
      * getter for the GetAPIGetGroupURL
+     *
      * @return String
      */
     public String GetAPIGetGroupURL() {

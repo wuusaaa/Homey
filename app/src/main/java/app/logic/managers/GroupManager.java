@@ -3,8 +3,6 @@ package app.logic.managers;
 import java.util.ArrayList;
 
 import app.logic.lib.Group;
-import callback.GroupsCallBack;
-import db.DBManager;
 
 /**
  * Created by barakm on 09/03/2017.
@@ -12,23 +10,10 @@ import db.DBManager;
 
 public class GroupManager extends ManagerBase {
 
-
     private ArrayList<Group> groupsList;
 
     public GroupManager() {
-        DBManager dbManager = (DBManager) Services.GetInstance().GetService(DBManager.GetClass());
-        dbManager.GetUserGroups(0, new GroupsCallBack() {
-            @Override
-            public void onSuccess(ArrayList<Group> groups) {
-                groupsList = groups;
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-                System.out.println(error);
-            }
-        });
+        super();
     }
 
     public int GetHowManyGroups() {
@@ -37,5 +22,9 @@ public class GroupManager extends ManagerBase {
 
     public void AddNewGroup(Group group) {
         groupsList.add(group);
+    }
+
+    public String stam() {
+        return "stam";
     }
 }

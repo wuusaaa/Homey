@@ -15,6 +15,7 @@ import java.util.Map;
 
 import app.AppController;
 import app.logic.managers.EnvironmentManager;
+import app.logic.managers.Services;
 import callback.ServerCallBack;
 
 /**
@@ -38,7 +39,7 @@ public class DBDriver {
         // Tag used to cancel the request
         String tag_string_req = "sql_query";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                EnvironmentManager.GetInstance().GetAPIServerURL(), new Response.Listener<String>() {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIServerURL(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -68,7 +69,7 @@ public class DBDriver {
             protected Map<String, String> getParams() {
                 // Posting parameters to query api
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token", EnvironmentManager.GetInstance().GetServerSecurityToken());
+                params.put("token", ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetServerSecurityToken());
                 params.put("query", query);
 
                 return params;

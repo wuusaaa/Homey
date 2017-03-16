@@ -16,8 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import app.logic.managers.DBManager;
 import callback.ServerCallBack;
-import db.DBManager;
 
 public class TestActivity extends AppCompatActivity {
 

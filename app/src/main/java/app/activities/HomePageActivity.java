@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.project.homey.R;
 
+import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 
 
@@ -28,7 +29,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         plusButton = (Button) findViewById(R.id.buttonPlus);
         txt = (TextView) findViewById(R.id.textView11);
-        txt.setText("Welcome " + SessionManager.GetInstance().getUser().getName());
+        txt.setText("Welcome " + ((SessionManager) (Services.GetService(SessionManager.class))).getUser().getName());
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
