@@ -33,7 +33,7 @@ public class EnvironmentManager {
 
     private final String APIPassResetURL = "https://www.crossword-clues.com/homey/forgot.php";
 
-    private final String APIAddTaskURL = "https://www.crossword-clues.com/homey/add-app.task.php";
+    private final String APIAddTaskURL = "https://www.crossword-clues.com/homey/add-task.php";
 
     private final String APIAddGroupURL = "https://www.crossword-clues.com/homey/add-group.php";
 

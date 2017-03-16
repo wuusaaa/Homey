@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.project.homey.R;
@@ -15,6 +17,7 @@ import app.logic.managers.SessionManager;
 
 public class HomePageActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    Button plusButton;
 
     private TextView txt;
 
@@ -23,8 +26,17 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        plusButton = (Button) findViewById(R.id.buttonPlus);
         txt = (TextView) findViewById(R.id.textView11);
         txt.setText("Welcome " + SessionManager.GetInstance().getUser().getName());
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, PlusActivity.class);
+                startActivity(intent);
+            }
+        });
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

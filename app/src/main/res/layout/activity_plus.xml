@@ -23,6 +23,25 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:text="add group" />
+
+    <Button
+        android:id="@+id/buttonAddTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.23"
+        android:text="add task" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:text="add BLA" />
+
     <LinearLayout
         android:id="@string/body"
         android:orientation="vertical"
@@ -31,6 +50,7 @@
         android:layout_weight="9">
 
     </LinearLayout>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"

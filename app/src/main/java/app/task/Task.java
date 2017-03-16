@@ -16,6 +16,16 @@ public class Task {
     private Date startTime;
     private Date endTime;
 
+    public Task(String name, String description, String status, String location, int creatorId, Date startTime, Date endTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.location = location;
+        this.creatorId = creatorId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public String GetName() {
         return name;
     }

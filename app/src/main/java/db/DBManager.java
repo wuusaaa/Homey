@@ -277,11 +277,11 @@ public class DBManager extends ManagerBase {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", task.GetName());
                 params.put("description", task.GetDescription());
-                params.put("status", task.GetStatus());
                 params.put("creator_id", task.GetCreatorId() + "");
+                params.put("status", task.GetStatus());
                 params.put("location", task.GetLocation());
-                params.put("start_time", task.GetStartTime().toString());
-                params.put("end_time", task.GetEndTime().toString());
+                params.put("start_time", new java.sql.Date(task.GetStartTime().getTime()).toString());
+                params.put("end_time", new java.sql.Date(task.GetEndTime().getTime()).toString());
 
                 return params;
             }
