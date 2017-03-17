@@ -13,7 +13,6 @@ import com.project.homey.R;
 
 import app.logic.lib.User;
 import app.logic.managers.DBManager;
-import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
@@ -150,12 +149,5 @@ public class LoginActivity extends Activity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
-    }
-
-    public void button3_OnClick(View view) {
-        GroupManager gm = (GroupManager) Services.GetService(GroupManager.class);
-        String stam = gm.stam();
-        Button b = (Button) findViewById(R.id.button3);
-        b.setText(stam);
     }
 }

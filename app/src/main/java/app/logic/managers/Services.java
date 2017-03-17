@@ -1,5 +1,6 @@
 package app.logic.managers;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
 /**
@@ -19,21 +20,16 @@ public class Services {
     }
 
     public static ManagerBase GetService(Class type) {
-        if (!initiated) {
-            initialManagers();
-            initiated = true;
+        //checks if the type is a subclass of ManagerBase and if the map doesnt contain the key.
+        if ((ManagerBase.class.isAssignableFrom(type)) && !services.containsKey(type)) {
+            Constructor ctor = type.getDeclaredConstructors()[0];
+            try {
+                ctor.newInstance();
+            } catch (Exception e) { //TODO: Handle the exception?
+                e.printStackTrace();
+            }
         }
 
         return services.get(type);
     }
-
-    private static void initialManagers() {
-        new AppManager();
-        new SessionManager();
-        new GroupManager();
-        new EnvironmentManager();
-        new TaskManager();
-        new DBManager();
-    }
-
 }
