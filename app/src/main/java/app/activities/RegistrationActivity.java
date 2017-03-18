@@ -105,7 +105,7 @@ public class RegistrationActivity extends Activity {
         pDialog.setMessage("Registering ...");
         showDialog();
 
-        new DBManager().RegisterUser(name, email, password, new UserCallBack() {
+        ((DBManager) (Services.GetService(DBManager.class))).RegisterUser(name, email, password, new UserCallBack() {
             @Override
             public void onSuccess(User user) {
                 hideDialog();

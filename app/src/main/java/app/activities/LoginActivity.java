@@ -108,7 +108,7 @@ public class LoginActivity extends Activity {
         showDialog();
 
         //TODO  DBManager
-        new DBManager().Login(email, password, new UserCallBack() {
+        ((DBManager) (Services.GetService(DBManager.class))).Login(email, password, new UserCallBack() {
             @Override
             public void onSuccess(User user) {
                 // user successfully logged in
@@ -150,4 +150,5 @@ public class LoginActivity extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
 }

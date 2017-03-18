@@ -17,7 +17,7 @@ public class GroupManagerTests {
 
     @Before
     public void BeforeTest() {
-        groupManager = new GroupManager();
+        //groupManager = new GroupManager();
     }
 
     @Test

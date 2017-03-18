@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.util.Date;
 
 import app.logic.managers.DBManager;
+import app.logic.managers.Services;
 import app.task.Task;
 import callback.ServerCallBack;
 
@@ -44,7 +45,7 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Task task = new Task(editTextName.getText().toString(), editTextDesc.getText().toString(), editTextStatus.getText().toString(), editTextLocation.getText().toString(), 5, new Date(editTextStart.getText().toString()), new Date(editTextEnd.getText().toString()));
-                new DBManager().AddTask(task, new ServerCallBack() {
+                ((DBManager) (Services.GetService(DBManager.class))).AddTask(task, new ServerCallBack() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         try {

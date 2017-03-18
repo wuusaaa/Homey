@@ -13,6 +13,7 @@ import com.project.homey.R;
 import org.json.JSONObject;
 
 import app.logic.managers.DBManager;
+import app.logic.managers.Services;
 import callback.ServerCallBack;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         resetPassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DBManager().ResetPassword(emailEditText.getText().toString(), new ServerCallBack() {
+                ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(emailEditText.getText().toString(), new ServerCallBack() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         hideDialog();

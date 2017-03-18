@@ -1,6 +1,6 @@
 package app.logic.lib;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by Raz on 2/22/2017.
@@ -10,13 +10,12 @@ public class Group {
 
     private int id;
     private String name;
-    private Date created;
+    private long created;
     private byte[] img;
 
-    public Group(int id,String name, Date created, byte[] img){
-        this.id = id;
-        this.created = created;
-        this.img = img;
+    public Group(String name) {
+        this.name = name;
+        this.created = Calendar.getInstance().getTime().getTime();
     }
 
     public int GetId() {
@@ -35,11 +34,11 @@ public class Group {
         this.name = name;
     }
 
-    public Date GetCreated() {
+    public long GetCreated() {
         return created;
     }
 
-    public void SetCreated(Date created) {
+    public void SetCreated(long created) {
         this.created = created;
     }
 

@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.logic.managers.DBManager;
+import app.logic.managers.Services;
 import callback.ServerCallBack;
 
 public class TestActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class TestActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DBManager().test(new ServerCallBack() {
+                ((DBManager) (Services.GetService(DBManager.class))).test(new ServerCallBack() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         try {

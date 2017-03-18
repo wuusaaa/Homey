@@ -29,7 +29,8 @@
         <activity android:name="app.activities.ProfileActivity" />
         <activity android:name="app.activities.AddTaskActivity" />
         <activity android:name="app.activities.SettingsActivity" />
-        <activity android:name="app.activities.ForgotPasswordActivity"></activity>
+        <activity android:name="app.activities.ForgotPasswordActivity" />
+        <activity android:name="app.activities.AddGroupActivity"></activity>
     </application>
 
 </manifest>

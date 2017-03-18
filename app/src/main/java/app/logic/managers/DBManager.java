@@ -355,7 +355,7 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void AddGroup(final String name, final byte[] img, final Date created, final GroupCallBack callBack) {
+    public void AddGroup(final String name, final byte[] img, final long created, final GroupCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -371,8 +371,7 @@ public class DBManager extends ManagerBase {
                         String name = jObj.getString("name");
                         String id = jObj.getString("id");
                         byte[] img = jObj.getString("img").getBytes();
-                        Date created = new Date(jObj.getString("created"));
-                        callBack.onSuccess(new Group(Integer.parseInt(id), name, created, img));
+                        callBack.onSuccess(new Group(name));
                     } else {
 
                         // Error occurred while adding a group. Get the error
@@ -399,7 +398,7 @@ public class DBManager extends ManagerBase {
                 // Posting params to adding group url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
-                params.put("created", created.toString());
+                params.put("created", Long.toString(created));
                 params.put("img", img.toString());
 
                 return params;
@@ -432,7 +431,7 @@ public class DBManager extends ManagerBase {
 
                         Date created = new Date(createdStr);
 
-                        Group group = new Group(Integer.parseInt(id), name, created, img.getBytes());
+                        Group group = new Group(name);
 
                         callBack.onSuccess(group);
 
