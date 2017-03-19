@@ -18,6 +18,7 @@ import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.task.Task;
 import callback.ServerCallBack;
+import callback.TaskCallBack;
 
 public class AddTaskActivity extends AppCompatActivity {
 
@@ -45,14 +46,10 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Task task = new Task(editTextName.getText().toString(), editTextDesc.getText().toString(), editTextStatus.getText().toString(), editTextLocation.getText().toString(), 5, new Date(editTextStart.getText().toString()), new Date(editTextEnd.getText().toString()));
-                ((DBManager) (Services.GetService(DBManager.class))).AddTask(task, new ServerCallBack() {
+                ((DBManager) (Services.GetService(DBManager.class))).AddTask(editTextName.getText().toString(), editTextDesc.getText().toString(),5, editTextStatus.getText().toString(), editTextLocation.getText().toString(), new Date(editTextStart.getText().toString()), new Date(editTextEnd.getText().toString()), new TaskCallBack() {
                     @Override
-                    public void onSuccess(JSONObject result) {
-                        try {
-                            Toast.makeText(AddTaskActivity.this, result.getString("res").toString(), Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onSuccess(Task result) {
+                            Toast.makeText(AddTaskActivity.this, "Task added!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

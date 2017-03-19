@@ -19,6 +19,7 @@ import app.task.Task;
 import callback.GroupCallBack;
 import callback.GroupsCallBack;
 import callback.ServerCallBack;
+import callback.TaskCallBack;
 import callback.TasksCallBack;
 import callback.UserCallBack;
 import db.DBDriver;
@@ -239,7 +240,7 @@ public class DBManager extends ManagerBase {
 
     }
 
-    public void AddTask(final Task task, final ServerCallBack callBack) {
+    public void AddTask(final String name, final String description, final int creatorId, final String status, final String location, final Date startTime, final Date endTime, final TaskCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_task";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -252,7 +253,15 @@ public class DBManager extends ManagerBase {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {// Task successfully stored in MySQL
-                        callBack.onSuccess(new JSONObject().put("res", "OK"));
+                        String name = jObj.getString("name");
+                        String id = jObj.getString("id");
+                        String description = jObj.getString("description");
+                        String creatorId = jObj.getString("creator_id");
+                        String status = jObj.getString("status");
+                        String location = jObj.getString("location");
+                        Date startTime = new Date(jObj.getString("start_time"));
+                        Date endTime = new Date(jObj.getString("end_time"));
+                        callBack.onSuccess(new Task(name,description,status,location,Integer.parseInt(creatorId),startTime,endTime));
                     } else {
 
                         // Error occurred while adding a app.task. Get the error
@@ -278,13 +287,13 @@ public class DBManager extends ManagerBase {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", task.GetName());
-                params.put("description", task.GetDescription());
-                params.put("creator_id", task.GetCreatorId() + "");
-                params.put("status", task.GetStatus());
-                params.put("location", task.GetLocation());
-                params.put("start_time", new java.sql.Date(task.GetStartTime().getTime()).toString());
-                params.put("end_time", new java.sql.Date(task.GetEndTime().getTime()).toString());
+                params.put("name", name);
+                params.put("description", description);
+                params.put("creator_id", creatorId + "");
+                params.put("status", status);
+                params.put("location", location);
+                params.put("start_time", new java.sql.Date(startTime.getTime()).toString());
+                params.put("end_time", new java.sql.Date(endTime.getTime()).toString());
 
                 return params;
             }
