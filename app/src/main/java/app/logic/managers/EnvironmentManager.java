@@ -40,6 +40,7 @@ public class EnvironmentManager extends ManagerBase {
         return LoginURL;
     }
 
+
     /**
      * getter for the registrationURL
      *

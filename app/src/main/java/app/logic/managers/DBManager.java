@@ -8,6 +8,8 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -260,12 +262,13 @@ public class DBManager extends ManagerBase {
                         String creatorId = jObj.getString("creator_id");
                         String status = jObj.getString("status");
                         String location = jObj.getString("location");
-                        Date startTime = new Date(jObj.getString("start_time"));
-                        Date endTime = new Date(jObj.getString("end_time"));
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date startTime = dateFormat.parse(jObj.getString("start_time"));
+                        Date endTime = dateFormat.parse(jObj.getString("end_time"));
                         callBack.onSuccess(new Task(name, description, status, location, Integer.parseInt(creatorId), startTime, endTime));
                     } else {
 
-                        // Error occurred while adding a app.task. Get the error
+                        // Error occurred while adding a task. Get the error
                         // message
                         String errorMsg = jObj.getString("error_msg");
                         callBack.onFailure(errorMsg);
@@ -273,6 +276,9 @@ public class DBManager extends ManagerBase {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("PARSE ERROR");
                 }
 
             }
@@ -293,8 +299,8 @@ public class DBManager extends ManagerBase {
                 params.put("creator_id", creatorId + "");
                 params.put("status", status);
                 params.put("location", location);
-                params.put("start_time", new java.sql.Date(startTime.getTime()).toString());
-                params.put("end_time", new java.sql.Date(endTime.getTime()).toString());
+                params.put("start_time", new java.sql.Timestamp(startTime.getTime()).toString());
+                params.put("end_time", new java.sql.Timestamp(endTime.getTime()).toString());
 
                 return params;
             }
@@ -408,7 +414,7 @@ public class DBManager extends ManagerBase {
                 // Posting params to adding group url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
-                params.put("created", Long.toString(new Date().getTime()));
+                params.put("created", new java.sql.Timestamp(new Date().getTime()).toString());
                 params.put("img", Arrays.toString(img));
 
                 return params;
