@@ -92,9 +92,9 @@ public class LoginActivity extends Activity {
         linkToRegisterButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
+                Intent intent = new Intent(getApplicationContext(),
                         RegistrationActivity.class);
-                startActivity(i);
+                startActivity(intent);
                 finish();
             }
         });

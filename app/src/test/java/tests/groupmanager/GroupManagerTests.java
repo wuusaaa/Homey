@@ -1,9 +1,6 @@
 package tests.groupmanager;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
-import org.junit.Test;
 
 import app.logic.managers.GroupManager;
 
@@ -20,11 +17,11 @@ public class GroupManagerTests {
         //groupManager = new GroupManager();
     }
 
-    @Test
-    public void AddGroupToListTest() {
-        int howManyGroups = groupManager.GetHowManyGroups();
-        Assert.assertEquals("Number of group is not as expected", groupManager.GetHowManyGroups(), howManyGroups + 1);
-    }
+//    @Test
+//    public void AddGroupToListTest() {
+//        int howManyGroups = groupManager.GetHowManyGroups();
+//        Assert.assertEquals("Number of group is not as expected", groupManager.GetHowManyGroups(), howManyGroups + 1);
+//    }
 
 //    @Test
 //    public void DeleteGroupFromListTest(){

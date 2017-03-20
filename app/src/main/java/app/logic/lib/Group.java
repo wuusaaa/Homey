@@ -8,45 +8,31 @@ import java.util.Calendar;
 
 public class Group {
 
-    private int id;
-    private String name;
+    private final String id;
+    private final String name;
     private long created;
     private byte[] img;
 
-    public Group(String name) {
+    public Group(String id, String name, byte[] img) {
+        this.id = id;
         this.name = name;
+        this.img = img;
         this.created = Calendar.getInstance().getTime().getTime();
     }
 
-    public int GetId() {
+    public String getId() {
         return id;
     }
 
-    public void SetId(int id) {
-        this.id = id;
-    }
-
-    public String GetName() {
+    public String getName() {
         return name;
     }
 
-    public void SetName(String name) {
-        this.name = name;
-    }
-
-    public long GetCreated() {
+    public long getCreated() {
         return created;
     }
 
-    public void SetCreated(long created) {
-        this.created = created;
-    }
-
-    public byte[] GetImg() {
+    public byte[] getImg() {
         return img;
-    }
-
-    public void SetImg(byte[] img) {
-        this.img = img;
     }
 }

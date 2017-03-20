@@ -24,7 +24,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonAddGroup"
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:text="add group" />
@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
-        android:layout_height="33dp"
+        android:layout_height="wrap_content"
         android:text="add BLA" />
 
     <LinearLayout

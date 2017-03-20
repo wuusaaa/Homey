@@ -24,8 +24,7 @@ public class AddGroupActivity extends AppCompatActivity {
     public void buttonAddGroup_onClick(View view) {
         GroupManager groupManager = (GroupManager) Services.GetService(GroupManager.class);
         String name = ((EditText) findViewById(R.id.editTextName)).getText().toString();
-        Group group = new Group(name);
-        groupManager.AddNewGroup(group, new GroupCallBack() {
+        groupManager.AddNewGroup(name, null, new GroupCallBack() {
             @Override
             public void onSuccess(Group group) {
                 ((EditText) findViewById(R.id.editTextName)).setText("blabla");
@@ -33,7 +32,7 @@ public class AddGroupActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-                ((EditText) findViewById(R.id.editTextName)).setText("FAIL");
+                ((EditText) findViewById(R.id.editTextName)).setText(error);
             }
         });
     }

@@ -18,11 +18,12 @@ public class GroupManager extends ManagerBase {
         super();
     }
 
-    public int GetHowManyGroups() {
-        return groupsList.size();
-    }
+//    public int GetHowManyGroups() {
+//        return groupsList.size();
+//    }
 
-    public void AddNewGroup(Group group, GroupCallBack groupCallBack) {
-        dbManager.AddGroup(group.GetName(), null, group.GetCreated(), groupCallBack);
+    public void AddNewGroup(String groupName, byte[] img, GroupCallBack groupCallBack) {
+
+        dbManager.AddGroup(groupName, img, groupCallBack);
     }
 }

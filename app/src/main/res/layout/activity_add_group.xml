@@ -6,15 +6,16 @@
     tools:context="app.activities.AddGroupActivity">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonAddGroupSubmit"
         android:layout_width="262dp"
         android:layout_height="48dp"
-        android:text="Add Group"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="427dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp" />
+        android:layout_marginBottom="54dp"
+        android:onClick="buttonAddGroup_onClick"
+        android:text="Add Group"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="427dp" />
 
     <EditText
         android:id="@+id/editTextImg"

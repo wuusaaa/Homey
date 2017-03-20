@@ -27,5 +27,15 @@ public class PlusActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        addGroupButton = (Button) findViewById(R.id.buttonAddGroup);
+
+        addGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlusActivity.this, AddGroupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -8,6 +8,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -261,7 +262,7 @@ public class DBManager extends ManagerBase {
                         String location = jObj.getString("location");
                         Date startTime = new Date(jObj.getString("start_time"));
                         Date endTime = new Date(jObj.getString("end_time"));
-                        callBack.onSuccess(new Task(name,description,status,location,Integer.parseInt(creatorId),startTime,endTime));
+                        callBack.onSuccess(new Task(name, description, status, location, Integer.parseInt(creatorId), startTime, endTime));
                     } else {
 
                         // Error occurred while adding a app.task. Get the error
@@ -364,7 +365,7 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void AddGroup(final String name, final byte[] img, final long created, final GroupCallBack callBack) {
+    public void AddGroup(final String name, final byte[] img, final GroupCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -380,7 +381,7 @@ public class DBManager extends ManagerBase {
                         String name = jObj.getString("name");
                         String id = jObj.getString("id");
                         byte[] img = jObj.getString("img").getBytes();
-                        callBack.onSuccess(new Group(name));
+                        callBack.onSuccess(new Group(id, name, img));
                     } else {
 
                         // Error occurred while adding a group. Get the error
@@ -407,8 +408,8 @@ public class DBManager extends ManagerBase {
                 // Posting params to adding group url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
-                params.put("created", Long.toString(created));
-                params.put("img", img.toString());
+                params.put("created", Long.toString(new Date().getTime()));
+                params.put("img", Arrays.toString(img));
 
                 return params;
             }
@@ -436,11 +437,11 @@ public class DBManager extends ManagerBase {
                         String id = jObj.getString("id");
                         String name = jObj.getString("name");
                         String createdStr = jObj.getString("created");
-                        String img = jObj.getString("img");
+                        byte[] img = jObj.getString("img").getBytes();
 
                         Date created = new Date(createdStr);
 
-                        Group group = new Group(name);
+                        Group group = new Group(id, name, img);
 
                         callBack.onSuccess(group);
 
