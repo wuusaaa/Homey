@@ -20,6 +20,7 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
+        //Todo: An example only!!! Need to be deleted.
         ScrollWithItems horizontalScrollView = (ScrollWithItems) findViewById(R.id.HSV);
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
