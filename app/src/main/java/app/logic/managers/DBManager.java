@@ -16,9 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.AppController;
-import app.logic.lib.Group;
-import app.logic.lib.User;
-import app.task.Task;
+import app.logic.appcomponents.Group;
+import app.logic.appcomponents.Task;
+import app.logic.appcomponents.User;
 import callback.GroupCallBack;
 import callback.GroupsCallBack;
 import callback.ServerCallBack;

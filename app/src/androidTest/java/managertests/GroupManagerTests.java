@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import app.logic.lib.Group;
+import app.logic.appcomponents.Group;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import callback.GroupCallBack;
@@ -39,8 +39,11 @@ public class GroupManagerTests extends TestBase {
             }
         });
         TimeUtils.Wait();
-        Assert.assertNotEquals("Number of group is not as expected", newGroup, null);
+        Assert.assertNotEquals("Group has not created", newGroup, null);
+    }
 
+    @Test
+    public void GetExistingGroup() {
     }
 
 }

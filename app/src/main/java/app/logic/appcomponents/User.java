@@ -1,4 +1,4 @@
-package app.logic.lib;
+package app.logic.appcomponents;
 
 /**
  * Created by Raz on 12/20/2016.

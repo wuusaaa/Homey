@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.project.homey.R;
 
-import app.logic.lib.Group;
+import app.logic.appcomponents.Group;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import callback.GroupCallBack;

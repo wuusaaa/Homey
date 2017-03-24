@@ -11,7 +11,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-import app.logic.lib.User;
+import app.logic.appcomponents.User;
 import db.SQLiteHandler;
 
 public class SessionManager extends ManagerBase {
@@ -20,9 +20,9 @@ public class SessionManager extends ManagerBase {
         super();
     }
 
-    public void set_context(Context _context) {
-        this._context = _context;
-        this.pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+    public void setContext(Context context) {
+        this.context = context;
+        this.pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         this.editor = pref.edit();
     }
 
@@ -42,7 +42,7 @@ public class SessionManager extends ManagerBase {
     private SharedPreferences pref;
 
     private Editor editor;
-    private Context _context;
+    private Context context;
 
     // Shared pref mode
     int PRIVATE_MODE = 0;
@@ -66,7 +66,7 @@ public class SessionManager extends ManagerBase {
         boolean res = pref.getBoolean(KEY_IS_LOGGEDIN, false);
 
         if (res && user == null) {
-            SQLiteHandler db = new SQLiteHandler(_context);
+            SQLiteHandler db = new SQLiteHandler(context);
             HashMap<String, String> userCred = db.getUserDetails();
             user = new User(userCred.get("name"), userCred.get("email"), userCred.get("uid"), userCred.get("created_at"));
         }

@@ -1,6 +1,6 @@
 package callback;
 
-import app.logic.lib.User;
+import app.logic.appcomponents.User;
 
 /**
  * Created by razze on 27/02/2017.

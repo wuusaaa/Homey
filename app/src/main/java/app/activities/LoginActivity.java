@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.project.homey.R;
 
-import app.logic.lib.User;
+import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        ((SessionManager) (Services.GetService(SessionManager.class))).set_context(getApplicationContext());
+        ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
 
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());

@@ -2,7 +2,7 @@ package callback;
 
 import java.util.ArrayList;
 
-import app.logic.lib.User;
+import app.logic.appcomponents.User;
 
 /**
  * Created by razze on 09/03/2017.

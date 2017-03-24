@@ -2,8 +2,9 @@ package app.logic.managers;
 
 import java.util.ArrayList;
 
-import app.logic.lib.Group;
+import app.logic.appcomponents.Group;
 import callback.GroupCallBack;
+import callback.GroupsCallBack;
 
 /**
  * Created by barakm on 09/03/2017.
@@ -18,12 +19,16 @@ public class GroupManager extends ManagerBase {
         super();
     }
 
-//    public int GetHowManyGroups() {
-//        return groupsList.size();
-//    }
-
     public void AddNewGroup(String groupName, byte[] img, GroupCallBack groupCallBack) {
-
         dbManager.AddGroup(groupName, img, groupCallBack);
+    }
+
+    public void GetUserGroups(GroupsCallBack groupsCallBack) {
+        //dbManager.GetUserGroups(Integer.parseInt(((SessionManager) Services.GetService(SessionManager.class)).getUser().getUid()),groupsCallBack);
+        ArrayList<Group> groups = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            groups.add(new Group(String.valueOf(i), String.format("example%s", i), null));
+        }
+        groupsCallBack.onSuccess(groups);
     }
 }

@@ -11,9 +11,9 @@ import com.project.homey.R;
 
 import java.util.Date;
 
+import app.logic.appcomponents.Task;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
-import app.task.Task;
 import callback.TaskCallBack;
 
 public class AddTaskActivity extends AppCompatActivity {

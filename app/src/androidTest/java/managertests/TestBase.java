@@ -5,7 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
-import app.logic.lib.User;
+import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import callback.UserCallBack;
@@ -16,7 +16,6 @@ import callback.UserCallBack;
 
 @RunWith(AndroidJUnit4.class)
 public abstract class TestBase {
-//    protected boolean isAsyncCallFinished = false;
 
     @Before
     public void BeforeTest() {

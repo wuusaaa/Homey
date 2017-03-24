@@ -1,6 +1,6 @@
 package callback;
 
-import app.task.Task;
+import app.logic.appcomponents.Task;
 
 /**
  * Created by razze on 09/03/2017.

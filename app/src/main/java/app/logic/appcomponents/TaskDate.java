@@ -1,4 +1,4 @@
-package app.task;
+package app.logic.appcomponents;
 
 import android.location.Location;
 

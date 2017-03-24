@@ -8,12 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.project.homey.R;
 
+import java.util.ArrayList;
+
+import app.logic.appcomponents.Group;
+import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import callback.GroupsCallBack;
 
 
 public class HomePageActivity extends AppCompatActivity {
@@ -63,4 +69,25 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void loadGroups() {
+        ((GroupManager) Services.GetService(GroupManager.class)).GetUserGroups(new GroupsCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Group> groups) {
+                groups.stream().forEach(group -> {
+                    ImageButton imageButton = new ImageButton(getApplicationContext());
+
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+    }
+
+
 }
+
+

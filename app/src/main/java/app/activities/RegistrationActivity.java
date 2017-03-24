@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.project.homey.R;
 
-import app.logic.lib.User;
+import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;

@@ -1,12 +1,14 @@
-package app.logic.lib;
+package app.logic.appcomponents;
 
 import java.util.Calendar;
+
+import app.logic.IItem;
 
 /**
  * Created by Raz on 2/22/2017.
  */
 
-public class Group {
+public class Group implements IItem {
 
     private final String id;
     private final String name;
@@ -24,7 +26,7 @@ public class Group {
         return id;
     }
 
-    public String getName() {
+    public String GetName() {
         return name;
     }
 

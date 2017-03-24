@@ -1,12 +1,14 @@
-package app.task;
+package app.logic.appcomponents;
 
 import java.util.Date;
+
+import app.logic.IItem;
 
 /**
  * Created by Raz on 12/20/2016.
  */
 
-public class Task {
+public class Task implements IItem {
 
     private String name;
     private String description;
