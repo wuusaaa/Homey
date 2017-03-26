@@ -2,13 +2,13 @@ package app.logic.appcomponents;
 
 import java.util.Date;
 
-import app.logic.IItem;
+import app.activities.interfaces.IHasText;
 
 /**
  * Created by Raz on 12/20/2016.
  */
 
-public class Task implements IItem {
+public class Task implements IHasText {
 
     private String name;
     private String description;

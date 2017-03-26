@@ -2,13 +2,14 @@ package app.logic.appcomponents;
 
 import java.util.Calendar;
 
-import app.logic.IItem;
+import app.activities.interfaces.IHasImage;
+import app.activities.interfaces.IHasText;
 
 /**
  * Created by Raz on 2/22/2017.
  */
 
-public class Group implements IItem {
+public class Group implements IHasText, IHasImage {
 
     private final String id;
     private final String name;
@@ -34,7 +35,7 @@ public class Group implements IItem {
         return created;
     }
 
-    public byte[] getImg() {
+    public byte[] GetImage() {
         return img;
     }
 }

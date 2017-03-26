@@ -15,16 +15,11 @@ public class GroupManager extends ManagerBase {
     private ArrayList<Group> groupsList;
     private DBManager dbManager = (DBManager) Services.GetService(DBManager.class);
 
-    public GroupManager() {
-        super();
-    }
-
     public void AddNewGroup(String groupName, byte[] img, GroupCallBack groupCallBack) {
         dbManager.AddGroup(groupName, img, groupCallBack);
     }
 
     public void GetUserGroups(GroupsCallBack groupsCallBack) {
-        //dbManager.GetUserGroups(Integer.parseInt(((SessionManager) Services.GetService(SessionManager.class)).getUser().getUid()),groupsCallBack);
         ArrayList<Group> groups = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
             groups.add(new Group(String.valueOf(i), String.format("example%s", i), null));

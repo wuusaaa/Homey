@@ -49,94 +49,25 @@
 
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/Tasks"
+        <app.customcomponents.ScrollVerticalWithItems
+            android:id="@+id/TasksHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.00">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="start" />
 
-            <LinearLayout
-                android:id="@+id/TasksHolder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/task1"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task1" />
-
-                <TextView
-                    android:id="@+id/task2"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task2" />
-
-                <TextView
-                    android:id="@+id/task3"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task3" />
-
-                <TextView
-                    android:id="@+id/task4"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task4" />
-
-                <TextView
-                    android:id="@+id/task5"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task5" />
-
-                <TextView
-                    android:id="@+id/task6"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task6" />
-
-                <TextView
-                    android:id="@+id/task7"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task7" />
-
-                <TextView
-                    android:id="@+id/task8"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:text="task8" />
-            </LinearLayout>
-        </ScrollView>
-
-        <HorizontalScrollView
-            android:id="@+id/Groups"
+        <app.customcomponents.ScrollHorizontalWithItems
+            android:id="@+id/GroupsHolder"
             android:layout_width="match_parent"
-            android:layout_height="87dp">
-
-            <LinearLayout
-                android:id="@+id/GroupsHolder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/Group2"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:contextClickable="false"
-                    app:srcCompat="@drawable/ic_action_assignment" />
-            </LinearLayout>
-        </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:itemBackground="@color/colorPrimary"
+            app:itemBackground="@color/Transparent"
             app:itemIconTint="@color/color_states"
             app:itemTextColor="@color/colorGray"
             app:menu="@menu/buttons_menu" />
