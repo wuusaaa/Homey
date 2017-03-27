@@ -35,10 +35,6 @@ import db.DBDriver;
 
 public class DBManager extends ManagerBase {
 
-    public DBManager() {
-        super();
-    }
-
     private DBDriver driver = new DBDriver();
 
     public void Login(final String email, final String password, final UserCallBack callBack) {
@@ -258,15 +254,15 @@ public class DBManager extends ManagerBase {
                     boolean error = jObj.getBoolean("error");
                     if (!error) {// Task successfully stored in MySQL
                         String name = jObj.getString("name");
-                        String id = jObj.getString("id");
+                        int id = jObj.getInt("id");
                         String description = jObj.getString("description");
-                        String creatorId = jObj.getString("creator_id");
+                        int creatorId = jObj.getInt("creator_id");
                         String status = jObj.getString("status");
                         String location = jObj.getString("location");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date startTime = dateFormat.parse(jObj.getString("start_time"));
                         Date endTime = dateFormat.parse(jObj.getString("end_time"));
-                        callBack.onSuccess(new Task(name, description, status, location, Integer.parseInt(creatorId), startTime, endTime));
+                        callBack.onSuccess(new Task(name, description, status, location, creatorId, startTime, endTime));
                     } else {
 
                         // Error occurred while adding a task. Get the error
@@ -326,13 +322,13 @@ public class DBManager extends ManagerBase {
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
                         // User successfully pulled from MySQL
-                        String uid = jObj.getString("uid");
+                        int id = jObj.getInt("uid");
                         JSONObject userObj = jObj.getJSONObject("user");
                         String name = userObj.getString("name");
                         String email = userObj.getString("email");
                         String created_at = userObj.getString("created_at");
 
-                        User user = new User(name, email, created_at, Integer.parseInt(uid));
+                        User user = new User(name, email, created_at, id);
 
                         callBack.onSuccess(user);
 
