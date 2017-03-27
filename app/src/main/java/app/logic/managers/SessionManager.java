@@ -68,7 +68,7 @@ public class SessionManager extends ManagerBase {
         if (res && user == null) {
             SQLiteHandler db = new SQLiteHandler(context);
             HashMap<String, String> userCred = db.getUserDetails();
-            user = new User(userCred.get("name"), userCred.get("email"), userCred.get("uid"), userCred.get("created_at"));
+            user = new User(userCred.get("name"), userCred.get("email"), userCred.get("created_at"), Integer.parseInt(userCred.get("uid")));
         }
 
         return res;

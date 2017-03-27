@@ -118,7 +118,7 @@ public class LoginActivity extends Activity {
 
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
 
-                db.addUser(user.getName(), user.getEmail(), user.getUid(), user.getCreatedAt());
+                db.addUser(user.getName(), user.getEmail(), user.getUid() + "", user.getCreatedAt());
 
                 hideDialog();
 

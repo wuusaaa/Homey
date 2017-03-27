@@ -5,11 +5,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,15 +58,14 @@ public class DBManager extends ManagerBase {
                     if (!error) {
 
                         // Now store the user in SQLite
-                        String uid = jObj.getString("uid");
-
                         JSONObject userObj = jObj.getJSONObject("user");
+                        String id = userObj.getString("id");
                         String name = userObj.getString("name");
                         String email = userObj.getString("email");
                         String created_at = userObj.getString("created_at");
 
                         // Inserting row in users table
-                        User user = new User(name, email, uid, created_at);
+                        User user = new User(name, email, created_at, Integer.parseInt(id));
 
                         callBack.onSuccess(user);
                     } else {
@@ -130,7 +131,7 @@ public class DBManager extends ManagerBase {
                         String created_at = userObj
                                 .getString("created_at");
 
-                        User user = new User(name, email, uid, created_at);
+                        User user = new User(name, email, created_at, Integer.parseInt(uid));
 
                         callBack.onSuccess(user);
 
@@ -331,7 +332,7 @@ public class DBManager extends ManagerBase {
                         String email = userObj.getString("email");
                         String created_at = userObj.getString("created_at");
 
-                        User user = new User(name, email, uid, created_at);
+                        User user = new User(name, email, created_at, Integer.parseInt(uid));
 
                         callBack.onSuccess(user);
 
@@ -371,7 +372,7 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void AddGroup(final String name, final byte[] img, final GroupCallBack callBack) {
+    public void AddGroup(final int creatorId, final String name, final byte[] img, final GroupCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -414,6 +415,7 @@ public class DBManager extends ManagerBase {
                 // Posting params to adding group url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
+                params.put("creator_id", creatorId + "");
                 params.put("created", new java.sql.Timestamp(new Date().getTime()).toString());
                 params.put("img", Arrays.toString(img));
 
@@ -495,8 +497,70 @@ public class DBManager extends ManagerBase {
 
     }
 
-    public void GetUserGroups(final int groupId, final GroupsCallBack callBack) {
+    public void GetUserGroups(final int userId, final GroupsCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_user_groups";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetUserGroupsURL(), new Response.Listener<String>() {
 
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<Group> groups = new ArrayList<Group>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            String id = jObj.getString("id");
+                            String name = jObj.getString("name");
+                            String createdStr = jObj.getString("created");
+                            byte[] img = jObj.getString("img").getBytes();
+
+                            Date created = new Date(createdStr);
+
+                            Group group = new Group(id, name, img);
+
+                            groups.add(group);
+                        }
+                        callBack.onSuccess(groups);
+
+                    } else {
+
+                        // Error occurred in getting groups. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to groups url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", userId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     //TODO delete this when finishing testing

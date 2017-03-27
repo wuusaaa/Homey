@@ -16,7 +16,8 @@ public class GroupManager extends ManagerBase {
     private DBManager dbManager = (DBManager) Services.GetService(DBManager.class);
 
     public void AddNewGroup(String groupName, byte[] img, GroupCallBack groupCallBack) {
-        dbManager.AddGroup(groupName, img, groupCallBack);
+        int creatorId = ((SessionManager) Services.GetService(SessionManager.class)).getUser().getUid();
+        dbManager.AddGroup(creatorId, groupName, img, groupCallBack);
     }
 
     public void GetUserGroups(GroupsCallBack groupsCallBack) {

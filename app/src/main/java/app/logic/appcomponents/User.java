@@ -11,9 +11,9 @@ public class User {
     private String name;
     private String email;
     private String createdAt;
-    private String uid;
+    private int uid;
 
-    public User(String _name, String _email, String _createdAt, String _uid) {
+    public User(String _name, String _email, String _createdAt, int _uid) {
         name = _name;
         email = _email;
         createdAt = _createdAt;
@@ -44,11 +44,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public String getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 

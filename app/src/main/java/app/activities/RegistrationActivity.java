@@ -109,7 +109,7 @@ public class RegistrationActivity extends Activity {
             @Override
             public void onSuccess(User user) {
                 hideDialog();
-                db.addUser(user.getName(), user.getEmail(), user.getUid(), user.getCreatedAt());
+                db.addUser(user.getName(), user.getEmail(), user.getUid() + "", user.getCreatedAt());
 
                 Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
