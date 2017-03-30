@@ -45,7 +45,7 @@ public class SessionManager extends ManagerBase {
     private Context context;
 
     // Shared pref mode
-    int PRIVATE_MODE = 0;
+    private int PRIVATE_MODE = 0;
 
     // Shared preferences file name
     private static final String PREF_NAME = "AndroidHiveLogin";
@@ -67,8 +67,8 @@ public class SessionManager extends ManagerBase {
 
         if (res && user == null) {
             SQLiteHandler db = new SQLiteHandler(context);
-            HashMap<String, String> userCred = db.getUserDetails();
-            user = new User(userCred.get("name"), userCred.get("email"), userCred.get("created_at"), Integer.parseInt(userCred.get("uid")));
+            HashMap<String, String> userDetails = db.getUserDetails();
+            user = new User(userDetails.get("name"), userDetails.get("email"), userDetails.get("created_at"), Integer.parseInt(userDetails.get("uid")));
         }
 
         return res;

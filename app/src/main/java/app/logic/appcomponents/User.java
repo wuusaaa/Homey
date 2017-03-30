@@ -44,7 +44,7 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public int getUid() {
+    public int GetUserId() {
         return uid;
     }
 

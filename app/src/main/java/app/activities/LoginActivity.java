@@ -58,34 +58,27 @@ public class LoginActivity extends Activity {
         }
 
         //forgot password click event
-        forgotPassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),
-                        ForgotPasswordActivity.class);
-                startActivity(intent);
-            }
+        forgotPassButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),
+                    ForgotPasswordActivity.class);
+            startActivity(intent);
         });
 
         // Login button Click Event
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(view -> {
+            String email = inputEmailEditText.getText().toString().trim();
+            String password = inputPasswordEditText.getText().toString().trim();
 
-            public void onClick(View view) {
-                String email = inputEmailEditText.getText().toString().trim();
-                String password = inputPasswordEditText.getText().toString().trim();
-
-                // Check for empty data in the form
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    // login user
-                    checkLogin(email, password);
-                } else {
-                    // Prompt user to enter credentials
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter the credentials!", Toast.LENGTH_LONG)
-                            .show();
-                }
+            // Check for empty data in the form
+            if (!email.isEmpty() && !password.isEmpty()) {
+                // login user
+                checkLogin(email, password);
+            } else {
+                // Prompt user to enter credentials
+                Toast.makeText(getApplicationContext(),
+                        "Please enter the credentials!", Toast.LENGTH_LONG)
+                        .show();
             }
-
         });
 
         // Link to Register Screen
@@ -118,7 +111,7 @@ public class LoginActivity extends Activity {
 
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
 
-                db.addUser(user.getName(), user.getEmail(), user.getUid() + "", user.getCreatedAt());
+                db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt());
 
                 hideDialog();
 

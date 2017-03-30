@@ -250,24 +250,24 @@ public class DBManager extends ManagerBase {
             public void onResponse(String response) {
 
                 try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
                     if (!error) {// Task successfully stored in MySQL
-                        String name = jObj.getString("name");
-                        int id = jObj.getInt("id");
-                        String description = jObj.getString("description");
-                        int creatorId = jObj.getInt("creator_id");
-                        String status = jObj.getString("status");
-                        String location = jObj.getString("location");
+                        String name = jsonObject.getString("name");
+                        int id = jsonObject.getInt("id");
+                        String description = jsonObject.getString("description");
+                        int creatorId = jsonObject.getInt("creator_id");
+                        String status = jsonObject.getString("status");
+                        String location = jsonObject.getString("location");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Date startTime = dateFormat.parse(jObj.getString("start_time"));
-                        Date endTime = dateFormat.parse(jObj.getString("end_time"));
+                        Date startTime = dateFormat.parse(jsonObject.getString("start_time"));
+                        Date endTime = dateFormat.parse(jsonObject.getString("end_time"));
                         callBack.onSuccess(new Task(name, description, status, location, creatorId, startTime, endTime));
                     } else {
 
                         // Error occurred while adding a task. Get the error
                         // message
-                        String errorMsg = jObj.getString("error_msg");
+                        String errorMsg = jsonObject.getString("error_msg");
                         callBack.onFailure(errorMsg);
                     }
                 } catch (JSONException e) {
@@ -329,7 +329,6 @@ public class DBManager extends ManagerBase {
                         String created_at = userObj.getString("created_at");
 
                         User user = new User(name, email, created_at, id);
-
                         callBack.onSuccess(user);
 
                     } else {
