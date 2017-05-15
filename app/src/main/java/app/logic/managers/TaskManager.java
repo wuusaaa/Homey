@@ -14,7 +14,7 @@ public class TaskManager extends ManagerBase {
     public void GetUserTasks(TasksCallBack tasksCallBack) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (int i = 1; i <= 15; i++) {
-            tasks.add(new Task(String.format("example%s", String.valueOf(i)), null, null, null, 0, null, null));
+            tasks.add(new Task(String.format("example%s", String.valueOf(i)), 5, null, null, null, 0, null, null));
         }
         tasksCallBack.onSuccess(tasks);
     }

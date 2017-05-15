@@ -39,12 +39,13 @@ public class AddTaskActivity extends AppCompatActivity {
         editTextEnd = (EditText) findViewById(R.id.editTextTaskEndDate);
         buttonAddTask = (Button) findViewById(R.id.buttonAddTaskToDB);
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
+            //TODO get the correct group id
             @Override
             public void onClick(View v) {
-                Task task = new Task(editTextName.getText().toString(), editTextDesc.getText().toString(), editTextStatus.getText().toString(), editTextLocation.getText().toString(), 5, new Date(editTextStart.getText().toString()), new Date(editTextEnd.getText().toString()));
+                Task task = new Task(editTextName.getText().toString(), 10, editTextDesc.getText().toString(), editTextStatus.getText().toString(), editTextLocation.getText().toString(), 5, new Date(editTextStart.getText().toString()), new Date(editTextEnd.getText().toString()));
                 ((DBManager) (Services.GetService(DBManager.class)))
                         .AddTask(editTextName.getText().toString(),
-                                editTextDesc.getText().toString(), 5,
+                                editTextDesc.getText().toString(), 5, 10,
                                 editTextStatus.getText().toString(),
                                 editTextLocation.getText().toString(),
                                 new Date(editTextStart.getText().toString()),

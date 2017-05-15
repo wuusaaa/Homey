@@ -11,6 +11,7 @@ import app.activities.interfaces.IHasText;
 public class Task implements IHasText {
 
     private String name;
+    private int groupId;
     private String description;
     private String status;
     private String location;
@@ -18,8 +19,9 @@ public class Task implements IHasText {
     private Date startTime;
     private Date endTime;
 
-    public Task(String name, String description, String status, String location, int creatorId, Date startTime, Date endTime) {
+    public Task(String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime) {
         this.name = name;
+        this.groupId = groupId;
         this.description = description;
         this.status = status;
         this.location = location;

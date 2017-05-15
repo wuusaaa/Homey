@@ -30,6 +30,10 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIGetGroupURL = "https://www.crossword-clues.com/homey/get-group.php";
 
+    private final String APIGetTasksByGroupIdURL = "https://www.crossword-clues.com/homey/get-tasks-by-group-id.php";
+
+    private final String APIGetTasksByUserIdURL = "https://www.crossword-clues.com/homey/get-tasks-by-user-id.php";
+
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
 
@@ -122,5 +126,23 @@ public class EnvironmentManager extends ManagerBase {
      */
     public String GetAPIGetUserGroupsURL() {
         return APIGetUserGroupsURL;
+    }
+
+    /**
+     * getter for the GetAPIGetTasksByGroupIdURL
+     *
+     * @return String
+     */
+    public String GetAPIGetTasksByGroupIdURL() {
+        return APIGetTasksByGroupIdURL;
+    }
+
+    /**
+     * getter for the GetAPIGetTasksByUserIdURL
+     *
+     * @return String
+     */
+    public String GetAPIGetTasksByUserIdURL() {
+        return APIGetTasksByUserIdURL;
     }
 }

@@ -240,7 +240,7 @@ public class DBManager extends ManagerBase {
 
     }
 
-    public void AddTask(final String name, final String description, final int creatorId, final String status, final String location, final Date startTime, final Date endTime, final TaskCallBack callBack) {
+    public void AddTask(final String name, final String description, final int creatorId, final int groupId, final String status, final String location, final Date startTime, final Date endTime, final TaskCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_task";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -257,12 +257,13 @@ public class DBManager extends ManagerBase {
                         int id = jsonObject.getInt("id");
                         String description = jsonObject.getString("description");
                         int creatorId = jsonObject.getInt("creator_id");
+                        int groupId = jsonObject.getInt("group_id");
                         String status = jsonObject.getString("status");
                         String location = jsonObject.getString("location");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date startTime = dateFormat.parse(jsonObject.getString("start_time"));
                         Date endTime = dateFormat.parse(jsonObject.getString("end_time"));
-                        callBack.onSuccess(new Task(name, description, status, location, creatorId, startTime, endTime));
+                        callBack.onSuccess(new Task(name, groupId, description, status, location, creatorId, startTime, endTime));
                     } else {
 
                         // Error occurred while adding a task. Get the error
@@ -294,6 +295,7 @@ public class DBManager extends ManagerBase {
                 params.put("name", name);
                 params.put("description", description);
                 params.put("creator_id", creatorId + "");
+                params.put("group_id", groupId + "");
                 params.put("status", status);
                 params.put("location", location);
                 params.put("start_time", new java.sql.Timestamp(startTime.getTime()).toString());
@@ -485,11 +487,148 @@ public class DBManager extends ManagerBase {
     }
 
     public void GetUserTasks(final int userId, final TasksCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_user_tasks";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTasksByUserIdURL(), new Response.Listener<String>() {
 
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<Task> tasks = new ArrayList<Task>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            String id = jObj.getString("id");
+                            int groupId = jObj.getInt("group_id");
+                            String name = jObj.getString("name");
+                            String description = jObj.getString("description");
+                            String status = jObj.getString("status");
+                            int creatorId = jObj.getInt("creator_id");
+                            String location = jObj.getString("location");
+                            String startTimeStr = jObj.getString("start_time");
+                            String endTimeStr = jObj.getString("end_time");
+
+                            Date startTime = new Date(startTimeStr);
+                            Date endTime = new Date(endTimeStr);
+
+                            Task task = new Task(name, groupId, description, status, location, creatorId, startTime, endTime);
+
+                            tasks.add(task);
+                        }
+                        callBack.onSuccess(tasks);
+
+                    } else {
+
+                        // Error occurred in getting tasks. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to tasks url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", userId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void GetGroupTasks(final int groupId, final GroupCallBack callBack) {
+    public void GetGroupTasks(final int groupId, final TasksCallBack callBack) {
 
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_user_tasks_by_group";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTasksByGroupIdURL(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<Task> tasks = new ArrayList<Task>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            String id = jObj.getString("id");
+                            int groupId = jObj.getInt("group_id");
+                            String name = jObj.getString("name");
+                            String description = jObj.getString("description");
+                            String status = jObj.getString("status");
+                            int creatorId = jObj.getInt("creator_id");
+                            String location = jObj.getString("location");
+                            String startTimeStr = jObj.getString("start_time");
+                            String endTimeStr = jObj.getString("end_time");
+
+                            Date startTime = new Date(startTimeStr);
+                            Date endTime = new Date(endTimeStr);
+
+                            Task task = new Task(name, groupId, description, status, location, creatorId, startTime, endTime);
+
+                            tasks.add(task);
+                        }
+                        callBack.onSuccess(tasks);
+
+                    } else {
+
+                        // Error occurred in getting tasks. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to tasks url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", groupId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     public void GetUserGroups(final int userId, final GroupsCallBack callBack) {
