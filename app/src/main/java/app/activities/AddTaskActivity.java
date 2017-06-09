@@ -14,6 +14,7 @@ import java.util.Date;
 import app.logic.appcomponents.Task;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
+import app.logic.managers.SessionManager;
 import callback.TaskCallBack;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -38,14 +39,14 @@ public class AddTaskActivity extends AppCompatActivity {
         editTextStart = (EditText) findViewById(R.id.editTextTaskStartDate);
         editTextEnd = (EditText) findViewById(R.id.editTextTaskEndDate);
         buttonAddTask = (Button) findViewById(R.id.buttonAddTaskToDB);
+        int userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             //TODO get the correct group id
             @Override
             public void onClick(View v) {
-                Task task = new Task(editTextName.getText().toString(), 10, editTextDesc.getText().toString(), editTextStatus.getText().toString(), editTextLocation.getText().toString(), 5, new Date(editTextStart.getText().toString()), new Date(editTextEnd.getText().toString()));
                 ((DBManager) (Services.GetService(DBManager.class)))
                         .AddTask(editTextName.getText().toString(),
-                                editTextDesc.getText().toString(), 5, 10,
+                                editTextDesc.getText().toString(), userId, 10,
                                 editTextStatus.getText().toString(),
                                 editTextLocation.getText().toString(),
                                 new Date(editTextStart.getText().toString()),

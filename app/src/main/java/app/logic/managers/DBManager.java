@@ -1,5 +1,7 @@
 package app.logic.managers;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -444,7 +446,8 @@ public class DBManager extends ManagerBase {
                         String createdStr = jObj.getString("created");
                         byte[] img = jObj.getString("img").getBytes();
 
-                        Date created = new Date(createdStr);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date created = dateFormat.parse(createdStr);
 
                         Group group = new Group(id, name, img);
 
@@ -460,6 +463,8 @@ public class DBManager extends ManagerBase {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -503,18 +508,20 @@ public class DBManager extends ManagerBase {
                         JSONArray resArr = new JSONArray(jObj.getString("result"));
                         for (int i = 0; i < resArr.length(); i++) {
                             JSONObject obj = resArr.getJSONObject(i);
-                            String id = jObj.getString("id");
-                            int groupId = jObj.getInt("group_id");
-                            String name = jObj.getString("name");
-                            String description = jObj.getString("description");
-                            String status = jObj.getString("status");
-                            int creatorId = jObj.getInt("creator_id");
-                            String location = jObj.getString("location");
-                            String startTimeStr = jObj.getString("start_time");
-                            String endTimeStr = jObj.getString("end_time");
+                            Log.d("debug", obj.toString());
+                            String id = obj.getString("id");
+                            int groupId = obj.getInt("group_id");
+                            String name = obj.getString("name");
+                            String description = obj.getString("description");
+                            String status = obj.getString("status");
+                            int creatorId = obj.getInt("creator_id");
+                            String location = obj.getString("location");
+                            String startTimeStr = obj.getString("start_time");
+                            String endTimeStr = obj.getString("end_time");
 
-                            Date startTime = new Date(startTimeStr);
-                            Date endTime = new Date(endTimeStr);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date startTime = dateFormat.parse(startTimeStr);
+                            Date endTime = dateFormat.parse(endTimeStr);
 
                             Task task = new Task(name, groupId, description, status, location, creatorId, startTime, endTime);
 
@@ -532,6 +539,8 @@ public class DBManager extends ManagerBase {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -576,18 +585,19 @@ public class DBManager extends ManagerBase {
                         JSONArray resArr = new JSONArray(jObj.getString("result"));
                         for (int i = 0; i < resArr.length(); i++) {
                             JSONObject obj = resArr.getJSONObject(i);
-                            String id = jObj.getString("id");
-                            int groupId = jObj.getInt("group_id");
-                            String name = jObj.getString("name");
-                            String description = jObj.getString("description");
-                            String status = jObj.getString("status");
-                            int creatorId = jObj.getInt("creator_id");
-                            String location = jObj.getString("location");
-                            String startTimeStr = jObj.getString("start_time");
-                            String endTimeStr = jObj.getString("end_time");
+                            String id = obj.getString("id");
+                            int groupId = obj.getInt("group_id");
+                            String name = obj.getString("name");
+                            String description = obj.getString("description");
+                            String status = obj.getString("status");
+                            int creatorId = obj.getInt("creator_id");
+                            String location = obj.getString("location");
+                            String startTimeStr = obj.getString("start_time");
+                            String endTimeStr = obj.getString("end_time");
 
-                            Date startTime = new Date(startTimeStr);
-                            Date endTime = new Date(endTimeStr);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date startTime = dateFormat.parse(startTimeStr);
+                            Date endTime = dateFormat.parse(endTimeStr);
 
                             Task task = new Task(name, groupId, description, status, location, creatorId, startTime, endTime);
 
@@ -605,6 +615,8 @@ public class DBManager extends ManagerBase {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -646,14 +658,16 @@ public class DBManager extends ManagerBase {
                     if (!error) {
                         ArrayList<Group> groups = new ArrayList<Group>();
                         JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug", resArr.toString());
                         for (int i = 0; i < resArr.length(); i++) {
                             JSONObject obj = resArr.getJSONObject(i);
-                            String id = jObj.getString("id");
-                            String name = jObj.getString("name");
-                            String createdStr = jObj.getString("created");
-                            byte[] img = jObj.getString("img").getBytes();
+                            String id = obj.getString("id");
+                            String name = obj.getString("name");
+                            String createdStr = obj.getString("created");
+                            byte[] img = obj.getString("img").getBytes();
 
-                            Date created = new Date(createdStr);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date created = dateFormat.parse(createdStr);
 
                             Group group = new Group(id, name, img);
 
@@ -671,6 +685,8 @@ public class DBManager extends ManagerBase {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
             }
