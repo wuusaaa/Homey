@@ -45,4 +45,9 @@
             android:textSize="15dp" />
     </LinearLayout>
 
+    <include
+        layout="@layout/navigation"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"></include>
+
 </RelativeLayout>

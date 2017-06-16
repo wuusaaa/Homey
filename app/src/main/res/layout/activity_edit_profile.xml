@@ -176,16 +176,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.13">
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:itemBackground="@color/colorPrimary"
-            app:itemIconTint="@color/color_states"
-            app:itemTextColor="@color/colorGray"
-            app:layout_anchor="@id/imageButtonUsersEditProfilePicture"
-            app:menu="@menu/buttons_menu" />
+        <include
+            layout="@layout/navigation"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"></include>
     </LinearLayout>
 
 </LinearLayout>

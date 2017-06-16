@@ -3,5 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="12"
     tools:context="app.activities.TaskActivity">
+
+    <RelativeLayout
+        android:id="@+id/Body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="12"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <include
+            layout="@layout/header_items"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"></include>
+
+
+        <include
+            layout="@layout/navigation"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"></include>
+    </RelativeLayout>
 </LinearLayout>
