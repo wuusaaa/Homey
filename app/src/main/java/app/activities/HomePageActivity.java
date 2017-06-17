@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.homey.R;
@@ -27,27 +27,26 @@ import callback.TasksCallBack;
 
 
 public class HomePageActivity extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
-    ImageButton plusButton;
 
+    //***** Class components: *****
+    private BottomNavigationView bottomNavigationView;
+    private ImageButton plusButton;
+    private ScrollHorizontalWithItems scrollHorizontalWithItems;
+    private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView txt;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadGroups();
-        loadTasks();
-    }
+    //*****************************
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
+        scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
         plusButton = (ImageButton) findViewById(R.id.buttonPlus);
         txt = (TextView) findViewById(R.id.textView11);
-        txt.setText("Welcome " + ((SessionManager) (Services.GetService(SessionManager.class))).getUser().getName());
 
+        //TODO:: Remove the rest of the code from this function. (ben 17.6.17)
         plusButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomePageActivity.this, PlusActivity.class);
             startActivity(intent);
@@ -75,13 +74,9 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
     }
 
-
     private void loadTasks() {
-        final ScrollVerticalWithItems scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
@@ -96,11 +91,10 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void loadGroups() {
-        final ScrollHorizontalWithItems scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
-                scrollHorizontalWithItems.SetUserGroups(groups, LinearLayout.HORIZONTAL);
+                scrollHorizontalWithItems.SetUserGroups(groups, LinearLayoutCompat.HORIZONTAL);
             }
 
             @Override
@@ -110,7 +104,14 @@ public class HomePageActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        txt.setText("Welcome " + ((SessionManager) (Services.GetService(SessionManager.class))).getUser().getName());
+        loadGroups();
+        loadTasks();
+    }
 }
 
 

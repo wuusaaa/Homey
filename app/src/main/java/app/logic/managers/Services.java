@@ -11,8 +11,6 @@ public class Services {
     private Services() {
     }
 
-    private static boolean initiated = false;
-
     private static final HashMap<Class, ManagerBase> services = new HashMap<>();
 
     public static void AddService(ManagerBase manager) {

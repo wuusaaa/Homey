@@ -36,6 +36,5 @@ public class GroupManager extends ManagerBase {
                 Log.d("debug", error);
             }
         });
-
     }
 }
