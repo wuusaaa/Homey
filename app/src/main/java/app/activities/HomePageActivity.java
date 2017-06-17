@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,7 +28,7 @@ import callback.TasksCallBack;
 
 public class HomePageActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
-    Button plusButton;
+    ImageButton plusButton;
 
     private TextView txt;
 
@@ -44,7 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        plusButton = (Button) findViewById(R.id.buttonPlus);
+        plusButton = (ImageButton) findViewById(R.id.buttonPlus);
         txt = (TextView) findViewById(R.id.textView11);
         txt.setText("Welcome " + ((SessionManager) (Services.GetService(SessionManager.class))).getUser().getName());
 

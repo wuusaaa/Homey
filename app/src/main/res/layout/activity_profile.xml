@@ -42,7 +42,6 @@
                 android:contentDescription="@string/profile_picture"
                 app:srcCompat="@drawable/profilepicturetest" />
 
-
         </LinearLayout>
 
         <ScrollView
