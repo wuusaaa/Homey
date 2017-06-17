@@ -33,6 +33,13 @@ public class HomePageActivity extends AppCompatActivity {
     private TextView txt;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        loadGroups();
+        loadTasks();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
@@ -69,9 +76,9 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        loadGroups();
-        loadTasks();
+
     }
+
 
     private void loadTasks() {
         final ScrollVerticalWithItems scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);

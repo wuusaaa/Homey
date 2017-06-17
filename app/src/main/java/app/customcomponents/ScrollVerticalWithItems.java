@@ -32,6 +32,7 @@ public class ScrollVerticalWithItems extends ScrollView {
     public <T extends IHasText> void SetUserTasks(ArrayList<T> userTasks) {
 
         GridLayout gridLayout = new GridLayout(this.getContext());
+        this.detachAllViewsFromParent();
         this.addView(gridLayout);
         //TODO: change the for to foreach with stream.
         for (int i = 0; i < userTasks.size(); i++) {

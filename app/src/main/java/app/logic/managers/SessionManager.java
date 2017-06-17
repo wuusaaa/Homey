@@ -52,6 +52,10 @@ public class SessionManager extends ManagerBase {
 
     private static final String KEY_IS_LOGGEDIN = "isLoggedIn";
 
+    public void LogOut() {
+        user = null;
+    }
+
     public void setLogin(boolean isLoggedIn) {
 
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);

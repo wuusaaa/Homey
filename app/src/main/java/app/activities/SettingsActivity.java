@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void logoutUser() {
         ((SessionManager) (Services.GetService(SessionManager.class))).setLogin(false);
 
+        ((SessionManager) (Services.GetService(SessionManager.class))).LogOut();
         db.deleteUsers();
 
         // Launching the login activity

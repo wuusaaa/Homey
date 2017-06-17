@@ -24,6 +24,7 @@ public class GroupManager extends ManagerBase {
     }
 
     public void GetUserGroups(GroupsCallBack groupsCallBack) {
+        creatorId = ((SessionManager) Services.GetService(SessionManager.class)).getUser().GetUserId();
         dbManager.GetUserGroups(creatorId, new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
