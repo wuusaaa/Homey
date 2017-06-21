@@ -1,6 +1,7 @@
 package app.logic.appcomponents;
 
 import java.util.Calendar;
+import java.util.StringJoiner;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
@@ -34,6 +35,8 @@ public class Group implements IHasText, IHasImage {
     public long getCreated() {
         return created;
     }
+
+    public String GetDescription(){ return null; }
 
     public byte[] GetImage() {
         return img;

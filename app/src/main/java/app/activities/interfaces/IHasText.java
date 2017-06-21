@@ -7,4 +7,6 @@ package app.activities.interfaces;
 public interface IHasText {
 
     String GetName();
+
+    String GetDescription();
 }

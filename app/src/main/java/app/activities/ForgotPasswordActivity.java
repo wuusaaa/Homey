@@ -21,7 +21,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText emailEditText;
     private Button resetPassButton;
     private ProgressDialog pDialog;
-    //TODO
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

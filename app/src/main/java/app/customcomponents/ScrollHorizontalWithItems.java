@@ -1,12 +1,17 @@
 package app.customcomponents;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.project.homey.R;
 
 import java.util.ArrayList;
 
@@ -52,6 +57,21 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             Button button = new Button(this.getContext());
             button.setText(userGroups.get(i).GetName());
             button.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
+
+            FrameLayout.LayoutParams layoutParamsName = new FrameLayout.LayoutParams(new LinearLayout.LayoutParams(300, 300));
+            layoutParamsName.leftMargin = 15;
+            layoutParamsName.rightMargin = 15;
+            layoutParamsName.topMargin = 15;
+            layoutParamsName.bottomMargin = 15;
+            button.setLayoutParams(layoutParamsName);
+
+            if(i%2==0) {
+                button.setBackgroundResource(R.color.colorPrimary);
+            }
+            else {
+                button.setBackgroundResource(R.color.colorAccent);
+            }
+            button.setTextColor(Color.WHITE);
             linearLayout.addView(button);
         }
     }
