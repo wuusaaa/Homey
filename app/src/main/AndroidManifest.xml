@@ -12,9 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="app.activities.LoginActivity"
+            android:name="app.activities.SplashActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
+            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,7 @@
         <activity android:name="app.activities.TestActivity" />
         <activity android:name="app.activities.ProfileActivity" />
         <activity android:name="app.activities.AddTaskActivity" />
+        <activity android:name="app.activities.LoginActivity" />
         <activity android:name="app.activities.SettingsActivity" />
         <activity android:name="app.activities.ForgotPasswordActivity" />
         <activity android:name="app.activities.AddGroupActivity"></activity>
