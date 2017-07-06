@@ -1,5 +1,9 @@
 package app.logic.appcomponents;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.StringJoiner;
 
@@ -10,7 +14,7 @@ import app.activities.interfaces.IHasText;
  * Created by Raz on 2/22/2017.
  */
 
-public class Group implements IHasText, IHasImage {
+public class Group implements IHasText, IHasImage,Parcelable {
 
     private final String id;
     private final String name;
@@ -24,7 +28,26 @@ public class Group implements IHasText, IHasImage {
         this.created = Calendar.getInstance().getTime().getTime();
     }
 
-    public String getId() {
+    protected Group(Parcel in) {
+        name = in.readString();
+        id = in.readString();
+        img = in.createByteArray();
+        created = in.readLong();
+    }
+
+    public static final Creator<Group> CREATOR = new Creator<Group>() {
+        @Override
+        public Group createFromParcel(Parcel in) {
+            return new Group(in);
+        }
+
+        @Override
+        public Group[] newArray(int size) {
+            return new Group[size];
+        }
+    };
+
+    public String GetId() {
         return id;
     }
 
@@ -32,13 +55,26 @@ public class Group implements IHasText, IHasImage {
         return name;
     }
 
-    public long getCreated() {
+    public long GetCreated() {
         return created;
     }
 
-    public String GetDescription(){ return null; }
+    public String GetDescription(){ return "aaa"; }
 
     public byte[] GetImage() {
         return img;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeByteArray(img);
+        dest.writeLong(created);
     }
 }

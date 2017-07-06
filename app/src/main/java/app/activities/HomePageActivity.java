@@ -1,8 +1,10 @@
 package app.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
+import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
@@ -102,10 +105,25 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void loadGroups() {
         pDialog.showDialog();
+        Context context=this;
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
-                scrollHorizontalWithItems.SetUserGroups(groups, LinearLayoutCompat.HORIZONTAL);
+                scrollHorizontalWithItems.SetUserGroups(groups, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
+                    @Override
+                    public void onSuccess(Group group) {
+                        Intent i = new Intent(context, GroupPageActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable("group", group);
+                        i.putExtras(b);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
                 pDialog.hideDialog();
             }
 

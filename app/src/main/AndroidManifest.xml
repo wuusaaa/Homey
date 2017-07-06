@@ -29,6 +29,7 @@
         <activity android:name="app.activities.TestActivity" />
         <activity android:name="app.activities.ProfileActivity" />
         <activity android:name="app.activities.AddTaskActivity" />
+        <activity android:name="app.activities.GroupPageActivity" />
         <activity android:name="app.activities.LoginActivity" />
         <activity android:name="app.activities.SettingsActivity" />
         <activity android:name="app.activities.ForgotPasswordActivity" />

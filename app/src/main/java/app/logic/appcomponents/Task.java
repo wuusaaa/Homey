@@ -1,5 +1,6 @@
 package app.logic.appcomponents;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import app.activities.interfaces.IHasText;

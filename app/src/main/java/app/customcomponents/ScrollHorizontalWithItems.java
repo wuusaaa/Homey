@@ -1,11 +1,14 @@
 package app.customcomponents;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
@@ -17,8 +20,11 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 
+import app.activities.GroupPageActivity;
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
+import app.logic.appcomponents.Group;
+import callback.GotoGroupPageCallBack;
 
 
 /**
@@ -51,7 +57,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText & IHasImage> void SetUserGroups(ArrayList<T> userGroups, @LinearLayoutCompat.OrientationMode int orientation) {
+    public <T extends IHasText & IHasImage> void SetUserGroups(ArrayList<T> userGroups, @LinearLayoutCompat.OrientationMode int orientation, GotoGroupPageCallBack callBack) {
         linearLayout.removeAllViews();
         linearLayout.setOrientation(orientation);
 
@@ -80,6 +86,13 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
                 button.setBackground(shape);
             }
             button.setTextColor(Color.WHITE);
+            final int finalI = i;
+            button.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   callBack.onSuccess((Group)userGroups.get(finalI));
+                }
+            });
             linearLayout.addView(button);
         }
     }

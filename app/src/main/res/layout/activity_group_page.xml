@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:weightSum="12"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="app.activities.GroupPageActivity">
+
+
+<LinearLayout
+    android:id="@+id/Body"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="12"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+    <include
+        layout="@layout/header_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/groupName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Group name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="9"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/groupDescription"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Group description" />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/Transparent"
+            app:itemIconTint="@color/color_states"
+            app:itemTextColor="@color/colorGray"
+            app:menu="@menu/buttons_menu" />
+    </LinearLayout>
+
+</LinearLayout>
