@@ -2,6 +2,8 @@ package app.customcomponents;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.widget.Button;
@@ -52,24 +54,30 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
     public <T extends IHasText & IHasImage> void SetUserGroups(ArrayList<T> userGroups, @LinearLayoutCompat.OrientationMode int orientation) {
         linearLayout.removeAllViews();
         linearLayout.setOrientation(orientation);
+
         //TODO: change the for to foreach with stream.
         for (int i = 0; i < userGroups.size(); i++) {
             Button button = new Button(this.getContext());
             button.setText(userGroups.get(i).GetName());
             button.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
 
-            FrameLayout.LayoutParams layoutParamsName = new FrameLayout.LayoutParams(new LinearLayout.LayoutParams(300, 300));
+            LayoutParams layoutParamsName = new LayoutParams(new LinearLayout.LayoutParams(300, 300));
             layoutParamsName.leftMargin = 15;
             layoutParamsName.rightMargin = 15;
             layoutParamsName.topMargin = 15;
             layoutParamsName.bottomMargin = 15;
             button.setLayoutParams(layoutParamsName);
-
+            GradientDrawable shape =  new GradientDrawable();
+            shape.setCornerRadius( 500 );
             if(i%2==0) {
-                button.setBackgroundResource(R.color.colorPrimary);
+                shape.setColor(Color.parseColor("#FF4081"));
             }
             else {
-                button.setBackgroundResource(R.color.colorAccent);
+                shape.setColor(Color.parseColor("#3F51B5"));
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                button.setBackground(shape);
             }
             button.setTextColor(Color.WHITE);
             linearLayout.addView(button);

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.project.homey.R;
 
+import app.customcomponents.HomeyProgressDialog;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
@@ -25,7 +26,7 @@ public class LoginActivity extends Activity {
     private Button linkToRegisterButton;
     private EditText inputEmailEditText;
     private EditText inputPasswordEditText;
-    private ProgressDialog pDialog;
+    private HomeyProgressDialog pDialog;
     private SQLiteHandler db;
 
     @Override
@@ -41,7 +42,8 @@ public class LoginActivity extends Activity {
         forgotPassButton = (Button) findViewById(R.id.buttonLinkToforgotPasswordScreen);
 
         // Progress dialog
-        pDialog = new ProgressDialog(this);
+        pDialog = new HomeyProgressDialog(this);
+        pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
 
         ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
@@ -98,7 +100,7 @@ public class LoginActivity extends Activity {
      * function to verify login details in mysql db
      */
     private void checkLogin(final String email, final String password) {
-        showDialog();
+        pDialog.showDialog();
 
         //TODO  DBManager
         ((DBManager) (Services.GetService(DBManager.class))).Login(email, password, new UserCallBack() {
@@ -113,7 +115,7 @@ public class LoginActivity extends Activity {
 
                 db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt());
 
-                hideDialog();
+                pDialog.hideDialog();
 
                 // Launch HomePage activity
                 Intent intent = new Intent(LoginActivity.this,
@@ -124,7 +126,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(String error) {
-                hideDialog();
+                pDialog.hideDialog();
                 if (error.equals("JSON ERROR") || error.equals("Volley ERROR")) {
                     Toast.makeText(getApplicationContext(), "Connection error, please try again", Toast.LENGTH_LONG).show();
                 } else {
@@ -134,14 +136,6 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
 
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
 
 }

@@ -1,5 +1,6 @@
 package app.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 
+import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
@@ -34,12 +36,18 @@ public class HomePageActivity extends AppCompatActivity {
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView txt;
+    private HomeyProgressDialog pDialog;
     //*****************************
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        // Progress dialog
+        pDialog = new HomeyProgressDialog(this);
+        pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
 
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
@@ -77,29 +85,33 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void loadTasks() {
+        pDialog.showDialog();
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
                 scrollVerticalWithItems.SetUserTasks(tasks);
+                pDialog.hideDialog();
             }
 
             @Override
             public void onFailure(String error) {
-
+                pDialog.hideDialog();
             }
         });
     }
 
     private void loadGroups() {
+        pDialog.showDialog();
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
                 scrollHorizontalWithItems.SetUserGroups(groups, LinearLayoutCompat.HORIZONTAL);
+                pDialog.hideDialog();
             }
 
             @Override
             public void onFailure(String error) {
-
+                pDialog.hideDialog();
             }
         });
     }
