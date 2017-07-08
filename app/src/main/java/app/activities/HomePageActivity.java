@@ -22,6 +22,7 @@ import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
@@ -55,7 +56,7 @@ public class HomePageActivity extends AppCompatActivity {
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
         plusButton = (ImageButton) findViewById(R.id.buttonPlus);
-        txt = (TextView) findViewById(R.id.textView11);
+        txt = (TextView) findViewById(R.id.textViewScreenName);
 
         //TODO:: Remove the rest of the code from this function. (ben 17.6.17)
         plusButton.setOnClickListener(v -> {
@@ -74,6 +75,8 @@ public class HomePageActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.assignment:
+                        intent = new Intent(HomePageActivity.this, PlusActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.settings:
                         intent = new Intent(HomePageActivity.this, SettingsActivity.class);
@@ -114,6 +117,7 @@ public class HomePageActivity extends AppCompatActivity {
                     public void onSuccess(Group group) {
                         Intent i = new Intent(context, GroupPageActivity.class);
                         Bundle b = new Bundle();
+                        ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName(group.GetName());
                         b.putParcelable("group", group);
                         i.putExtras(b);
                         startActivity(i);
@@ -121,7 +125,7 @@ public class HomePageActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(String error) {
-
+                        //TODO handle error
                     }
                 });
                 pDialog.hideDialog();

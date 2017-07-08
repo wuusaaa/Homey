@@ -36,6 +36,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
+    private String screenName;
+
 
     /**
      * getter for the LoginURL
@@ -144,5 +146,23 @@ public class EnvironmentManager extends ManagerBase {
      */
     public String GetAPIGetTasksByUserIdURL() {
         return APIGetTasksByUserIdURL;
+    }
+
+    /**
+     * getter for the screenName
+     *
+     * @return String
+     */
+    public String GetScreenName() {
+        return screenName;
+    }
+
+    /**
+     * setter for the screenName
+     *
+     * @return String
+     */
+    public void SetScreenName(String screenName) {
+        this.screenName = screenName;
     }
 }

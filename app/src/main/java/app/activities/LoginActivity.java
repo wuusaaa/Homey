@@ -22,6 +22,7 @@ import com.project.homey.R;
 import app.customcomponents.HomeyProgressDialog;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
+import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
@@ -114,7 +115,6 @@ public class LoginActivity extends Activity {
 
         // Progress dialog
         pDialog = new HomeyProgressDialog(this);
-        pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
 
         ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
@@ -124,6 +124,7 @@ public class LoginActivity extends Activity {
 
         // Check if user is already logged in or not
         if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
+            ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName("Home Page");
             // User is already logged in. Take him to HomePage activity
             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
             startActivity(intent);

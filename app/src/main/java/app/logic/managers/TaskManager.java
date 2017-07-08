@@ -26,6 +26,22 @@ public class TaskManager extends ManagerBase {
                 Log.d("debug", error);
             }
         });
+    }
+
+    public void GetGroupTasks(TasksCallBack tasksCallBack,int groupId) {
+        ((DBManager) (Services.GetService(DBManager.class))).GetGroupTasks(groupId, new TasksCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Task> tasks) {
+                tasksCallBack.onSuccess(tasks);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d("debug", error);
+                tasksCallBack.onFailure(error);
+
+            }
+        });
 
 //                ArrayList < Task > tasks = new ArrayList<>();
 //        for (int i = 1; i <= 15; i++) {

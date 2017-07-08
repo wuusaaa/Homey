@@ -18,25 +18,27 @@
     android:weightSum="10">
 
     <include
+        android:id="@+id/header"
         layout="@layout/header_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-        <TextView
-            android:id="@+id/groupName"
+        <app.customcomponents.ScrollVerticalWithItems
+            android:id="@+id/TasksHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Group name" />
+            android:layout_gravity="start">
+
+        </app.customcomponents.ScrollVerticalWithItems>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="9"
+        android:layout_weight="5"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView

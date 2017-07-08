@@ -581,8 +581,10 @@ public class DBManager extends ManagerBase {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
+
                         ArrayList<Task> tasks = new ArrayList<Task>();
                         JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug:GetGroupTasks", resArr.toString());
                         for (int i = 0; i < resArr.length(); i++) {
                             JSONObject obj = resArr.getJSONObject(i);
                             String id = obj.getString("id");

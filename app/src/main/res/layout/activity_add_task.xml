@@ -99,4 +99,13 @@
         android:inputType="date"
         android:text="11/11/2010" />
 
+    <Spinner
+        android:id="@+id/spinnerTaskGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTaskEndDate"
+        android:spinnerMode="dropdown" />
+
+
+
 </RelativeLayout>

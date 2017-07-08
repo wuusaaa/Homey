@@ -1,20 +1,30 @@
 package app.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.project.homey.R;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import app.customcomponents.HomeyProgressDialog;
+import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.managers.DBManager;
+import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import callback.GroupsCallBack;
 import callback.TaskCallBack;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -26,12 +36,59 @@ public class AddTaskActivity extends AppCompatActivity {
     EditText editTextStart;
     EditText editTextEnd;
     Button buttonAddTask;
+    private Spinner dropdown;
+    private HomeyProgressDialog pDialog;
+    private ArrayList<Group> userGroups;
+    private int selectedGroupId=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        // Progress dialog
+        pDialog = new HomeyProgressDialog(this);
+
+        dropdown = (Spinner)findViewById(R.id.spinnerTaskGroup);
+
+        Context context= this;
+        List<String> items = new ArrayList<String>();
+        pDialog.showDialog();
+        ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Group> groups) {
+                userGroups = groups;
+                for (Group group:groups) {
+                    items.add(group.GetName());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown.setAdapter(adapter);
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        getSelectedGroupId((String) parent.getItemAtPosition(position));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // TODO Auto-generated method stub
+                    }
+                });
+                pDialog.hideDialog();
+            }
+
+            @Override
+            public void onFailure(String error) {
+                pDialog.hideDialog();
+                //TODO handle connection error
+            }
+        });
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        dropdown.setAdapter(adapter);
+//        dropdown.setOnItemSelectedListener(this);
         editTextName = (EditText) findViewById(R.id.editTextTaskName);
         editTextDesc = (EditText) findViewById(R.id.editTextTaskDesc);
         editTextLocation = (EditText) findViewById(R.id.editTextTaskLocation);
@@ -46,7 +103,7 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ((DBManager) (Services.GetService(DBManager.class)))
                         .AddTask(editTextName.getText().toString(),
-                                editTextDesc.getText().toString(), userId, 10,
+                                editTextDesc.getText().toString(), userId, selectedGroupId,
                                 editTextStatus.getText().toString(),
                                 editTextLocation.getText().toString(),
                                 new Date(editTextStart.getText().toString()),
@@ -65,5 +122,15 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+
+    private void getSelectedGroupId(String GroupName){
+        for (Group group:userGroups) {
+            if(group.GetName().equals(GroupName)){
+                selectedGroupId = Integer.parseInt(group.GetId());
+            }
+        }
     }
 }
