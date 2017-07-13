@@ -15,6 +15,7 @@ import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 import app.logic.managers.TaskManager;
 import callback.TasksCallBack;
@@ -28,12 +29,17 @@ public class GroupPageActivity extends AppCompatActivity {
     private TextView groupDescription;
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
+    private TextView screenName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
+
+        screenName = (TextView) findViewById(R.id.textViewScreenName);
+        screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
+
         Bundle b = this.getIntent().getExtras();
         if (b != null)
             group = b.getParcelable("group");

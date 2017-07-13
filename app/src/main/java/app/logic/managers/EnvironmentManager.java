@@ -36,7 +36,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
-    private String screenName;
+    //default is Home Page - first screen
+    private String screenName = "Home Page";
 
 
     /**

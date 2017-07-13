@@ -12,7 +12,7 @@ import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 
 /**
- * TODO: check when this is loaded and change the header screen text
+ * TODO: DELETE THIS CLASS
  */
 public class Header extends AppCompatActivity {
 

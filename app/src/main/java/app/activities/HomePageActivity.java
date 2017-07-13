@@ -40,6 +40,7 @@ public class HomePageActivity extends AppCompatActivity {
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView txt;
+    private TextView screenName;
     private HomeyProgressDialog pDialog;
     //*****************************
 
@@ -57,6 +58,8 @@ public class HomePageActivity extends AppCompatActivity {
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
         plusButton = (ImageButton) findViewById(R.id.buttonPlus);
         txt = (TextView) findViewById(R.id.textViewScreenName);
+        screenName = (TextView) findViewById(R.id.textViewScreenName);
+        screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
 
         //TODO:: Remove the rest of the code from this function. (ben 17.6.17)
         plusButton.setOnClickListener(v -> {
