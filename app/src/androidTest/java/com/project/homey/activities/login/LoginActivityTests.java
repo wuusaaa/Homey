@@ -14,14 +14,12 @@ import org.junit.runner.RunWith;
 
 import app.activities.LoginActivity;
 
-import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
@@ -50,8 +48,10 @@ public class LoginActivityTests extends ActivityTestBase {
     public void HasUserNameTextView() {
         emailField.check(matches(isDisplayed()));
         emailField.check(matches(withHint("Email")));
+
         passwordField.check(matches(isDisplayed()));
         passwordField.check(matches(withHint("Password")));
+
         loginButton.check(matches(isDisplayed()));
         loginButton.check(matches(isClickable()));
         loginButton.check(matches(withText("LOGIN")));
@@ -66,12 +66,16 @@ public class LoginActivityTests extends ActivityTestBase {
         loginButton.perform(click());
 
         TimeUtils.Wait(3000);
-        onView(withId(R.id.activity_home_page)).check(matches(isDisplayed()));
+        getViewById(R.id.activity_home_page).check(matches(isDisplayed()));
 
+        logout();
     }
 
+    private void logout() {
+        getViewById(R.id.settings).perform(click());
+        getViewById(R.id.buttonLogout).perform(click());
+    }
 
-    //TODO: logout from user.
     @Override
     public void AfterTest() {
     }

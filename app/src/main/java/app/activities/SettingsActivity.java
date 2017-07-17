@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnLogout = (Button) findViewById(R.id.buttonLogout);
 
         // SqLite app.database handler
         db = new SQLiteHandler(getApplicationContext());
