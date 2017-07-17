@@ -11,9 +11,9 @@ import com.project.homey.R;
 
 import java.util.HashMap;
 
+import app.database.SQLiteHandler;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
-import db.SQLiteHandler;
 
 public class SettingsActivity extends AppCompatActivity {
     private TextView txtName;
@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
-        // SqLite database handler
+        // SqLite app.database handler
         db = new SQLiteHandler(getApplicationContext());
 
         // session manager

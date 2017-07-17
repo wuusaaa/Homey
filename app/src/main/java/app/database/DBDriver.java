@@ -1,4 +1,4 @@
-package db;
+package app.database;
 
 import android.util.Log;
 

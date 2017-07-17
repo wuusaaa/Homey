@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.AppController;
+import app.database.DBDriver;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
@@ -29,7 +30,6 @@ import callback.ServerCallBack;
 import callback.TaskCallBack;
 import callback.TasksCallBack;
 import callback.UserCallBack;
-import db.DBDriver;
 
 /**
  * Created by Raz on 12/20/2016.
@@ -103,7 +103,7 @@ public class DBManager extends ManagerBase {
     }
 
     /**
-     * Function to store user in MySQL database. will post params(name,
+     * Function to store user in MySQL app.database. will post params(name,
      * email, password) to register url
      */
     public void RegisterUser(final String name, final String email, final String password, final UserCallBack callBack) {

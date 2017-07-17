@@ -2,10 +2,8 @@ package app.activities;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,17 +14,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.project.homey.R;
 
 import app.customcomponents.HomeyProgressDialog;
+import app.database.SQLiteHandler;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
-import db.SQLiteHandler;
 
 public class LoginActivity extends Activity {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -119,7 +116,7 @@ public class LoginActivity extends Activity {
 
         ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
 
-        // SQLite database handler
+        // SQLite app.database handler
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not

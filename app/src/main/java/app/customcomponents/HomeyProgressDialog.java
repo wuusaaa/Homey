@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 /**
- * Created by Raz on 7/6/2017.
+ * Created by Raz on 7/6/2017
  */
 
 public class HomeyProgressDialog extends ProgressDialog {

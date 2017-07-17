@@ -1,4 +1,4 @@
-package db;
+package app.database;
 
 /**
  * Created by razze on 18/02/2017.
@@ -50,7 +50,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Database tables created");
     }
 
-    // Upgrading database
+    // Upgrading app.database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -61,7 +61,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Storing user details in database
+     * Storing user details in app.database
      */
     public void addUser(String name, String email, String uid, String created_at) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -74,13 +74,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         // Inserting Row
         long id = db.insert(TABLE_USER, null, values);
-        db.close(); // Closing database connection
+        db.close(); // Closing app.database connection
 
         Log.d(TAG, "New user inserted into sqlite: " + id);
     }
 
     /**
-     * Getting user data from database
+     * Getting user data from app.database
      */
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
@@ -105,7 +105,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Re crate database Delete all tables and create them again
+     * Re crate app.database Delete all tables and create them again
      */
     public void deleteUsers() {
         SQLiteDatabase db = this.getWritableDatabase();

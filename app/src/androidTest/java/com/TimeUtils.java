@@ -1,7 +1,7 @@
-package managertests;
+package com;
 
 /**
- * Created by barakm on 20/03/2017.
+ * Created by barakm on 20/03/2017
  */
 
 public final class TimeUtils {

@@ -11,12 +11,12 @@ import android.widget.Toast;
 
 import com.project.homey.R;
 
+import app.database.SQLiteHandler;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
-import db.SQLiteHandler;
 
 //TODO add birthday
 
@@ -47,7 +47,7 @@ public class RegistrationActivity extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        // SQLite database handler
+        // SQLite app.database handler
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
@@ -98,7 +98,7 @@ public class RegistrationActivity extends Activity {
     }
 
     /**
-     * Function to store user in MySQL database. will post params(name,
+     * Function to store user in MySQL app.database. will post params(name,
      * email, password) to register url
      */
     private void registerUser(final String name, final String email, final String password) {

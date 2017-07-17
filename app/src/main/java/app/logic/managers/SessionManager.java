@@ -11,8 +11,8 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import app.database.SQLiteHandler;
 import app.logic.appcomponents.User;
-import db.SQLiteHandler;
 
 public class SessionManager extends ManagerBase {
 
