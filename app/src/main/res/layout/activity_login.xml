@@ -6,7 +6,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/loginActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -43,12 +44,12 @@
         <!-- Login Button -->
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/buttonLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@color/btn_login_bg"
-            android:text="@string/btn_login"
+            android:text="@string/button_login"
             android:textColor="@color/btn_login" />
 
         <!-- Link to Login Screen -->

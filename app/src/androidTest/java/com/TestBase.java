@@ -15,6 +15,7 @@ import callback.UserCallBack;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by barakm on 20/03/2017
@@ -46,6 +47,11 @@ public abstract class TestBase {
 
     protected ViewInteraction getViewById(final int viewID) {
         return onView(withId(viewID));
+    }
+
+
+    protected ViewInteraction getViewByText(final int viewText) {
+        return onView(withText(viewText));
     }
 
     @After

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -49,11 +48,11 @@ public class LoginActivity extends Activity {
                     mFusedLocationClient.getLastLocation()
                             .addOnSuccessListener(this, location -> {
                                 // Got last known location. In some rare situations this can be null.
-                                if (location != null) {
-                                    Toast.makeText(getApplicationContext(),
-                                            location.toString(), Toast.LENGTH_LONG)
-                                            .show();
-                                }
+//                                if (location != null) {
+//                                    Toast.makeText(getApplicationContext(),
+//                                            location.toString(), Toast.LENGTH_LONG)
+//                                            .show();
+//                                }
                             });
 
                 } else {
@@ -106,7 +105,7 @@ public class LoginActivity extends Activity {
 
         inputEmailEditText = (EditText) findViewById(R.id.email);
         inputPasswordEditText = (EditText) findViewById(R.id.password);
-        loginButton = (Button) findViewById(R.id.btnLogin);
+        loginButton = (Button) findViewById(R.id.buttonLogin);
         linkToRegisterButton = (Button) findViewById(R.id.btnLinkToRegisterScreen);
         forgotPassButton = (Button) findViewById(R.id.buttonLinkToforgotPasswordScreen);
 
@@ -147,20 +146,17 @@ public class LoginActivity extends Activity {
             } else {
                 // Prompt user to enter credentials
                 Toast.makeText(getApplicationContext(),
-                        "Please enter the credentials!", Toast.LENGTH_LONG)
+                        R.string.pleaseEnterTheCredentials, Toast.LENGTH_LONG)
                         .show();
             }
         });
 
         // Link to Register Screen
-        linkToRegisterButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),
-                        RegistrationActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        linkToRegisterButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(),
+                    RegistrationActivity.class);
+            startActivity(intent);
+            finish();
         });
 
     }
@@ -176,7 +172,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onSuccess(User user) {
                 // user successfully logged in
-                Toast.makeText(getApplicationContext(), "Successfully logged in!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.successfullyLoggedIn, Toast.LENGTH_LONG).show();
                 // Create login session
                 ((SessionManager) (Services.GetService(SessionManager.class))).setLogin(true);
 
@@ -187,8 +183,7 @@ public class LoginActivity extends Activity {
                 pDialog.hideDialog();
 
                 // Launch HomePage activity
-                Intent intent = new Intent(LoginActivity.this,
-                        HomePageActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -199,7 +194,7 @@ public class LoginActivity extends Activity {
                 if (error.equals("JSON ERROR") || error.equals("Volley ERROR")) {
                     Toast.makeText(getApplicationContext(), "Connection error, please try again", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.loginCredentialsAreWrongPleaseTryAgain, Toast.LENGTH_LONG).show();
                 }
             }
         });
