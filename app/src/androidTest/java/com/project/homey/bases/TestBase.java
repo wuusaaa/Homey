@@ -1,7 +1,9 @@
-package com;
+package com.project.homey.bases;
 
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.project.homey.elementsproxy.ViewInteractionProxy;
+import com.project.homey.utils.TimeUtils;
 
 import org.junit.After;
 import org.junit.Before;
@@ -45,13 +47,13 @@ public abstract class TestBase {
         TimeUtils.Wait();
     }
 
-    protected ViewInteraction getViewById(final int viewID) {
-        return onView(withId(viewID));
+    protected ViewInteractionProxy getViewById(final int viewID) {
+        return new ViewInteractionProxy(onView(withId(viewID)));
     }
 
 
-    protected ViewInteraction getViewByText(final int viewText) {
-        return onView(withText(viewText));
+    protected ViewInteractionProxy getViewByText(final int viewText) {
+        return new ViewInteractionProxy(onView(withText(viewText)));
     }
 
     @After

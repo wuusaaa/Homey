@@ -1,9 +1,7 @@
-package com.project.homey.activities;
-
-import com.TestBase;
+package com.project.homey.bases;
 
 /**
- * Created by barakm on 10/07/2017.
+ * Created by barakm on 10/07/2017
  */
 
 public abstract class ActivityTestBase extends TestBase {
