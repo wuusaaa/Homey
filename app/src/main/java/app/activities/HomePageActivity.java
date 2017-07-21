@@ -62,30 +62,6 @@ public class HomePageActivity extends ActivityBase {
         });
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                Intent intent;
-//
-//                switch (item.getItemId()) {
-//                    case R.id.today:
-//                        intent = new Intent(HomePageActivity.this, TestActivity.class);
-//                        startActivity(intent);
-//                        break;
-//                    case R.id.assignment:
-//                        intent = new Intent(HomePageActivity.this, PlusActivity.class);
-//                        startActivity(intent);
-//                        break;
-//                    case R.id.settings:
-//                        intent = new Intent(HomePageActivity.this, SettingsActivity.class);
-//                        startActivity(intent);
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
         txt.setText("Home");
     }
 
@@ -94,7 +70,7 @@ public class HomePageActivity extends ActivityBase {
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetUserTasks(tasks);
+                scrollVerticalWithItems.SetTasks(tasks);
                 pDialog.hideDialog();
             }
 

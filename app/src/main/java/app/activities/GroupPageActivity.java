@@ -54,7 +54,7 @@ public class GroupPageActivity extends ActivityBase {
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetGroupTasks(tasks);
+                scrollVerticalWithItems.SetTasks(tasks);
                 pDialog.hideDialog();
             }
 

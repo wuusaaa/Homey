@@ -12,6 +12,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.project.homey.R;
+
 import java.util.ArrayList;
 
 import app.activities.interfaces.IHasImage;
@@ -34,7 +36,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         this.addView(linearLayout);
 
         emptyMessage = new TextView(context);
-        emptyMessage.setText("EmptyMessage");
+        emptyMessage.setText(R.string.emptyMessage);
         this.addView(emptyMessage);
     }
 

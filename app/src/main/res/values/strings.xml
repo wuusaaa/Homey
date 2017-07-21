@@ -25,4 +25,5 @@
     <string name="pleaseEnterTheCredentials">Please enter the credentials!</string>
     <string name="successfullyLoggedIn">Successfully logged in!</string>
     <string name="loginCredentialsAreWrongPleaseTryAgain">Login credentials are wrong. Please try again!</string>
+    <string name="emptyMessage">EmptyMessage</string>
 </resources>
