@@ -1,6 +1,5 @@
 package app.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import callback.UserCallBack;
 
 //TODO add birthday
 
-public class RegistrationActivity extends Activity {
+public class RegistrationActivity extends ActivityBase {
     private static final String TAG = RegistrationActivity.class.getSimpleName();
     private Button registerButton;
     private Button linkToLoginButton;

@@ -1,7 +1,6 @@
 package app.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,7 +12,7 @@ import app.logic.managers.Services;
 import callback.GroupCallBack;
 
 
-public class AddGroupActivity extends AppCompatActivity {
+public class AddGroupActivity extends ActivityBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

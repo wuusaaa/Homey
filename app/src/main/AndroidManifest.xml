@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.homey">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -35,7 +35,8 @@
         <activity android:name="app.activities.LoginActivity" />
         <activity android:name="app.activities.SettingsActivity" />
         <activity android:name="app.activities.ForgotPasswordActivity" />
-        <activity android:name="app.activities.AddGroupActivity"></activity>
+        <activity android:name="app.activities.AddGroupActivity" />
+        <activity android:name="app.activities.ActivityBase"></activity>
     </application>
 
 </manifest>

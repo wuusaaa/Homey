@@ -1,13 +1,10 @@
 package app.activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -25,14 +22,13 @@ import app.logic.appcomponents.Task;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
-import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
 import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends ActivityBase {
 
     //***** Class components: *****
     private BottomNavigationView bottomNavigationView;
@@ -91,6 +87,7 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
             }
         });
+        txt.setText("Home");
     }
 
     private void loadTasks() {
@@ -144,8 +141,6 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        txt.setText("Welcome " + ((SessionManager) (Services.GetService(SessionManager.class))).getUser().getName());
         loadGroups();
         loadTasks();
     }

@@ -1,16 +1,12 @@
 package app.activities;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
 
-import app.customcomponents.Header;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
@@ -24,7 +20,7 @@ import callback.TasksCallBack;
  * Created by Raz on 7/6/2017.
  */
 
-public class GroupPageActivity extends AppCompatActivity {
+public class GroupPageActivity extends ActivityBase {
     private Group group;
     private TextView groupDescription;
     private HomeyProgressDialog pDialog;

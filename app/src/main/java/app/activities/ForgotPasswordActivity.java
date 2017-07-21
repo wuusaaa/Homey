@@ -2,7 +2,6 @@ package app.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import callback.ServerCallBack;
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends ActivityBase {
 
     private EditText emailEditText;
     private Button resetPassButton;

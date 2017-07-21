@@ -3,7 +3,6 @@ package app.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,7 @@ import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import callback.ServerCallBack;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends ActivityBase {
 
     Button btn;
     EditText txt;

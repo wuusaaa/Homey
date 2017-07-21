@@ -1,7 +1,6 @@
 package app.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends ActivityBase {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private Button loginButton;
     private Button forgotPassButton;

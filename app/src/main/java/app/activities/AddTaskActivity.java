@@ -2,7 +2,6 @@ package app.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +26,7 @@ import app.logic.managers.SessionManager;
 import callback.GroupsCallBack;
 import callback.TaskCallBack;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class AddTaskActivity extends ActivityBase {
 
     EditText editTextName;
     EditText editTextDesc;

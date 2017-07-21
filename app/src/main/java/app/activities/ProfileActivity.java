@@ -2,12 +2,11 @@ package app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.project.homey.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends ActivityBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

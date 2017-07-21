@@ -2,7 +2,6 @@ package app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,7 +13,7 @@ import app.database.SQLiteHandler;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends ActivityBase {
     private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;

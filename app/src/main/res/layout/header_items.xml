@@ -23,6 +23,7 @@
         android:layout_weight="1.00"
         android:text="Screen name"
         android:textAlignment="center"
+        android:textSize="30sp"
         tools:gravity="center" />
 
     <ImageButton
@@ -31,6 +32,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/Transparent"
-        android:text="add" />
+        app:srcCompat="@mipmap/add_button" />
 
 </LinearLayout>

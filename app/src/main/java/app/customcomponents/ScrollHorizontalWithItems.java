@@ -1,26 +1,19 @@
 package app.customcomponents;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.project.homey.R;
-
 import java.util.ArrayList;
 
-import app.activities.GroupPageActivity;
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
 import app.logic.appcomponents.Group;
@@ -76,10 +69,10 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             GradientDrawable shape =  new GradientDrawable();
             shape.setCornerRadius( 500 );
             if(i%2==0) {
-                shape.setColor(Color.parseColor("#FF4081"));
+                shape.setColor(Color.parseColor("#D8EAF6"));
             }
             else {
-                shape.setColor(Color.parseColor("#3F51B5"));
+                shape.setColor(Color.parseColor("#EAEAEA"));
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
