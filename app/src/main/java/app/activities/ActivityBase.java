@@ -42,8 +42,8 @@ public class ActivityBase extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.groups:
-                    //intent = new Intent(this ,GroupPageActivity.class);
-                    //startActivity(intent);
+                    intent = new Intent(this, GroupPageActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.home:
                     intent = new Intent(this, HomePageActivity.class);

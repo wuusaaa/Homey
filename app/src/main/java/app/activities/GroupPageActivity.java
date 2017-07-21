@@ -1,6 +1,7 @@
 package app.activities;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.homey.R;
@@ -44,6 +45,8 @@ public class GroupPageActivity extends ActivityBase {
         groupDescription.setText(group.GetDescription());
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
+        ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
+        // TODO: Set group icon
     }
 
     private void loadTasks() {
