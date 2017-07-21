@@ -32,7 +32,7 @@ import callback.TasksCallBack;
 import callback.UserCallBack;
 
 /**
- * Created by Raz on 12/20/2016.
+ * Created by Raz on 12/20/2016
  */
 
 public class DBManager extends ManagerBase {
@@ -78,13 +78,7 @@ public class DBManager extends ManagerBase {
                 }
 
             }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callBack.onFailure("Volley ERROR");
-            }
-        }) {
+        }, error -> callBack.onFailure("Volley ERROR")) {
 
             @Override
             protected Map<String, String> getParams() {

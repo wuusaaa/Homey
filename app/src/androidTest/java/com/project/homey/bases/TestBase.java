@@ -2,7 +2,6 @@ package com.project.homey.bases;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.project.homey.elementsproxy.ViewInteractionProxy;
 import com.project.homey.utils.TimeUtils;
 
 import org.junit.After;
@@ -14,10 +13,6 @@ import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by barakm on 20/03/2017
@@ -35,7 +30,6 @@ public abstract class TestBase {
             @Override
             public void onSuccess(User user) {
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
-
             }
 
             @Override
@@ -47,14 +41,6 @@ public abstract class TestBase {
         TimeUtils.Wait();
     }
 
-    protected ViewInteractionProxy getViewById(final int viewID) {
-        return new ViewInteractionProxy(onView(withId(viewID)));
-    }
-
-
-    protected ViewInteractionProxy getViewByText(final int viewText) {
-        return new ViewInteractionProxy(onView(withText(viewText)));
-    }
 
     @After
     public void AfterTest() {
