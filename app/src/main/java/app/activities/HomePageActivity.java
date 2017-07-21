@@ -3,10 +3,8 @@ package app.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.LinearLayoutCompat;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -64,29 +62,30 @@ public class HomePageActivity extends ActivityBase {
         });
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent intent;
-                switch (item.getItemId()) {
-                    case R.id.today:
-                        intent = new Intent(HomePageActivity.this, TestActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.assignment:
-                        intent = new Intent(HomePageActivity.this, PlusActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.settings:
-                        intent = new Intent(HomePageActivity.this, SettingsActivity.class);
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                Intent intent;
+//
+//                switch (item.getItemId()) {
+//                    case R.id.today:
+//                        intent = new Intent(HomePageActivity.this, TestActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case R.id.assignment:
+//                        intent = new Intent(HomePageActivity.this, PlusActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case R.id.settings:
+//                        intent = new Intent(HomePageActivity.this, SettingsActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
         txt.setText("Home");
     }
 
