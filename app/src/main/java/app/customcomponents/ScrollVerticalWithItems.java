@@ -41,13 +41,13 @@ public class ScrollVerticalWithItems extends ScrollView {
     public <T extends IHasText> void SetTasks(ArrayList<T> tasks) {
 
         linearLayout.removeAllViews();
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         //TODO: change the for to foreach with stream.
 
         for (int i = 0; i < tasks.size(); i++) {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
             taskLayout.setDescription(tasks.get(i).GetDescription());
             linearLayout.addView(taskLayout);
-
         }
 
 

@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <app.customcomponents.ScrollVerticalWithItems
-            android:id="@+id/TasksHolder"
+            android:id="@+id/homePageActivityTasksHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start">

@@ -38,33 +38,33 @@ public class LoginActivity extends ActivityBase {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-            if(requestCode==99) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
-                    mFusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(this, location -> {
-                                // Got last known location. In some rare situations this can be null.
+        if (requestCode == 99) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                mFusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(this, location -> {
+                            // Got last known location. In some rare situations this can be null.
 //                                if (location != null) {
 //                                    Toast.makeText(getApplicationContext(),
 //                                            location.toString(), Toast.LENGTH_LONG)
 //                                            .show();
 //                                }
-                            });
+                        });
 
-                } else {
+            } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
             }
-
-            // other 'switch' lines to check for other
-            // permissions this app might request
+            return;
         }
+
+        // other 'switch' lines to check for other
+        // permissions this app might request
+    }
 
 
     @Override
@@ -198,7 +198,6 @@ public class LoginActivity extends ActivityBase {
             }
         });
     }
-
 
 
 }

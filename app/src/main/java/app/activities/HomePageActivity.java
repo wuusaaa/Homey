@@ -49,7 +49,7 @@ public class HomePageActivity extends ActivityBase {
         pDialog.setCancelable(false);
 
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
-        scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.TasksHolder);
+        scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
         plusButton = (ImageButton) findViewById(R.id.buttonPlus);
         txt = (TextView) findViewById(R.id.textViewScreenName);
         screenName = (TextView) findViewById(R.id.textViewScreenName);

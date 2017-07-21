@@ -1,29 +1,40 @@
 package app.customcomponents;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-public class TaskLayout extends View {
-
+/**
+ * TODO: document your custom view class.
+ */
+public class TaskLayout extends LinearLayout {
     private TextView descriptionTextView;
     private CheckBox checkBox;
 
     public TaskLayout(Context context) {
         super(context);
-        descriptionTextView = new TextView(this.getContext());
-        checkBox = new CheckBox(this.getContext());
+        setOrientation(HORIZONTAL);
+        descriptionTextView = new TextView(getContext());
+        checkBox = new CheckBox(getContext());
+        this.addView(checkBox);
+        this.addView(descriptionTextView);
     }
 
-    public void setDescription(String description) {
-        descriptionTextView.setText(description);
+    public String getDescriptionText() {
+        return descriptionTextView.getText().toString();
     }
 
-    public boolean isChecked() {
+    public boolean getCheckBox() {
         return checkBox.isChecked();
     }
 
+    public void setDescription(String descriptionText) {
+        this.descriptionTextView.setText(descriptionText);
+    }
 
+    public void setCheckBox(boolean checked) {
+        this.checkBox.setChecked(checked);
+    }
 }
