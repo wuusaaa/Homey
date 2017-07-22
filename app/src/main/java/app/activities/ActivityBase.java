@@ -34,7 +34,7 @@ public class ActivityBase extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.settings:
-                    intent = new Intent(this, SettingsActivity.class);
+                    intent = new Intent(this, LogoutActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.today:
