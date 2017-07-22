@@ -6,13 +6,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.project.homey.R;
 
 import java.util.ArrayList;
 
@@ -28,16 +24,11 @@ import callback.GotoGroupPageCallBack;
 public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
     private final LinearLayout linearLayout = new LinearLayout(this.getContext());
-    private TextView emptyMessage;
 
     public ScrollHorizontalWithItems(Context context) {
         super(context);
 
         this.addView(linearLayout);
-
-        emptyMessage = new TextView(context);
-        emptyMessage.setText(R.string.emptyMessage);
-        this.addView(emptyMessage);
     }
 
     public ScrollHorizontalWithItems(Context context, AttributeSet attrs) {
@@ -60,7 +51,6 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         for (int i = 0; i < userGroups.size(); i++) {
             Button button = new Button(this.getContext());
             button.setText(userGroups.get(i).GetName());
-            button.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
 
             LayoutParams layoutParamsName = new LayoutParams(new LinearLayout.LayoutParams(300, 300));
             layoutParamsName.leftMargin = 15;
@@ -68,39 +58,24 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             layoutParamsName.topMargin = 15;
             layoutParamsName.bottomMargin = 15;
             button.setLayoutParams(layoutParamsName);
-            GradientDrawable shape =  new GradientDrawable();
-            shape.setCornerRadius( 500 );
-            if(i%2==0) {
+
+            GradientDrawable shape = new GradientDrawable();
+            shape.setCornerRadius(500);
+
+            if (i % 2 == 0) {
                 shape.setColor(Color.parseColor("#D8EAF6"));
-            }
-            else {
+            } else {
                 shape.setColor(Color.parseColor("#EAEAEA"));
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 button.setBackground(shape);
             }
-            button.setTextColor(Color.WHITE);
+
+            button.setTextColor(Color.BLACK);
             final int finalI = i;
-            button.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   callBack.onSuccess((Group)userGroups.get(finalI));
-                }
-            });
+            button.setOnClickListener(v -> callBack.onSuccess((Group) userGroups.get(finalI)));
             linearLayout.addView(button);
         }
-    }
-
-    public void SetEmptyMessage(String message) {
-
-    }
-
-    public void HideEmptyMessage() {
-
-    }
-
-    public void ShowEmptyMessage() {
-
     }
 }
