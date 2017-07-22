@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/headerId"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="50dp"
+    android:background="#01A9D9"
     android:orientation="horizontal">
 
 
@@ -13,21 +14,20 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:adjustViewBounds="true"
-        android:maxWidth="40dp"
-        android:maxHeight="40dp"
-        android:scaleType="fitCenter"
         android:background="@color/Transparent"
         android:elevation="0dp"
-        app:srcCompat="@mipmap/ic_header_logo" />
+        android:paddingLeft="-30dp"
+        app:srcCompat="@mipmap/ic_settings" />
 
     <TextView
         android:id="@+id/textViewScreenName"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1.00"
+        android:fontFamily="sans-serif-condensed"
         android:text="Screen name"
         android:textAlignment="center"
+        android:textColor="#ffffff"
         android:textSize="30sp"
         tools:gravity="center" />
 
@@ -37,6 +37,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/Transparent"
-        app:srcCompat="@mipmap/add_button" />
+        android:paddingRight="-30dp"
+        app:srcCompat="@mipmap/ic_plus_button" />
 
 </LinearLayout>
