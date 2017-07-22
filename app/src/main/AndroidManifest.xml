@@ -33,7 +33,7 @@
         <activity android:name="app.activities.AddTaskActivity" />
         <activity android:name="app.activities.GroupPageActivity" />
         <activity android:name="app.activities.LoginActivity" />
-        <activity android:name="app.activities.SettingsActivity" />
+        <activity android:name="app.activities.LogoutActivity" />
         <activity android:name="app.activities.ForgotPasswordActivity" />
         <activity android:name="app.activities.AddGroupActivity" />
         <activity android:name="app.activities.ActivityBase"></activity>

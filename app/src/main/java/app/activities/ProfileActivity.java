@@ -1,6 +1,5 @@
 package app.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,7 +14,5 @@ public class ProfileActivity extends ActivityBase {
     }
 
     public void editButton_onClick(View view) {
-        Intent intent = new Intent(this, EditProfileActivity.class);
-        startActivity(intent);
     }
 }

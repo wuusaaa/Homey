@@ -13,7 +13,7 @@ import app.database.SQLiteHandler;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 
-public class SettingsActivity extends ActivityBase {
+public class LogoutActivity extends ActivityBase {
     private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;
@@ -23,7 +23,7 @@ public class SettingsActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_logout);
 
         txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
@@ -62,7 +62,7 @@ public class SettingsActivity extends ActivityBase {
         db.deleteUsers();
 
         // Launching the login activity
-        Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+        Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
