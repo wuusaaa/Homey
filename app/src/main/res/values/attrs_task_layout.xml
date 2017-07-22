@@ -1,4 +1,3 @@
 <resources>
-    <declare-styleable name="TaskLayout">
-    </declare-styleable>
+    <declare-styleable name="TaskLayout" />
 </resources>

@@ -2,7 +2,6 @@ package app.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,28 +31,25 @@ public class ForgotPasswordActivity extends ActivityBase {
         pDialog.setCancelable(false);
         pDialog.setTitle("Please wait.");
 
-        resetPassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(emailEditText.getText().toString(), new ServerCallBack() {
-                    @Override
-                    public void onSuccess(JSONObject result) {
-                        hideDialog();
-                        Toast.makeText(getApplicationContext(),
-                                "Password has been reset! Please check your email.", Toast.LENGTH_LONG)
-                                .show();
-                    }
+        resetPassButton.setOnClickListener(v -> {
+            ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(emailEditText.getText().toString(), new ServerCallBack() {
+                @Override
+                public void onSuccess(JSONObject result) {
+                    hideDialog();
+                    Toast.makeText(getApplicationContext(),
+                            "Password has been reset! Please check your email.", Toast.LENGTH_LONG)
+                            .show();
+                }
 
-                    @Override
-                    public void onFailure(String error) {
-                        hideDialog();
-                        Toast.makeText(getApplicationContext(),
-                                error, Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-                showDialog();
-            }
+                @Override
+                public void onFailure(String error) {
+                    hideDialog();
+                    Toast.makeText(getApplicationContext(),
+                            error, Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+            showDialog();
         });
     }
 

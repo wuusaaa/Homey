@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_add_task"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,17 +10,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="app.activities.AddTaskActivity">
-
-    <Button
-        android:id="@+id/buttonAddTaskToDB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="102dp"
-        android:layout_marginStart="102dp"
-        android:text="Add" />
 
     <EditText
         android:id="@+id/editTextTaskName"
@@ -105,6 +95,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextTaskEndDate"
         android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/buttonAddTaskToDB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_marginBottom="31dp"
+        android:layout_above="@+id/bottom_navigation_view"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:itemBackground="@color/Transparent"
+        app:itemIconTint="@color/color_states"
+        app:itemTextColor="@color/colorGray"
+        app:menu="@menu/buttons_menu" />
 
 
 

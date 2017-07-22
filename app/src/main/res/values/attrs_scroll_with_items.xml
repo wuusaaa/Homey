@@ -1,4 +1,3 @@
 <resources>
-    <declare-styleable name="ScrollHorizontalWithItems">
-    </declare-styleable>
+    <declare-styleable name="ScrollHorizontalWithItems" />
 </resources>
