@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.project.homey">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -36,7 +37,16 @@
         <activity android:name="app.activities.LogoutActivity" />
         <activity android:name="app.activities.ForgotPasswordActivity" />
         <activity android:name="app.activities.AddGroupActivity" />
-        <activity android:name="app.activities.ActivityBase"></activity>
+        <activity android:name="app.activities.ActivityBase" />
+        <activity
+            android:name="app.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="app.activities.ActivityBase"
+            tools:targetApi="jelly_bean">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.activities.ActivityBase" />
+        </activity>
     </application>
 
 </manifest>
