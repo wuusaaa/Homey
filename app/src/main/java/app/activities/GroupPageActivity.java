@@ -40,7 +40,7 @@ public class GroupPageActivity extends ActivityBase {
         Bundle b = this.getIntent().getExtras();
         if (b != null)
             group = b.getParcelable("group");
-        groupDescription = (TextView) findViewById(R.id.groupDescription);
+        groupDescription = (TextView) findViewById(R.id.groupPageActivityParticipantHolder);
 
         groupDescription.setText(group.GetDescription());
         pDialog = new HomeyProgressDialog(this);

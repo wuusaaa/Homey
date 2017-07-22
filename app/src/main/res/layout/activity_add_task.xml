@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="Name" />
 
     <EditText
         android:id="@+id/editTextTaskDesc"
@@ -35,7 +35,7 @@
         android:layout_below="@+id/editTextTaskName"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Description" />
+        android:hint="Description" />
 
     <EditText
         android:id="@+id/editTextTaskStatus"
@@ -48,7 +48,7 @@
         android:layout_below="@+id/editTextTaskDesc"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Status" />
+        android:hint="Status" />
 
     <EditText
         android:id="@+id/editTextTaskLocation"
@@ -61,7 +61,7 @@
         android:layout_below="@+id/editTextTaskStatus"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Location" />
+        android:hint="Location" />
 
     <EditText
         android:id="@+id/editTextTaskStartDate"
@@ -74,7 +74,7 @@
         android:layout_below="@+id/editTextTaskLocation"
         android:ems="10"
         android:inputType="date"
-        android:text="10/10/2011" />
+        android:hint="10/10/2011" />
 
     <EditText
         android:id="@+id/editTextTaskEndDate"
@@ -87,7 +87,7 @@
         android:layout_centerVertical="true"
         android:ems="10"
         android:inputType="date"
-        android:text="11/11/2010" />
+        android:hint="11/11/2010" />
 
     <Spinner
         android:id="@+id/spinnerTaskGroup"
