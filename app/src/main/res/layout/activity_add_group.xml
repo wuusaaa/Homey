@@ -1,55 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.activities.AddGroupActivity">
-
-    <Button
-        android:id="@+id/buttonAddGroupSubmit"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:onClick="buttonAddGroup_onClick"
-        android:text="Add Group"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="427dp" />
-
-    <EditText
-        android:id="@+id/editTextImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="img"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="91dp"
-        android:layout_marginTop="55dp"
-        android:layout_below="@+id/editTextName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteY="35dp"
-        tools:layout_editor_absoluteX="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/editTextImg"
-        android:layout_alignStart="@+id/editTextImg" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="app.activities.AddGroupActivity"
+    android:orientation="vertical">
 
     <include
-        layout="@layout/navigation"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"></include>
+        layout="@layout/header_items"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="123dp">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginEnd="33dp"
+            android:layout_marginRight="33dp"
+            android:background="@color/Transparent"
+            android:adjustViewBounds="true"
+            android:maxWidth="120dp"
+            android:maxHeight="120dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_upload_image_group"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextImg"
+            android:layout_alignStart="@+id/editTextImg"
+            android:layout_below="@+id/editTextGroupName"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="10dp"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="35dp" />
+
+        <EditText
+            android:id="@+id/editTextGroupName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextImg"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/editTextImg"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="10dp"
+            android:ems="10"
+            android:hint="Group name"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="35dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </HorizontalScrollView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonAddGroupSubmit"
+            android:layout_width="262dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="54dp"
+            android:layout_weight="1"
+            android:onClick="buttonAddGroup_onClick"
+            android:text="Create Group"
+            tools:layout_editor_absoluteX="61dp"
+            tools:layout_editor_absoluteY="427dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/Transparent"
+            app:itemIconTint="@color/color_states"
+            app:itemTextColor="@color/colorGray"
+            app:menu="@menu/buttons_menu" />
+    </LinearLayout>
+
+
+</LinearLayout>
