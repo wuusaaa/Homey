@@ -9,6 +9,7 @@ import com.project.homey.R;
 import java.util.ArrayList;
 
 import app.customcomponents.HomeyProgressDialog;
+import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
@@ -18,12 +19,12 @@ import app.logic.managers.TaskManager;
 import callback.TasksCallBack;
 
 /**
- * Created by Raz on 7/6/2017.
+ * Created by Raz on 7/6/2017
  */
 
 public class GroupPageActivity extends ActivityBase {
     private Group group;
-    private TextView groupDescription;
+    private ScrollHorizontalWithItems participantsHolder;
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView screenName;
@@ -40,9 +41,8 @@ public class GroupPageActivity extends ActivityBase {
         Bundle b = this.getIntent().getExtras();
         if (b != null)
             group = b.getParcelable("group");
-        groupDescription = (TextView) findViewById(R.id.groupPageActivityParticipantHolder);
+        participantsHolder = (ScrollHorizontalWithItems) findViewById(R.id.groupPageActivityParticipantsHolder);
 
-        groupDescription.setText(group.GetDescription());
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
