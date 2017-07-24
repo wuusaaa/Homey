@@ -36,6 +36,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIUpdateTableValueURL = "https://www.crossword-clues.com/homey/update-table-value.php";
 
+    private final String APIRemoveFromTableURL = "https://www.crossword-clues.com/homey/remove-from-table.php";
+
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
     //default is Home Page - first screen
@@ -176,5 +178,14 @@ public class EnvironmentManager extends ManagerBase {
      */
     public String GetAPIUpdateTableValueURL() {
         return APIUpdateTableValueURL;
+    }
+
+    /**
+     * getter for the APIRemoveFromTableURL
+     *
+     * @return String
+     */
+    public String getAPIRemoveFromTableURL() {
+        return APIRemoveFromTableURL;
     }
 }

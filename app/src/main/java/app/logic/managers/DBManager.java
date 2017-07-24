@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import app.AppController;
 import app.database.DBDriver;
@@ -221,6 +222,18 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public void RemoveGroup(final int groupId, final ServerCallBack callBack) {
+        removeFromTable("group",groupId,callBack);
+    }
+
+    public void RemoveTask(final int taskId, final ServerCallBack callBack) {
+        removeFromTable("task",taskId,callBack);
+    }
+
+    private void removeFromTable(final String table, final int id, final ServerCallBack callBack){
+        //TODO add this to the API server
+    }
+
     private void ChangePassword(final int userId, final String oldPass, final String newPass) {
 
     }
@@ -238,6 +251,7 @@ public class DBManager extends ManagerBase {
     }
 
     private void updateTableValue(final String table, final int id, final String property, final Object value, final ServerCallBack callBack){
+        //TODO add this to the API server
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
