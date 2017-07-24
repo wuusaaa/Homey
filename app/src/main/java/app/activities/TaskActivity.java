@@ -1,7 +1,6 @@
 package app.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
 import com.project.homey.R;
@@ -10,7 +9,7 @@ import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollVerticalWithItems;
 
 
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends ActivityWithNavigatorBase {
 
     private HomeyProgressDialog pDialog;
     private LinearLayout tasksHolderLayout;

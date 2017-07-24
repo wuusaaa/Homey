@@ -22,7 +22,7 @@ import callback.TasksCallBack;
  * Created by Raz on 7/6/2017
  */
 
-public class GroupPageActivity extends ActivityBase {
+public class GroupPageActivity extends ActivityWithNavigatorBase {
     private Group group;
     private ScrollHorizontalWithItems participantsHolder;
     private HomeyProgressDialog pDialog;

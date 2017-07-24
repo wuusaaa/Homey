@@ -26,7 +26,7 @@ import app.logic.managers.SessionManager;
 import callback.GroupsCallBack;
 import callback.TaskCallBack;
 
-public class AddTaskActivity extends ActivityBase {
+public class AddTaskActivity extends ActivityWithNavigatorBase {
 
     EditText editTextName;
     EditText editTextDesc;
@@ -51,7 +51,7 @@ public class AddTaskActivity extends ActivityBase {
         dropdown = (Spinner)findViewById(R.id.spinnerTaskGroup);
 
         Context context= this;
-        List<String> items = new ArrayList<String>();
+        List<String> items = new ArrayList<>();
         pDialog.showDialog();
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
@@ -60,7 +60,7 @@ public class AddTaskActivity extends ActivityBase {
                 for (Group group:groups) {
                     items.add(group.GetName());
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, items);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 dropdown.setAdapter(adapter);
                 dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

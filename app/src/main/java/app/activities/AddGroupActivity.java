@@ -12,7 +12,7 @@ import app.logic.managers.Services;
 import callback.GroupCallBack;
 
 
-public class AddGroupActivity extends ActivityBase {
+public class AddGroupActivity extends ActivityWithNavigatorBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

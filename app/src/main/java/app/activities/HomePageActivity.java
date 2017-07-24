@@ -26,14 +26,12 @@ import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
 
-public class HomePageActivity extends ActivityBase {
+public class HomePageActivity extends ActivityWithNavigatorBase {
 
     //***** Class components: *****
-    private BottomNavigationView bottomNavigationView;
     private ImageButton plusButton;
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
-    private TextView txt;
     private TextView screenName;
     private HomeyProgressDialog pDialog;
     //*****************************
@@ -51,7 +49,6 @@ public class HomePageActivity extends ActivityBase {
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
         plusButton = (ImageButton) findViewById(R.id.buttonPlus);
-        txt = (TextView) findViewById(R.id.textViewScreenName);
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
 
@@ -62,7 +59,6 @@ public class HomePageActivity extends ActivityBase {
         });
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
-        txt.setText("Home");
     }
 
     private void loadTasks() {

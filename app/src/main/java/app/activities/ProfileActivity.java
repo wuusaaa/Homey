@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.project.homey.R;
 
-public class ProfileActivity extends ActivityBase {
+public class ProfileActivity extends ActivityWithNavigatorBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
