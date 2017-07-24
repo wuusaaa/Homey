@@ -182,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                app:itemBackground="@color/colorPrimary"
+                app:itemBackground="@color/Transparent"
                 app:itemIconTint="@color/color_states"
                 app:itemTextColor="@color/colorGray"
                 app:layout_anchor="@id/imageButtonUsersProfilePicture"
