@@ -47,10 +47,11 @@ public class ScrollVerticalWithItems extends ScrollView {
         for (int i = 0; i < tasks.size(); i++) {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
             taskLayout.setDescription(tasks.get(i).GetDescription());
+
+
             linearLayout.addView(taskLayout);
             linearLayout.addView(new Separator(getContext()));
         }
-
 
     }
 }

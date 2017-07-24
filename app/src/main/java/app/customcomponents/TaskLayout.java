@@ -18,6 +18,7 @@ public class TaskLayout extends LinearLayout {
         setOrientation(HORIZONTAL);
         descriptionTextView = new TextView(getContext());
         checkBox = new CheckBox(getContext());
+
         this.addView(checkBox);
         this.addView(descriptionTextView);
     }

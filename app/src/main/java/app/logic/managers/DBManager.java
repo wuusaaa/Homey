@@ -1,5 +1,6 @@
 package app.logic.managers;
 
+import android.content.pm.LauncherApps;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -225,15 +226,69 @@ public class DBManager extends ManagerBase {
     }
 
     public void UpdateUser(final int userId, final String property, final Object value, final ServerCallBack callBack) {
-
+        updateTableValue("user",userId,property,value,callBack);
     }
 
     public void UpdateTask(final int taskId, final String property, final Object value, final ServerCallBack callBack) {
-
+        updateTableValue("task",taskId,property,value,callBack);
     }
 
     public void UpdateGroup(final int groupId, final String property, final Object value, final ServerCallBack callBack) {
+        updateTableValue("group",groupId,property,value,callBack);
+    }
 
+    private void updateTableValue(final String table, final int id, final String property, final Object value, final ServerCallBack callBack){
+        // Tag used to cancel the request
+        String tag_string_req = "update_value";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIUpdateTableValueURL(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess(jsonObject);
+                    } else {
+
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("table", table);
+                params.put("property", property);
+                params.put("id", id + "");
+                params.put("value", value.toString());
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     public void AddTask(final String name, final String description, final int creatorId, final int groupId, final String status, final String location, final Date startTime, final Date endTime, final TaskCallBack callBack) {

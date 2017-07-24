@@ -34,6 +34,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIGetTasksByUserIdURL = "https://www.crossword-clues.com/homey/get-tasks-by-user-id.php";
 
+    private final String APIUpdateTableValueURL = "https://www.crossword-clues.com/homey/update-table-value.php";
+
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
 
     //default is Home Page - first screen
@@ -78,7 +80,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIPassResetURL
+     * getter for the APIPassResetURL
      *
      * @return String
      */
@@ -87,7 +89,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIAddTaskURL
+     * getter for the APIAddTaskURL
      *
      * @return String
      */
@@ -96,7 +98,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIAddGroupURL
+     * getter for the APIAddGroupURL
      *
      * @return String
      */
@@ -105,7 +107,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIGetUserURL
+     * getter for the APIGetUserURL
      *
      * @return String
      */
@@ -114,7 +116,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIGetGroupURL
+     * getter for the APIGetGroupURL
      *
      * @return String
      */
@@ -123,7 +125,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIGetUserGroupsURL
+     * getter for the APIGetUserGroupsURL
      *
      * @return String
      */
@@ -132,7 +134,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIGetTasksByGroupIdURL
+     * getter for the APIGetTasksByGroupIdURL
      *
      * @return String
      */
@@ -141,7 +143,7 @@ public class EnvironmentManager extends ManagerBase {
     }
 
     /**
-     * getter for the GetAPIGetTasksByUserIdURL
+     * getter for the APIGetTasksByUserIdURL
      *
      * @return String
      */
@@ -165,5 +167,14 @@ public class EnvironmentManager extends ManagerBase {
      */
     public void SetScreenName(String screenName) {
         this.screenName = screenName;
+    }
+
+    /**
+     * getter for the APIUpdateTableValueURL
+     *
+     * @return String
+     */
+    public String GetAPIUpdateTableValueURL() {
+        return APIUpdateTableValueURL;
     }
 }
