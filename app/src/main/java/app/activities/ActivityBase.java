@@ -16,5 +16,6 @@ public class ActivityBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_base);
+
     }
 }
