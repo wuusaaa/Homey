@@ -1,6 +1,7 @@
 package app.customcomponents;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -51,7 +52,8 @@ public class TaskLayout extends LinearLayout {
         taskInfo.setOrientation(VERTICAL);
 
         nameTextView = new TextView(getContext());
-        nameTextView.setTextSize(28);
+        nameTextView.setTextSize(20);
+        nameTextView.setTypeface(null, Typeface.BOLD);
         nameTextView.setLayoutParams(textViewLayoutParams);
 
         descriptionTextView = new TextView(getContext());

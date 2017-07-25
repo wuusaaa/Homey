@@ -15,9 +15,9 @@ public class Separator extends LinearLayout {
 
     public Separator(Context context) {
         super(context);
-        this.setOrientation(HORIZONTAL);
         this.setMinimumHeight(1);
-        this.setMinimumWidth(MATCH_PARENT);
+        LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, 2);
+        this.setLayoutParams(layoutParams);
         this.setBackgroundColor(Color.parseColor("#000000"));
     }
 
