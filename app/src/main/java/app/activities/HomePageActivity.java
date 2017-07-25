@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -79,7 +80,7 @@ public class HomePageActivity extends ActivityWithNavigatorBase {
 
     private void loadGroups() {
         pDialog.showDialog();
-        Context context=this;
+        Context context = this;
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
@@ -114,6 +115,16 @@ public class HomePageActivity extends ActivityWithNavigatorBase {
         super.onStart();
         loadGroups();
         loadTasks();
+    }
+
+    @Override
+    protected int getMenuId() {
+        return R.id.menuHome;
+    }
+
+    public void onLogoutClick(View view) {
+        Intent intent = new Intent(this, LogoutActivity.class);
+        startActivity(intent);
     }
 }
 

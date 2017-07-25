@@ -1,12 +1,11 @@
 package app.logic.appcomponents;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import app.activities.interfaces.IHasText;
 
 /**
- * Created by Raz on 12/20/2016.
+ * Created by Raz on 12/20/2016
  */
 
 public class Task implements IHasText {

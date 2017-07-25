@@ -3,15 +3,13 @@ package app.logic.appcomponents;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.Calendar;
-import java.util.StringJoiner;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
 
 /**
- * Created by Raz on 2/22/2017.
+ * Created by Raz on 2/22/2017
  */
 
 public class Group implements IHasText, IHasImage,Parcelable {

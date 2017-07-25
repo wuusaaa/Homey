@@ -29,7 +29,6 @@
         <activity android:name="app.activities.RegistrationActivity" />
         <activity android:name="app.activities.HomePageActivity" />
         <activity android:name="app.activities.PlusActivity" />
-        <activity android:name="app.activities.TestActivity" />
         <activity android:name="app.activities.ProfileActivity" />
         <activity android:name="app.activities.AddTaskActivity" />
         <activity android:name="app.activities.GroupPageActivity" />
@@ -38,6 +37,8 @@
         <activity android:name="app.activities.ForgotPasswordActivity" />
         <activity android:name="app.activities.AddGroupActivity" />
         <activity android:name="app.activities.ActivityBase" />
+        <activity android:name="app.activities.ActivityWithNavigatorBase" />
+        <activity android:name="app.activities.TaskActivity" />
         <activity
             android:name="app.activities.SettingsActivity"
             android:label="@string/title_activity_settings"

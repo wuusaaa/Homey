@@ -64,4 +64,9 @@ public class GroupPageActivity extends ActivityWithNavigatorBase {
             }
         },Integer.parseInt(group.GetId()));
     }
+
+    @Override
+    protected int getMenuId() {
+        return R.id.menuMyGroups;
+    }
 }

@@ -15,4 +15,9 @@ public class ProfileActivity extends ActivityWithNavigatorBase {
 
     public void editButton_onClick(View view) {
     }
+
+    @Override
+    protected int getMenuId() {
+        return R.id.menuProfile;
+    }
 }

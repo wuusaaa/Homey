@@ -9,7 +9,7 @@ import callback.GroupCallBack;
 import callback.GroupsCallBack;
 
 /**
- * Created by barakm on 09/03/2017.
+ * Created by barakm on 09/03/2017
  */
 
 public class GroupManager extends ManagerBase {

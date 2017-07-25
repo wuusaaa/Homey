@@ -3,12 +3,12 @@ package app.customcomponents;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -49,15 +49,22 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
         //TODO: change the for to foreach with stream.
         for (int i = 0; i < userGroups.size(); i++) {
-            Button button = new Button(this.getContext());
-            button.setText(userGroups.get(i).GetName());
+            LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
+            ImageButton imageButton = new ImageButton(this.getContext());
+            TextView textView = new TextView(this.getContext());
 
-            LayoutParams layoutParamsName = new LayoutParams(new LinearLayout.LayoutParams(300, 300));
-            layoutParamsName.leftMargin = 15;
-            layoutParamsName.rightMargin = 15;
-            layoutParamsName.topMargin = 15;
-            layoutParamsName.bottomMargin = 15;
-            button.setLayoutParams(layoutParamsName);
+            verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
+
+            LayoutParams layoutParamsImageButton = new LayoutParams(new LinearLayout.LayoutParams(300, 300));
+            setLayoutParamsMargin(layoutParamsImageButton);
+            imageButton.setLayoutParams(layoutParamsImageButton);
+
+            LayoutParams layoutParamsTextView = new LayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            setLayoutParamsMargin(layoutParamsTextView);
+            textView.setLayoutParams(layoutParamsTextView);
+
+            textView.setText(userGroups.get(i).GetName());
+            textView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
             GradientDrawable shape = new GradientDrawable();
             shape.setCornerRadius(500);
@@ -68,14 +75,22 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
                 shape.setColor(Color.parseColor("#EAEAEA"));
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                button.setBackground(shape);
-            }
+            imageButton.setBackground(shape);
 
-            button.setTextColor(Color.BLACK);
+            textView.setTextColor(Color.BLACK);
             final int finalI = i;
-            button.setOnClickListener(v -> callBack.onSuccess((Group) userGroups.get(finalI)));
-            linearLayout.addView(button);
+            imageButton.setOnClickListener(v -> callBack.onSuccess((Group) userGroups.get(finalI)));
+
+            verticalLinearLayout.addView(imageButton);
+            verticalLinearLayout.addView(textView);
+            linearLayout.addView(verticalLinearLayout);
         }
+    }
+
+    private void setLayoutParamsMargin(LayoutParams layoutParamsImageButton) {
+        layoutParamsImageButton.leftMargin = 15;
+        layoutParamsImageButton.rightMargin = 15;
+        layoutParamsImageButton.topMargin = 15;
+        layoutParamsImageButton.bottomMargin = 15;
     }
 }

@@ -1,6 +1,5 @@
 package app.logic.managers;
 
-import android.content.pm.LauncherApps;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -19,7 +18,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
 
 import app.AppController;
 import app.database.DBDriver;

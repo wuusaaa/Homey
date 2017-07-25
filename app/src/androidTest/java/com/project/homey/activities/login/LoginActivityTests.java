@@ -90,7 +90,7 @@ public class LoginActivityTests extends ActivityTestBase {
     }
 
     private void logout() {
-        getViewById(R.id.settings).click();
+        getViewById(R.id.loginActivity).click();
         getViewById(R.id.buttonLogout).click();
     }
 

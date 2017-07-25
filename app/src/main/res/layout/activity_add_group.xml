@@ -102,22 +102,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            app:itemBackground="@color/Transparent"
-            app:itemIconTint="@color/color_states"
-            app:itemTextColor="@color/colorGray"
-            app:menu="@menu/buttons_menu" />
-    </LinearLayout>
-
-
 </LinearLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -210,20 +209,4 @@
             android:text="@string/complete" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/taskActivityNavigatorHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:itemBackground="@color/Transparent"
-            app:itemIconTint="@color/color_states"
-            app:itemTextColor="@color/colorGray"
-            app:menu="@menu/buttons_menu" />
-    </LinearLayout>
 </LinearLayout>

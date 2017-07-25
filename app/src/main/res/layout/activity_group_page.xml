@@ -1,92 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:weightSum="12"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:weightSum="12"
     tools:context="app.activities.GroupPageActivity">
 
 
-<LinearLayout
-    android:id="@+id/Body"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="12"
-    android:orientation="vertical"
-    android:weightSum="10">
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/header_items"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
-        android:id="@+id/groupActivityImageLayout"
+        android:id="@+id/Body"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="12"
+        android:orientation="vertical"
+        android:weightSum="10">
 
-        <ImageView
-            android:id="@+id/groupActivityImage"
+        <include
+            android:id="@+id/header"
+            layout="@layout/header_items"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
-    </LinearLayout>
+            android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/groupActivityTasksLayout"
-        android:layout_weight="5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <app.customcomponents.ScrollVerticalWithItems
-            android:id="@+id/homePageActivityTasksHolder"
+        <LinearLayout
+            android:id="@+id/groupActivityImageLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start">
+            android:layout_height="80dp"
+            android:orientation="horizontal">
 
-        </app.customcomponents.ScrollVerticalWithItems>
+            <ImageView
+                android:id="@+id/groupActivityImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/groupActivityUsersLayout"
-        android:layout_weight="5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-        <app.customcomponents.ScrollHorizontalWithItems
+        <LinearLayout
+            android:id="@+id/groupActivityTasksLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/groupPageActivityParticipantsHolder">
+            android:layout_height="0dp"
+            android:layout_weight="5">
 
-        </app.customcomponents.ScrollHorizontalWithItems>
+            <app.customcomponents.ScrollVerticalWithItems
+                android:id="@+id/homePageActivityTasksHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start">
 
-    </LinearLayout>
+            </app.customcomponents.ScrollVerticalWithItems>
 
+        </LinearLayout>
 
-
-
-
-</LinearLayout>
-
-    <LinearLayout
-        android:layout_weight="0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+        <LinearLayout
+            android:id="@+id/groupActivityUsersLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            app:itemBackground="@color/Transparent"
-            app:itemIconTint="@color/color_states"
-            app:itemTextColor="@color/colorGray"
-            app:menu="@menu/buttons_menu" />
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+            <app.customcomponents.ScrollHorizontalWithItems
+                android:id="@+id/groupPageActivityParticipantsHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </app.customcomponents.ScrollHorizontalWithItems>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/assignment"
+        android:id="@+id/menuHome"
+        android:icon="@mipmap/profileicon"
+        android:title="Homey" />
+    <item
+        android:id="@+id/menuMyTasks"
         android:icon="@drawable/ic_action_assignment"
-        android:title="Assignment" />
+        android:title="My Tasks" />
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_action_settings"
-        android:title="Settings" />
-    <item
-        android:id="@+id/today"
+        android:id="@+id/menuMyGroups"
         android:icon="@drawable/ic_action_today"
-        android:title="Calendar" />
+        android:title="My Groups" />
     <item
-        android:id="@+id/groups"
+        android:id="@+id/menuProfile"
         android:icon="@drawable/ic_action_today"
-        android:title="Groups" />
-    <item
-        android:id="@+id/home"
-        android:icon="@drawable/ic_action_today"
-        android:title="Home" />
+        android:title="Profile" />
 </menu>
