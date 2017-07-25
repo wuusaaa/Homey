@@ -8,6 +8,8 @@ import android.widget.ScrollView;
 import java.util.ArrayList;
 
 import app.activities.interfaces.IHasText;
+import app.logic.appcomponents.Task;
+import callback.GoToTaskPageCallBack;
 
 
 /**
@@ -38,7 +40,7 @@ public class ScrollVerticalWithItems extends ScrollView {
     }
 
 
-    public <T extends IHasText> void SetTasks(ArrayList<T> tasks) {
+    public <T extends IHasText> void SetTasks(ArrayList<T> tasks, GoToTaskPageCallBack callBack) {
 
         linearLayout.removeAllViews();
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -47,11 +49,9 @@ public class ScrollVerticalWithItems extends ScrollView {
         for (int i = 0; i < tasks.size(); i++) {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
             taskLayout.setDescription(tasks.get(i).GetDescription());
-
-
+            taskLayout.SetOnClick(callBack, (Task) tasks.get(i));
             linearLayout.addView(taskLayout);
             linearLayout.addView(new Separator(getContext()));
         }
-
     }
 }

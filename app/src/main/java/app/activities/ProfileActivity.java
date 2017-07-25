@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.project.homey.R;
 
-public class ProfileActivity extends ActivityWithNavigatorBase {
+public class ProfileActivity extends ActivityWithHeaderBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,10 +14,5 @@ public class ProfileActivity extends ActivityWithNavigatorBase {
     }
 
     public void editButton_onClick(View view) {
-    }
-
-    @Override
-    protected int getMenuId() {
-        return R.id.menuProfile;
     }
 }

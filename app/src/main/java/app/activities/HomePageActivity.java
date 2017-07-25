@@ -3,7 +3,6 @@ package app.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,20 +20,24 @@ import app.logic.appcomponents.Task;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
+import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
+import callback.GoToTaskPageCallBack;
 import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
 
-public class HomePageActivity extends ActivityWithNavigatorBase {
+public class HomePageActivity extends ActivityWithHeaderBase {
 
     //***** Class components: *****
-    private ImageButton plusButton;
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView screenName;
+    private TextView textViewUserName;
+    private ImageButton buttonProfile;
     private HomeyProgressDialog pDialog;
+    private GoToTaskPageCallBack taskClickCallBack;
     //*****************************
 
     @Override
@@ -49,25 +52,44 @@ public class HomePageActivity extends ActivityWithNavigatorBase {
 
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
-        plusButton = (ImageButton) findViewById(R.id.buttonPlus);
+        textViewUserName = (TextView) findViewById(R.id.userName);
+        buttonProfile = (ImageButton) findViewById(R.id.profileImage);
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
-
-        //TODO:: Remove the rest of the code from this function. (ben 17.6.17)
-        plusButton.setOnClickListener(v -> {
-            Intent intent = new Intent(HomePageActivity.this, PlusActivity.class);
-            startActivity(intent);
-        });
-
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initPage();
+    }
+
+    //******* Init functions: ********************
     private void loadTasks() {
         pDialog.showDialog();
+        Context context = this;
+
+        taskClickCallBack = new GoToTaskPageCallBack() {
+            @Override
+            public void onSuccess(Task task) {
+                Intent intent = new Intent(context, TaskActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("task", task);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        };
+
+
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks);
+                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack);
                 pDialog.hideDialog();
             }
 
@@ -76,6 +98,7 @@ public class HomePageActivity extends ActivityWithNavigatorBase {
                 pDialog.hideDialog();
             }
         });
+
     }
 
     private void loadGroups() {
@@ -110,17 +133,27 @@ public class HomePageActivity extends ActivityWithNavigatorBase {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void initPage() {
         loadGroups();
         loadTasks();
+        fetchUserName();
+        setProfileClick();
     }
 
-    @Override
-    protected int getMenuId() {
-        return R.id.menuHome;
+    private void setProfileClick() {
+        buttonProfile.setOnClickListener(clickedButton ->
+        {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        });
     }
+
+    private void fetchUserName() {
+        String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().getName();
+        textViewUserName.setText("Welcome " + userName);
+    }
+
+    //*********************************************
 
     public void onLogoutClick(View view) {
         Intent intent = new Intent(this, LogoutActivity.class);

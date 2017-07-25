@@ -10,7 +10,7 @@
 
 
     <ImageButton
-        android:id="@+id/imageView6"
+        android:id="@+id/imageViewSettings"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/textViewScreenName"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_weight="1.00"
         android:fontFamily="sans-serif-condensed"
@@ -32,7 +32,8 @@
         tools:gravity="center" />
 
     <ImageButton
-        android:id="@+id/buttonPlus"
+
+        android:id="@+id/imageButtonPlus"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"

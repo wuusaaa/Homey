@@ -221,14 +221,14 @@ public class DBManager extends ManagerBase {
     }
 
     public void RemoveGroup(final int groupId, final ServerCallBack callBack) {
-        removeFromTable("group",groupId,callBack);
+        removeFromTable("group", groupId, callBack);
     }
 
     public void RemoveTask(final int taskId, final ServerCallBack callBack) {
-        removeFromTable("task",taskId,callBack);
+        removeFromTable("task", taskId, callBack);
     }
 
-    private void removeFromTable(final String table, final int id, final ServerCallBack callBack){
+    private void removeFromTable(final String table, final int id, final ServerCallBack callBack) {
         //TODO add this to the API server
     }
 
@@ -237,18 +237,18 @@ public class DBManager extends ManagerBase {
     }
 
     public void UpdateUser(final int userId, final String property, final Object value, final ServerCallBack callBack) {
-        updateTableValue("user",userId,property,value,callBack);
+        updateTableValue("user", userId, property, value, callBack);
     }
 
     public void UpdateTask(final int taskId, final String property, final Object value, final ServerCallBack callBack) {
-        updateTableValue("task",taskId,property,value,callBack);
+        updateTableValue("task", taskId, property, value, callBack);
     }
 
     public void UpdateGroup(final int groupId, final String property, final Object value, final ServerCallBack callBack) {
-        updateTableValue("group",groupId,property,value,callBack);
+        updateTableValue("group", groupId, property, value, callBack);
     }
 
-    private void updateTableValue(final String table, final int id, final String property, final Object value, final ServerCallBack callBack){
+    private void updateTableValue(final String table, final int id, final String property, final Object value, final ServerCallBack callBack) {
         //TODO add this to the API server
         // Tag used to cancel the request
         String tag_string_req = "update_value";
@@ -317,7 +317,7 @@ public class DBManager extends ManagerBase {
                     boolean error = jsonObject.getBoolean("error");
                     if (!error) {// Task successfully stored in MySQL
                         String name = jsonObject.getString("name");
-                        int id = jsonObject.getInt("id");
+                        String id = jsonObject.getString("id");
                         String description = jsonObject.getString("description");
                         int creatorId = jsonObject.getInt("creator_id");
                         int groupId = jsonObject.getInt("group_id");
@@ -326,7 +326,7 @@ public class DBManager extends ManagerBase {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date startTime = dateFormat.parse(jsonObject.getString("start_time"));
                         Date endTime = dateFormat.parse(jsonObject.getString("end_time"));
-                        callBack.onSuccess(new Task(name, groupId, description, status, location, creatorId, startTime, endTime));
+                        callBack.onSuccess(new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime));
                     } else {
 
                         // Error occurred while adding a task. Get the error
@@ -584,7 +584,7 @@ public class DBManager extends ManagerBase {
                             Date startTime = dateFormat.parse(startTimeStr);
                             Date endTime = dateFormat.parse(endTimeStr);
 
-                            Task task = new Task(name, groupId, description, status, location, creatorId, startTime, endTime);
+                            Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime);
 
                             tasks.add(task);
                         }
@@ -662,7 +662,7 @@ public class DBManager extends ManagerBase {
                             Date startTime = dateFormat.parse(startTimeStr);
                             Date endTime = dateFormat.parse(endTimeStr);
 
-                            Task task = new Task(name, groupId, description, status, location, creatorId, startTime, endTime);
+                            Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime);
 
                             tasks.add(task);
                         }

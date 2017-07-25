@@ -1,5 +1,8 @@
 package app.logic.appcomponents;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 import app.activities.interfaces.IHasText;
@@ -8,8 +11,8 @@ import app.activities.interfaces.IHasText;
  * Created by Raz on 12/20/2016
  */
 
-public class Task implements IHasText {
-
+public class Task implements IHasText, Parcelable {
+    private String taskId;
     private String name;
     private int groupId;
     private String description;
@@ -19,7 +22,8 @@ public class Task implements IHasText {
     private Date startTime;
     private Date endTime;
 
-    public Task(String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime) {
+    public Task(String taskId, String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime) {
+        this.taskId = taskId;
         this.name = name;
         this.groupId = groupId;
         this.description = description;
@@ -29,6 +33,27 @@ public class Task implements IHasText {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    protected Task(Parcel in) {
+        name = in.readString();
+        groupId = in.readInt();
+        description = in.readString();
+        status = in.readString();
+        location = in.readString();
+        creatorId = in.readInt();
+    }
+
+    public static final Creator<Task> CREATOR = new Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
     public String GetName() {
         return name;
@@ -84,6 +109,24 @@ public class Task implements IHasText {
 
     public void SetEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(taskId);
+        dest.writeString(name);
+        dest.writeInt(groupId);
+        dest.writeString(description);
+        dest.writeString(status);
+        dest.writeString(location);
+        dest.writeInt(creatorId);
+        dest.writeLong(startTime.getTime());
+        dest.writeLong(endTime.getTime());
     }
 
 

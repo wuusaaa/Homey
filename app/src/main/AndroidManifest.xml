@@ -37,7 +37,7 @@
         <activity android:name="app.activities.ForgotPasswordActivity" />
         <activity android:name="app.activities.AddGroupActivity" />
         <activity android:name="app.activities.ActivityBase" />
-        <activity android:name="app.activities.ActivityWithNavigatorBase" />
+        <activity android:name="app.activities.ActivityWithHeaderBase" />
         <activity android:name="app.activities.TaskActivity" />
         <activity
             android:name="app.activities.SettingsActivity"

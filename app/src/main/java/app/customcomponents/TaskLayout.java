@@ -5,6 +5,9 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import app.logic.appcomponents.Task;
+import callback.GoToTaskPageCallBack;
+
 
 /**
  * TODO: document your custom view class.
@@ -37,5 +40,12 @@ public class TaskLayout extends LinearLayout {
 
     public void setCheckBox(boolean checked) {
         this.checkBox.setChecked(checked);
+    }
+
+    public void SetOnClick(GoToTaskPageCallBack callback, Task task) {
+        descriptionTextView.setOnClickListener(event ->
+        {
+            callback.onSuccess(task);
+        });
     }
 }

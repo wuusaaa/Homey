@@ -9,7 +9,7 @@ import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollVerticalWithItems;
 
 
-public class TaskActivity extends ActivityWithNavigatorBase {
+public class TaskActivity extends ActivityWithHeaderBase {
 
     private HomeyProgressDialog pDialog;
     private LinearLayout tasksHolderLayout;
@@ -20,7 +20,6 @@ public class TaskActivity extends ActivityWithNavigatorBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         pDialog = new HomeyProgressDialog(this);
-
     }
 
     @Override
@@ -30,6 +29,6 @@ public class TaskActivity extends ActivityWithNavigatorBase {
     }
 
     private void loadTaskInformation() {
-        pDialog.showDialog();
+        //pDialog.showDialog();
     }
 }

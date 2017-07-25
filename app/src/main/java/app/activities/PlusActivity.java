@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import com.project.homey.R;
 
-public class PlusActivity extends ActivityWithNavigatorBase {
+public class PlusActivity extends ActivityBase {
 
     Button addTaskButton;
     Button addGroupButton;

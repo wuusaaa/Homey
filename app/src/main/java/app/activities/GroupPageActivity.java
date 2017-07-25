@@ -1,5 +1,7 @@
 package app.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +18,14 @@ import app.logic.appcomponents.Task;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 import app.logic.managers.TaskManager;
+import callback.GoToTaskPageCallBack;
 import callback.TasksCallBack;
 
 /**
  * Created by Raz on 7/6/2017
  */
 
-public class GroupPageActivity extends ActivityWithNavigatorBase {
+public class GroupPageActivity extends ActivityWithHeaderBase {
     private Group group;
     private ScrollHorizontalWithItems participantsHolder;
     private HomeyProgressDialog pDialog;
@@ -51,10 +54,28 @@ public class GroupPageActivity extends ActivityWithNavigatorBase {
 
     private void loadTasks() {
         pDialog.showDialog();
-        ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
+        Context context = this;
+
+        GoToTaskPageCallBack taskClickCallBack = new GoToTaskPageCallBack() {
+            @Override
+            public void onSuccess(Task task) {
+                Intent intent = new Intent(context, TaskActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("task", task);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        };
+
+        ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks);
+                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack);
                 pDialog.hideDialog();
             }
 
@@ -62,11 +83,6 @@ public class GroupPageActivity extends ActivityWithNavigatorBase {
             public void onFailure(String error) {
                 pDialog.hideDialog();
             }
-        },Integer.parseInt(group.GetId()));
-    }
-
-    @Override
-    protected int getMenuId() {
-        return R.id.menuMyGroups;
+        });
     }
 }

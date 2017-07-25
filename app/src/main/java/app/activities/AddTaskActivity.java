@@ -26,7 +26,7 @@ import app.logic.managers.SessionManager;
 import callback.GroupsCallBack;
 import callback.TaskCallBack;
 
-public class AddTaskActivity extends ActivityWithNavigatorBase {
+public class AddTaskActivity extends ActivityWithHeaderBase {
 
     EditText editTextName;
     EditText editTextDesc;
