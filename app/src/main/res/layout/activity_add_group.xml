@@ -10,7 +10,7 @@
     <include
         layout="@layout/header_items"
         android:layout_width="match_parent"
-        android:layout_height="80dp" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,6 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginEnd="33dp"
-            android:layout_marginRight="33dp"
             android:background="@color/Transparent"
             android:adjustViewBounds="true"
             android:maxWidth="120dp"
@@ -29,20 +28,17 @@
             android:scaleType="fitCenter"
             app:srcCompat="@mipmap/ic_upload_image_group"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
         <EditText
             android:id="@+id/editTextDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editTextImg"
-            android:layout_alignStart="@+id/editTextImg"
             android:layout_below="@+id/editTextGroupName"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:ems="10"
-            android:hint="Description"
+            android:hint="@string/description"
             android:inputType="textPersonName"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="35dp" />
@@ -51,13 +47,11 @@
             android:id="@+id/editTextGroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editTextImg"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/editTextImg"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:ems="10"
-            android:hint="Group name"
+            android:hint="@string/group_name"
             android:inputType="textPersonName"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="35dp" />
@@ -89,14 +83,12 @@
 
         <Button
             android:id="@+id/buttonAddGroupSubmit"
-            android:layout_width="262dp"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_width="0dp"
             android:layout_marginBottom="54dp"
             android:layout_weight="1"
             android:onClick="buttonAddGroup_onClick"
-            android:text="Create Group"
+            android:text="@string/create_group"
             tools:layout_editor_absoluteX="61dp"
             tools:layout_editor_absoluteY="427dp" />
 

@@ -13,41 +13,22 @@
     android:orientation="vertical"
     tools:context="app.activities.PlusActivity">
 
-    <LinearLayout
-        android:id="@string/header"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3">
-
-    </LinearLayout>
-
     <Button
         android:id="@+id/buttonAddGroup"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:text="add group" />
+        android:layout_height="wrap_content"
+        android:text="@string/add_group" />
 
     <Button
         android:id="@+id/buttonAddTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.23"
-        android:text="add task" />
+        android:text="@string/add_task" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="add BLA" />
-
-    <LinearLayout
-        android:id="@string/body"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="9">
-
-    </LinearLayout>
+        android:text="@string/add_member" />
 
 </LinearLayout>

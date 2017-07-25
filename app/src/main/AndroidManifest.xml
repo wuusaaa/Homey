@@ -48,6 +48,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.activities.ActivityBase" />
         </activity>
+        <activity android:name="app.activities.AddMemberActivity"></activity>
     </application>
 
 </manifest>
