@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.activities.interfaces.IHasText;
 import app.logic.appcomponents.Task;
@@ -18,6 +19,8 @@ import callback.GoToTaskPageCallBack;
 public class ScrollVerticalWithItems extends ScrollView {
 
     LinearLayout linearLayout;
+
+    List<TaskLayout> taskLayouts = new ArrayList<>();
 
     public ScrollVerticalWithItems(Context context) {
         super(context);
@@ -39,7 +42,6 @@ public class ScrollVerticalWithItems extends ScrollView {
         this.addView(linearLayout);
     }
 
-
     public <T extends IHasText> void SetTasks(ArrayList<T> tasks, GoToTaskPageCallBack callBack) {
 
         linearLayout.removeAllViews();
@@ -48,8 +50,8 @@ public class ScrollVerticalWithItems extends ScrollView {
         linearLayout.addView(new Separator(getContext()));
         for (int i = 0; i < tasks.size(); i++) {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
-            taskLayout.setDescription(tasks.get(i).GetDescription());
-            taskLayout.SetOnClick(callBack, (Task) tasks.get(i));
+            taskLayout.setTask((Task) tasks.get(i));
+            taskLayout.SetOnClick(callBack);
             linearLayout.addView(taskLayout);
             linearLayout.addView(new Separator(getContext()));
         }

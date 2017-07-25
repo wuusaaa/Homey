@@ -159,6 +159,10 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         Intent intent = new Intent(this, LogoutActivity.class);
         startActivity(intent);
     }
+
+    public void onSubmitClicked(View view) {
+
+    }
 }
 
 
