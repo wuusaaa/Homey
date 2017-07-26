@@ -24,13 +24,13 @@ public class TaskLayout extends LinearLayout {
     private CheckBox checkBox;
     private Task task;
     private ImageButton groupIcon;
+    private LinearLayout taskInfo;
 
     public void setTask(Task task) {
         setName(task.GetName());
         setDescription(task.GetDescription());
         this.task = task;
     }
-
 
     public TaskLayout(Context context) {
         super(context);
@@ -48,7 +48,7 @@ public class TaskLayout extends LinearLayout {
         shape.setCornerRadius(500);
         groupIcon.setBackground(shape);
         // Task info
-        LinearLayout taskInfo = new LinearLayout(getContext());
+        taskInfo = new LinearLayout(getContext());
         taskInfo.setOrientation(VERTICAL);
 
         nameTextView = new TextView(getContext());
@@ -91,7 +91,11 @@ public class TaskLayout extends LinearLayout {
     }
 
     public void SetOnClick(GoToTaskPageCallBack callback) {
-        descriptionTextView.setOnClickListener(event -> callback.onSuccess(task));
+        taskInfo.setBackgroundResource(R.drawable.task_layout_selector);
 
+        taskInfo.setOnClickListener(event ->
+        {
+            callback.onSuccess(task);
+        });
     }
 }
