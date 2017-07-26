@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.widget.LinearLayout;
 
 /**
- * Created by talza on 25-Jul-17.
+ * Created by talza on 25-Jul-17
  */
 
 public class Spacer extends LinearLayout {
@@ -13,9 +13,14 @@ public class Spacer extends LinearLayout {
     public Spacer(Context context) {
         super(context);
         this.setOrientation(HORIZONTAL);
-        LayoutParams layoutParams = new LayoutParams(1000, 2);
-        layoutParams.setMargins(300, 0, 0, 0);
+        LayoutParams layoutParams = new LayoutParams(getDpSize(200), getDpSize(1));
+        layoutParams.setMargins(getDpSize(90), 0, 0, 0);
         this.setLayoutParams(layoutParams);
         this.setBackgroundColor(Color.parseColor("#000000"));
+    }
+
+    public int getDpSize(int size) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (size * scale + 0.5f);
     }
 }
