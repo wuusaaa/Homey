@@ -15,11 +15,14 @@ public class Separator extends LinearLayout {
 
     public Separator(Context context) {
         super(context);
-        this.setMinimumHeight(1);
-        LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, 2);
+        LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, getDpSize(1));
         this.setLayoutParams(layoutParams);
-        this.setBackgroundColor(Color.parseColor("#000000"));
+        this.setBackgroundColor(Color.parseColor("#D1CFCF"));
     }
 
+    public int getDpSize(int size) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (size * scale + 0.5f);
+    }
 
 }
