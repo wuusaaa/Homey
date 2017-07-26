@@ -91,10 +91,11 @@ public class TaskLayout extends LinearLayout {
     }
 
     public void SetOnClick(GoToTaskPageCallBack callback) {
-        taskInfo.setBackgroundResource(R.drawable.task_layout_selector);
+        this.setBackgroundResource(R.drawable.task_layout_selector);
 
-        taskInfo.setOnClickListener(event ->
+        this.setOnClickListener(event ->
         {
+            this.setPressed(true);
             callback.onSuccess(task);
         });
     }
