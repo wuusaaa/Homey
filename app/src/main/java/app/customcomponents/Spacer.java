@@ -14,7 +14,7 @@ public class Spacer extends LinearLayout {
         super(context);
         this.setOrientation(HORIZONTAL);
         LayoutParams layoutParams = new LayoutParams(getDpSize(310), getDpSize(1));
-        layoutParams.setMargins(getDpSize(90), 0, 0, 0);
+        layoutParams.setMargins(getDpSize(90), 0, 0, getDpSize(5));
         this.setLayoutParams(layoutParams);
         this.setBackgroundColor(Color.parseColor("#E0E0E0"));
     }
