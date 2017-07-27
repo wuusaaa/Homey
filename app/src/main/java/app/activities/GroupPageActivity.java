@@ -72,7 +72,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
             }
         };
 
-        ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
+        ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
                 scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack);
@@ -83,6 +83,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
             public void onFailure(String error) {
                 pDialog.hideDialog();
             }
-        });
+        }, Integer.parseInt(group.GetId()));
     }
 }
