@@ -5,7 +5,7 @@
     android:id="@+id/headerId"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#01A9D9"
+    android:background="@color/theme_color"
     android:orientation="horizontal"
     android:elevation="5dp">
 
