@@ -61,9 +61,11 @@ public class DBManager extends ManagerBase {
                         String name = userObj.getString("name");
                         String email = userObj.getString("email");
                         String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
 
                         // Inserting row in users table
-                        User user = new User(name, email, created_at, Integer.parseInt(id));
+                        User user = new User(name, email, created_at, Integer.parseInt(id), Integer.parseInt(score), Integer.parseInt(lvl));
 
                         callBack.onSuccess(user);
                     } else {
@@ -120,10 +122,12 @@ public class DBManager extends ManagerBase {
                         JSONObject userObj = jObj.getJSONObject("user");
                         String name = userObj.getString("name");
                         String email = userObj.getString("email");
-                        String created_at = userObj
-                                .getString("created_at");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
 
-                        User user = new User(name, email, created_at, Integer.parseInt(uid));
+                        // Inserting row in users table
+                        User user = new User(name, email, created_at, Integer.parseInt(uid), Integer.parseInt(score), Integer.parseInt(lvl));
 
                         callBack.onSuccess(user);
 
@@ -392,8 +396,12 @@ public class DBManager extends ManagerBase {
                         String name = userObj.getString("name");
                         String email = userObj.getString("email");
                         String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
 
-                        User user = new User(name, email, created_at, id);
+                        // Inserting row in users table
+                        User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl));
+
                         callBack.onSuccess(user);
 
                     } else {
@@ -499,6 +507,7 @@ public class DBManager extends ManagerBase {
 
                 try {
                     JSONObject jObj = new JSONObject(response);
+                    Log.d("debug", jObj.toString());
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
                         // User successfully pulled from MySQL
@@ -523,6 +532,7 @@ public class DBManager extends ManagerBase {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.d("debug", e.getMessage().toString());
                     callBack.onFailure("JSON ERROR");
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -583,7 +593,7 @@ public class DBManager extends ManagerBase {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                             Date startTime = dateFormat.parse(startTimeStr);
                             Date endTime = dateFormat.parse(endTimeStr);
-
+                            Log.e("debug",obj.getString("start_time"));
                             Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime);
 
                             tasks.add(task);

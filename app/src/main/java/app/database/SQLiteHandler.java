@@ -33,6 +33,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
+    private static final String KEY_SCORE = "score";
+    private static final String KEY_LEVEL = "level";
 
     public SQLiteHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,6 +46,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_USER + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_EMAIL + " TEXT UNIQUE," + KEY_UID + " TEXT,"
+                + KEY_SCORE + " INTEGER," + KEY_LEVEL + " INTEGER,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
@@ -63,7 +66,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in app.database
      */
-    public void addUser(String name, String email, String uid, String created_at) {
+    public void addUser(String name, String email, String uid, String created_at, int score, int lvl) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -71,6 +74,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_EMAIL, email); // Email
         values.put(KEY_UID, uid); // Email
         values.put(KEY_CREATED_AT, created_at); // Created At
+        values.put(KEY_SCORE, score); // score
+        values.put(KEY_LEVEL, lvl); // level
 
         // Inserting Row
         long id = db.insert(TABLE_USER, null, values);
@@ -95,6 +100,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("email", cursor.getString(2));
             user.put("uid", cursor.getString(3));
             user.put("created_at", cursor.getString(4));
+            user.put("score", cursor.getString(5));
+            user.put("level", cursor.getString(6));
         }
         cursor.close();
         db.close();

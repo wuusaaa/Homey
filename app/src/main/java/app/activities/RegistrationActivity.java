@@ -108,7 +108,7 @@ public class RegistrationActivity extends ActivityBase {
             @Override
             public void onSuccess(User user) {
                 hideDialog();
-                db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt());
+                db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(),user.GetScore(),user.GetLevel());
 
                 Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 

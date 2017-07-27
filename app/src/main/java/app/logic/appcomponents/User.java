@@ -12,12 +12,16 @@ public class User {
     private String email;
     private String createdAt;
     private int uid;
+    private int score;
+    private int level;
 
-    public User(String _name, String _email, String _createdAt, int _uid) {
+    public User(String _name, String _email, String _createdAt, int _uid, int score, int lvl) {
         name = _name;
         email = _email;
         createdAt = _createdAt;
         uid = _uid;
+        this.score = score;
+        level=lvl;
     }
 
     public String getName() {
@@ -53,4 +57,19 @@ public class User {
     }
 
 
+    public int GetScore() {
+        return score;
+    }
+
+    public void SetScore(int score) {
+        this.score = score;
+    }
+
+    public int GetLevel() {
+        return level;
+    }
+
+    public void SetLevel(int level) {
+        this.level = level;
+    }
 }
