@@ -81,13 +81,13 @@ public class TaskActivity extends ActivityWithHeaderBase {
         if (myTask.GetStartTime() != null) {
             ((TextView) findViewById(R.id.taskActivityStartDate)).setText(myTask.GetStartTime().toString());
         } else {
-            ((TextView) findViewById(R.id.taskActivityStartDate)).setText("-----");
+            ((TextView) findViewById(R.id.taskActivityStartDate)).setText("-");
         }
 
         if (myTask.GetEndTime() != null) {
             ((TextView) findViewById(R.id.taskActivityEndDate)).setText(myTask.GetEndTime().toString());
         } else {
-            ((TextView) findViewById(R.id.taskActivityEndDate)).setText("------");
+            ((TextView) findViewById(R.id.taskActivityEndDate)).setText("-");
         }
 
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
