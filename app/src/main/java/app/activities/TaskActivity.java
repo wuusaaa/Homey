@@ -70,7 +70,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
             @Override
             public void onFailure(String error) {
-
+                ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText("failed");
             }
         });
 
@@ -78,6 +78,18 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     private void setTaskInfo() {
         setScreenName(myTask.GetName());
+        if (myTask.GetStartTime() != null) {
+            ((TextView) findViewById(R.id.taskActivityStartDate)).setText(myTask.GetStartTime().toString());
+        } else {
+            ((TextView) findViewById(R.id.taskActivityStartDate)).setText("-----");
+        }
+
+        if (myTask.GetEndTime() != null) {
+            ((TextView) findViewById(R.id.taskActivityEndDate)).setText(myTask.GetEndTime().toString());
+        } else {
+            ((TextView) findViewById(R.id.taskActivityEndDate)).setText("------");
+        }
+
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
         //TODO::
         //findViewById(R.id.taskActivityTaskImage); SET HERE TASK IMAGE
