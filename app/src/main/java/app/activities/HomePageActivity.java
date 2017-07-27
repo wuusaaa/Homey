@@ -27,7 +27,6 @@ import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
-
 public class HomePageActivity extends ActivityWithHeaderBase {
 
     //***** Class components: *****

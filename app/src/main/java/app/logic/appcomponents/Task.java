@@ -35,6 +35,7 @@ public class Task implements IHasText, Parcelable {
     }
 
     protected Task(Parcel in) {
+        taskId = in.readString();
         name = in.readString();
         groupId = in.readInt();
         description = in.readString();
@@ -57,6 +58,14 @@ public class Task implements IHasText, Parcelable {
 
     public String GetName() {
         return name;
+    }
+
+    public String GetTaskId() {
+        return taskId;
+    }
+
+    public int GetGroupId() {
+        return groupId;
     }
 
     public void SetName(String name) {

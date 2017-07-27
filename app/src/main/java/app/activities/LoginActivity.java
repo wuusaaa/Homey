@@ -34,7 +34,6 @@ public class LoginActivity extends ActivityBase {
     private SQLiteHandler db;
     private FusedLocationProviderClient mFusedLocationClient;
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -65,7 +64,6 @@ public class LoginActivity extends ActivityBase {
         // other 'switch' lines to check for other
         // permissions this app might request
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

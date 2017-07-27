@@ -32,22 +32,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="120dp"
-                    android:layout_marginLeft="10dp">
-
-                    <TextView
-                        android:id="@+id/taskActivityGroupLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="22dp"
-                        android:layout_marginStart="22dp"
-                        android:text="@string/group" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/taskActivityGroupImage"
@@ -60,8 +50,19 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/profilepicturetest" />
 
+                    <TextView
+                        android:id="@+id/taskActivityGroupLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginStart="22dp"
+                        android:text="@string/group" />
 
-                </RelativeLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -75,8 +76,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:text="@string/start_date"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:text="@string/start_date" />
 
                     <TextView
                         android:id="@+id/taskActivityStartDate"
@@ -96,9 +97,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="@string/end_date"
-                        android:layout_marginRight="10dp" />
+                        android:text="@string/end_date" />
 
                     <TextView
                         android:id="@+id/taskActivityEndDate"
@@ -107,25 +108,15 @@
                 </LinearLayout>
 
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="120dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp">
-
-                    <TextView
-                        android:id="@+id/taskActivityCreatorLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="22dp"
-                        android:layout_marginStart="22dp"
-                        android:text="@string/creator" />
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/taskActivityCreatorImage"
@@ -138,7 +129,18 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/profilepicturetest" />
 
-                </RelativeLayout>
+                    <TextView
+                        android:id="@+id/taskActivityCreatorLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginStart="22dp"
+                        android:text="@string/creator" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -160,11 +162,12 @@
                         android:id="@+id/taskActivityTaskImage"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
                         android:background="@color/Transparent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/profilepicturetest"
-                        android:layout_marginRight="10dp" />
+                        android:src="@drawable/profilepicturetest" />
 
                 </RelativeLayout>
 
@@ -182,6 +185,7 @@
                         android:text="@string/description" />
 
                     <TextView
+                        android:id="@+id/taskActivityDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp" />
@@ -192,21 +196,21 @@
 
         </LinearLayout>
 
-
         <app.customcomponents.ScrollHorizontalWithItems
+            android:id="@+id/taskActivityTaskAssignee"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="135dp"
+                android:text="@string/complete" />
+        </RelativeLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="135dp"
-            android:text="@string/complete" />
-    </RelativeLayout>
 
 </LinearLayout>

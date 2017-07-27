@@ -4,6 +4,9 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.widget.TextView;
+
+import com.project.homey.R;
 
 
 public class ActivityBase extends AppCompatActivity {
@@ -34,5 +37,9 @@ public class ActivityBase extends AppCompatActivity {
         screenSize.x /= widthDivider;
         screenSize.y /= heightDivider;
         return screenSize;
+    }
+
+    protected void setScreenName(String screenName) {
+        ((TextView) findViewById(R.id.textViewScreenName)).setText(screenName);
     }
 }
