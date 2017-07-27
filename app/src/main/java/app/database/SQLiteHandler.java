@@ -46,7 +46,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_USER + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_EMAIL + " TEXT UNIQUE," + KEY_UID + " TEXT,"
-                + KEY_SCORE + " INTEGER," + KEY_LEVEL + " INTEGER,"
+                + KEY_SCORE + " TEXT," + KEY_LEVEL + " TEXT,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
@@ -73,9 +73,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, name); // Name
         values.put(KEY_EMAIL, email); // Email
         values.put(KEY_UID, uid); // Email
-        values.put(KEY_CREATED_AT, created_at); // Created At
         values.put(KEY_SCORE, score); // score
         values.put(KEY_LEVEL, lvl); // level
+        values.put(KEY_CREATED_AT, created_at); // Created At
 
         // Inserting Row
         long id = db.insert(TABLE_USER, null, values);
@@ -99,9 +99,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("name", cursor.getString(1));
             user.put("email", cursor.getString(2));
             user.put("uid", cursor.getString(3));
-            user.put("created_at", cursor.getString(4));
-            user.put("score", cursor.getString(5));
-            user.put("level", cursor.getString(6));
+            user.put("created_at", cursor.getString(6));
+            user.put("score", cursor.getString(4));
+            user.put("level", cursor.getString(5));
         }
         cursor.close();
         db.close();

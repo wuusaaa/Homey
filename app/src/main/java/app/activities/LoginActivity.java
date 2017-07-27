@@ -70,7 +70,8 @@ public class LoginActivity extends ActivityBase {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
+// SQLite app.database handler
+        db = new SQLiteHandler(getApplicationContext());
 
 // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -112,8 +113,7 @@ public class LoginActivity extends ActivityBase {
 
         ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
 
-        // SQLite app.database handler
-        db = new SQLiteHandler(getApplicationContext());
+
 
         // Check if user is already logged in or not
         if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
