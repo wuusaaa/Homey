@@ -79,6 +79,40 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/group_add_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="4.41">
+
+            <Button
+                android:id="@+id/add_member_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:background="#04B854"
+                android:text="Add Member"
+                android:drawableLeft="@android:drawable/"
+                android:textColor="#FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"></LinearLayout>
+
+            <Button
+                android:id="@+id/leave_group_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="#D83402"
+                android:text="Leave Group"
+                android:drawableRight="@android:drawable/ic_menu_delete"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
