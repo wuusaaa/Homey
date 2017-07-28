@@ -30,6 +30,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIGetGroupURL = "https://www.crossword-clues.com/homey/get-group.php";
 
+    private final String APIGetGroupByTaskIdURL = "https://www.crossword-clues.com/homey/get-group-from-task-id.php";
+
     private final String APIGetTasksByGroupIdURL = "https://www.crossword-clues.com/homey/get-tasks-by-group-id.php";
 
     private final String APIGetTasksByUserIdURL = "https://www.crossword-clues.com/homey/get-tasks-by-user-id.php";
@@ -185,7 +187,16 @@ public class EnvironmentManager extends ManagerBase {
      *
      * @return String
      */
-    public String getAPIRemoveFromTableURL() {
+    public String GetAPIRemoveFromTableURL() {
         return APIRemoveFromTableURL;
+    }
+
+    /**
+     * getter for the APIGetGroupByTaskIdURL
+     *
+     * @return String
+     */
+    public String GetAPIGetGroupByTaskIdURL() {
+        return APIGetGroupByTaskIdURL;
     }
 }

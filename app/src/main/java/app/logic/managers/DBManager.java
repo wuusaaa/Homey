@@ -562,6 +562,72 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public void GetGroupByTaskId(final int taskId, final GroupCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_group";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupByTaskIdURL(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    Log.d("debug", jObj.toString());
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        String id = jObj.getString("id");
+                        String name = jObj.getString("name");
+                        String createdStr = jObj.getString("created");
+                        byte[] img = jObj.getString("img").getBytes();
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date created = dateFormat.parse(createdStr);
+
+                        Group group = new Group(id, name, img);
+
+                        callBack.onSuccess(group);
+
+                    } else {
+
+                        // Error occurred in getting group. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("debug", e.getMessage().toString());
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to group url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", taskId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     public void GetUserTasks(final int userId, final TasksCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user_tasks";
