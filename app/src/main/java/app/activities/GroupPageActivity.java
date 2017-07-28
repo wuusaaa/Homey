@@ -3,6 +3,8 @@ package app.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +52,9 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         loadTasks();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
         // TODO: Set group icon
+
+        // Arrange group buttons
+        arrangeButtons();
     }
 
     private void loadTasks() {
@@ -84,5 +89,47 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                 pDialog.hideDialog();
             }
         }, Integer.parseInt(group.GetId()));
+    }
+
+    //******************************************************
+    // Handles Add Member and Delete/Leave group buttons
+    //******************************************************
+    private void arrangeButtons() {
+        Button addMember = (Button) findViewById(R.id.button_group_add_member);
+        Button deleteLeave = (Button) findViewById(R.id.button_group_delete_leave);
+
+        if (!isGroupAdmin()) {
+            addMember.setEnabled(false);
+            deleteLeave.setText("Leave Group");
+        } else {
+            deleteLeave.setText("Delete Group");
+        }
+    }
+
+    //******************************************************
+    // Checks if the user is one of the group admins
+    //******************************************************
+    private boolean isGroupAdmin() {
+        return true;
+    }
+
+    //******************************************************
+    // Adds new member to the group
+    //******************************************************
+    public void button_group_add_member_onClick(View view) {
+        // IMPORTANT! This method is only for testing don't look for logic here !!!
+        Button addMember = (Button) findViewById(R.id.button_group_add_member);
+        if (addMember.getText().equals("Add Member")) {
+            addMember.setText("Added!");
+        } else {
+            addMember.setText("Add Member");
+        }
+    }
+
+    //******************************************************
+    // Adds new member to the group
+    //******************************************************
+    public void button_group_delete_leave_onClick(View view) {
+        // TODO
     }
 }
