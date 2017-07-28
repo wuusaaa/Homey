@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
- * Created by talza on 23-Jul-17.
+ * Created by talza on 23-Jul-17
  */
 
 public class Separator extends LinearLayout {

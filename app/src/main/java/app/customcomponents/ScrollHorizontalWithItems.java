@@ -11,86 +11,86 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
 import app.logic.appcomponents.Group;
 import callback.GotoGroupPageCallBack;
 
-
-/**
- * TODO: document your custom view class.
- */
 public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
-    private final LinearLayout linearLayout = new LinearLayout(this.getContext());
+    private final LinearLayout linearLayout;
 
     public ScrollHorizontalWithItems(Context context) {
         super(context);
 
+        linearLayout = new LinearLayout(context);
         this.addView(linearLayout);
     }
 
     public ScrollHorizontalWithItems(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        linearLayout = new LinearLayout(context);
         this.addView(linearLayout);
     }
 
     public ScrollHorizontalWithItems(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
+        linearLayout = new LinearLayout(context);
         this.addView(linearLayout);
     }
 
     public <T extends IHasText & IHasImage> void SetUserGroups(ArrayList<T> userGroups, @LinearLayoutCompat.OrientationMode int orientation, GotoGroupPageCallBack callBack) {
         linearLayout.removeAllViews();
-        linearLayout.setOrientation(orientation);
 
-        //TODO: change the for to foreach with stream.
-        for (int i = 0; i < userGroups.size(); i++) {
+        linearLayout.setOrientation(orientation);
+        LayoutParams layoutParamsTextView = new LayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        LayoutParams layoutParamsImageButton = new LayoutParams(new LinearLayout.LayoutParams(300, 300));
+        AtomicInteger i = new AtomicInteger(0);
+
+        setLayoutParamsMargin(layoutParamsImageButton);
+        setLayoutParamsMargin(layoutParamsTextView);
+
+        userGroups.forEach(group -> {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
             ImageButton imageButton = new ImageButton(this.getContext());
             TextView textView = new TextView(this.getContext());
 
             verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
 
-            LayoutParams layoutParamsImageButton = new LayoutParams(new LinearLayout.LayoutParams(300, 300));
-            setLayoutParamsMargin(layoutParamsImageButton);
-            imageButton.setLayoutParams(layoutParamsImageButton);
-
-            LayoutParams layoutParamsTextView = new LayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            setLayoutParamsMargin(layoutParamsTextView);
             textView.setLayoutParams(layoutParamsTextView);
-
-            textView.setText(userGroups.get(i).GetName());
+            textView.setText(group.GetName());
             textView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+            textView.setTextColor(Color.BLACK);
 
             GradientDrawable shape = new GradientDrawable();
             shape.setCornerRadius(500);
 
-            if (i % 2 == 0) {
+            if (i.getAndIncrement() % 2 == 0) {
                 shape.setColor(Color.parseColor("#D8EAF6"));
             } else {
                 shape.setColor(Color.parseColor("#EAEAEA"));
             }
 
+            imageButton.setLayoutParams(layoutParamsImageButton);
             imageButton.setBackground(shape);
-
-            textView.setTextColor(Color.BLACK);
-            final int finalI = i;
-            imageButton.setOnClickListener(v -> callBack.onSuccess((Group) userGroups.get(finalI)));
+            imageButton.setOnClickListener(v -> callBack.onSuccess((Group) group));
 
             verticalLinearLayout.addView(imageButton);
             verticalLinearLayout.addView(textView);
             linearLayout.addView(verticalLinearLayout);
-        }
+        });
+
+
     }
 
-    private void setLayoutParamsMargin(LayoutParams layoutParamsImageButton) {
-        layoutParamsImageButton.leftMargin = 15;
-        layoutParamsImageButton.rightMargin = 15;
-        layoutParamsImageButton.topMargin = 15;
-        layoutParamsImageButton.bottomMargin = 15;
+    private void setLayoutParamsMargin(LayoutParams layoutParams) {
+        layoutParams.leftMargin = 15;
+        layoutParams.rightMargin = 15;
+        layoutParams.topMargin = 15;
+        layoutParams.bottomMargin = 15;
     }
 }
