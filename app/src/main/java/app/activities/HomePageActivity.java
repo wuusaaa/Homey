@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
 
+import app.activities.interfaces.IonClicked;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -37,6 +41,9 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private ImageButton buttonProfile;
     private HomeyProgressDialog pDialog;
     private GoToTaskPageCallBack taskClickCallBack;
+    private IonClicked taskCheckBoxClickCallBack;
+    private Button buttonSubmit;
+    private int checkedBoxesCounter;
     //*****************************
 
     @Override
@@ -48,6 +55,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         pDialog = new HomeyProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
+
+        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
 
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
@@ -84,11 +93,12 @@ public class HomePageActivity extends ActivityWithHeaderBase {
             }
         };
 
+        taskCheckBoxClickCallBack = this::onCheckBoxClicked;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack);
+                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack, taskCheckBoxClickCallBack);
                 pDialog.hideDialog();
             }
 
@@ -137,6 +147,12 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         loadTasks();
         fetchUserName();
         setProfileClick();
+        initSubmitButton();
+    }
+
+    private void initSubmitButton() {
+        buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        checkedBoxesCounter = 0;
     }
 
     private void setProfileClick() {
@@ -163,9 +179,22 @@ public class HomePageActivity extends ActivityWithHeaderBase {
 
     }
 
-    public void onLogOutClick(View view) {
-        Intent intent = new Intent(this, LogoutActivity.class);
-        startActivity(intent);
+    public void onCheckBoxClicked(View view) {
+        CheckBox checkBox = (CheckBox) view;
+
+        if (checkBox.isChecked()) {
+            checkedBoxesCounter++;
+        } else {
+            checkedBoxesCounter--;
+        }
+
+        if (checkedBoxesCounter > 0) {
+            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            buttonSubmit.setVisibility(View.VISIBLE);
+        } else {
+            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+            buttonSubmit.setVisibility(View.INVISIBLE);
+        }
     }
 }
 

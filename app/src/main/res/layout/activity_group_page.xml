@@ -92,25 +92,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:background="#04B854"
-                android:drawableLeft="@android:drawable/ic_menu_add"
-                android:onClick="button_group_add_member_onClick"
-                android:text="Add Member"
+                android:drawableStart="@android:drawable/ic_menu_add"
+                android:onClick="buttonGroupAddMemberOnClick"
+                android:text="@string/add_member"
                 android:textColor="#FFFFFF" />
-
-            <LinearLayout
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"></LinearLayout>
 
             <Button
                 android:id="@+id/button_group_delete_leave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="6"
                 android:background="#D83402"
-                android:drawableRight="@android:drawable/ic_menu_delete"
-                android:onClick="button_group_delete_leave_onClick"
-                android:text="Leave Group"
+                android:drawableEnd="@android:drawable/ic_menu_delete"
+                android:onClick="buttonGroupDeleteLeaveOnClick"
+                android:text="@string/leave_group"
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>

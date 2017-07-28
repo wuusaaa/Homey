@@ -12,6 +12,7 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 
+import app.activities.interfaces.IonClicked;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -77,10 +78,12 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
             }
         };
 
+        IonClicked taskLayoutCheckBoxCallBack = this::onCheckBoxClicked;
+
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack);
+                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack, taskLayoutCheckBoxCallBack);
                 pDialog.hideDialog();
             }
 
@@ -100,9 +103,9 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
         if (!isGroupAdmin()) {
             addMember.setEnabled(false);
-            deleteLeave.setText("Leave Group");
+            deleteLeave.setText(R.string.leave_group);
         } else {
-            deleteLeave.setText("Delete Group");
+            deleteLeave.setText(R.string.delete_group);
         }
     }
 
@@ -116,20 +119,24 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void button_group_add_member_onClick(View view) {
+    public void buttonGroupAddMemberOnClick(View view) {
         // IMPORTANT! This method is only for testing don't look for logic here !!!
         Button addMember = (Button) findViewById(R.id.button_group_add_member);
-        if (addMember.getText().equals("Add Member")) {
-            addMember.setText("Added!");
+        if (addMember.getText().equals(R.string.add_member)) {
+            addMember.setText(R.string.added);
         } else {
-            addMember.setText("Add Member");
+            addMember.setText(R.string.add_member);
         }
     }
 
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void button_group_delete_leave_onClick(View view) {
+    public void buttonGroupDeleteLeaveOnClick(View view) {
         // TODO
+    }
+
+    public void onCheckBoxClicked(View view) {
+        //TODO
     }
 }

@@ -54,7 +54,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         setLayoutParamsMargin(layoutParamsImageButton);
         setLayoutParamsMargin(layoutParamsTextView);
 
-        userGroups.forEach(group -> {
+        for (T group : userGroups) {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
             ImageButton imageButton = new ImageButton(this.getContext());
             TextView textView = new TextView(this.getContext());
@@ -82,7 +82,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             verticalLinearLayout.addView(imageButton);
             verticalLinearLayout.addView(textView);
             linearLayout.addView(verticalLinearLayout);
-        });
+        }
 
 
     }

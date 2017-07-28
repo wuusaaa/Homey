@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import app.activities.interfaces.IHasText;
+import app.activities.interfaces.IonClicked;
 import app.logic.appcomponents.Task;
 import callback.GoToTaskPageCallBack;
 
@@ -40,7 +41,7 @@ public class ScrollVerticalWithItems extends ScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText> void SetTasks(ArrayList<T> tasks, GoToTaskPageCallBack callBack) {
+    public <T extends IHasText> void SetTasks(ArrayList<T> tasks, GoToTaskPageCallBack callBack, IonClicked checkBoxCallBack) {
         linearLayout.removeAllViews();
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -50,6 +51,7 @@ public class ScrollVerticalWithItems extends ScrollView {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
             taskLayout.setTask((Task) task);
             taskLayout.SetOnClick(callBack);
+            taskLayout.setCheckBoxOnClick(checkBoxCallBack);
             linearLayout.addView(taskLayout);
 
             taskLayouts.add(taskLayout);
@@ -59,4 +61,6 @@ public class ScrollVerticalWithItems extends ScrollView {
             }
         });
     }
+
+
 }
