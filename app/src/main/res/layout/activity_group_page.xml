@@ -93,7 +93,7 @@
                 android:layout_weight="6"
                 android:background="#04B854"
                 android:text="Add Member"
-                android:drawableLeft="@android:drawable/"
+                android:drawableLeft="@android:drawable/ic_menu_add"
                 android:textColor="#FFFFFF" />
 
             <LinearLayout
