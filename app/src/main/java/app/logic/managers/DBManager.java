@@ -238,17 +238,41 @@ public class DBManager extends ManagerBase {
     }
 
     private void ChangePassword(final int userId, final String oldPass, final String newPass) {
-
+        //TODO
     }
 
+    /**
+     * properties:
+     *  TODO
+     * @param userId
+     * @param property
+     * @param value
+     * @param callBack
+     */
     public void UpdateUser(final int userId, final String property, final Object value, final ServerCallBack callBack) {
         updateTableValue("user", userId, property, value, callBack);
     }
 
+    /**
+     * properties:
+     *  TODO
+     * @param taskId
+     * @param property
+     * @param value
+     * @param callBack
+     */
     public void UpdateTask(final int taskId, final String property, final Object value, final ServerCallBack callBack) {
         updateTableValue("task", taskId, property, value, callBack);
     }
 
+    /**
+     * properties:
+     *  TODO
+     * @param groupId
+     * @param property
+     * @param value
+     * @param callBack
+     */
     public void UpdateGroup(final int groupId, final String property, final Object value, final ServerCallBack callBack) {
         updateTableValue("group", groupId, property, value, callBack);
     }
