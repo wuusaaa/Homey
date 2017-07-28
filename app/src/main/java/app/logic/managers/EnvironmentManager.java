@@ -28,6 +28,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIGetUserURL = "https://www.crossword-clues.com/homey/get-user.php";
 
+    private final String APIGetCreatorFromTaskIdURL = "https://www.crossword-clues.com/homey/get-creator-from-task-id.php";
+
     private final String APIGetGroupURL = "https://www.crossword-clues.com/homey/get-group.php";
 
     private final String APIGetGroupByTaskIdURL = "https://www.crossword-clues.com/homey/get-group-from-task-id.php";
@@ -198,5 +200,14 @@ public class EnvironmentManager extends ManagerBase {
      */
     public String GetAPIGetGroupByTaskIdURL() {
         return APIGetGroupByTaskIdURL;
+    }
+
+    /**
+     * getter for the APIGetCreatorFromTaskIdURL
+     *
+     * @return String
+     */
+    public String GetAPIGetCreatorFromTaskIdURL() {
+        return APIGetCreatorFromTaskIdURL;
     }
 }

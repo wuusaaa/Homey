@@ -440,6 +440,69 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public void GetCreatorFromTaskId(final int taskId, final UserCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_user";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetCreatorFromTaskIdURL(), new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        int id = jObj.getInt("uid");
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        String name = userObj.getString("name");
+                        String email = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+
+                        // Inserting row in users table
+                        User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl));
+
+                        callBack.onSuccess(user);
+
+                    } else {
+
+                        // Error occurred in getting user. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to getting user url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", taskId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     public void AddGroup(final int creatorId, final String name, final byte[] img, final GroupCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
