@@ -6,7 +6,7 @@ package app.enums;
 
 public enum TaskStatus {
 
-    DONE("done"),
+    COMPLETED("completed"),
     INCOMPLETE("incomplete"),
     IN_PROGRESS("inProgress");
 

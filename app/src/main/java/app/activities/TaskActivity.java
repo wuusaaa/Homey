@@ -2,6 +2,7 @@ package app.activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,12 +13,16 @@ import java.util.ArrayList;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
+import app.enums.TaskProperty;
+import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import callback.GroupCallBack;
+import callback.UpdateCallBack;
+import callback.UpdateTask;
 import callback.UserCallBack;
 import callback.UsersCallBack;
 
@@ -118,5 +123,13 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     private void loadTaskInformation() {
         //pDialog.showDialog();
+    }
+
+    public void buttonCompleteOnClicked(View view) {
+        UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext());
+
+        myTask.setStatus(TaskStatus.COMPLETED);
+        ((DBManager) Services.GetService(DBManager.class)).UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
+
     }
 }

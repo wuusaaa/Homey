@@ -49,7 +49,7 @@ public class ScrollVerticalWithItems extends ScrollView {
         AtomicInteger i = new AtomicInteger(0);
 
         tasks.stream()
-                .filter(task -> !((Task) (task)).getStatus().equals(TaskStatus.DONE.value()))
+                .filter(task -> !((Task) (task)).getStatus().equals(TaskStatus.COMPLETED.value()))
                 .forEach(task -> {
                     TaskLayout taskLayout = new TaskLayout(this.getContext());
                     taskLayout.setTask((Task) task);

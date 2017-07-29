@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
-import app.logic.appcomponents.Group;
 import callback.GotoGroupPageCallBack;
 
 public class ScrollHorizontalWithItems extends HorizontalScrollView {
@@ -77,7 +76,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
             imageButton.setLayoutParams(layoutParamsImageButton);
             imageButton.setBackground(shape);
-            imageButton.setOnClickListener(v -> callBack.onSuccess((Group) item));
+            imageButton.setOnClickListener(v -> callBack.onSuccess(item));
 
             verticalLinearLayout.addView(imageButton);
             verticalLinearLayout.addView(textView);

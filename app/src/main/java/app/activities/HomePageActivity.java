@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.activities.interfaces.IHasImage;
+import app.activities.interfaces.IHasText;
 import app.activities.interfaces.IonClicked;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
@@ -36,6 +37,7 @@ import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
 import callback.UpdateCallBack;
+import callback.UpdateTask;
 
 public class HomePageActivity extends ActivityWithHeaderBase {
 
@@ -124,11 +126,11 @@ public class HomePageActivity extends ActivityWithHeaderBase {
             public void onSuccess(ArrayList<Group> groups) {
                 scrollHorizontalWithItems.SetScrollerItems(groups, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
                     @Override
-                    public void onSuccess(Group group) {
+                    public <T extends IHasImage & IHasText> void onSuccess(T item) {
                         Intent i = new Intent(context, GroupPageActivity.class);
                         Bundle b = new Bundle();
-                        ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName(group.GetName());
-                        b.putParcelable("group", group);
+                        ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName(item.GetName());
+                        b.putParcelable("group", (Group) item);
                         i.putExtras(b);
                         startActivity(i);
                     }
@@ -181,22 +183,11 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         startActivity(intent);
     }
 
-    UpdateCallBack updateCallBack = new UpdateCallBack() {
-        @Override
-        public void onSuccess() {
-            Toast.makeText(getBaseContext(), R.string.tasksUpdatedSuccessfully, Toast.LENGTH_SHORT).show();
-        }
-
-        //TODO: handle the error message
-        @Override
-        public void onFailure(String errorMessage) {
-            Toast.makeText(getBaseContext(), R.string.tasksNotUpdatedSuccessfully, Toast.LENGTH_SHORT).show();
-        }
-    };
 
     public void onSubmitClicked(View view) {
+        UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext());
         taskLayoutsChecked.forEach(taskLayout -> {
-            taskLayout.getTask().setStatus(TaskStatus.DONE);
+            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
             ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
                     TaskProperty.STATUS,
                     taskLayout.getTask().getStatus(),
