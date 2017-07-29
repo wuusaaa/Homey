@@ -18,8 +18,8 @@ import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import callback.GroupCallBack;
-import callback.GroupsCallBack;
 import callback.UserCallBack;
+import callback.UsersCallBack;
 
 
 public class TaskActivity extends ActivityWithHeaderBase {
@@ -96,11 +96,11 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
 
         //TODO:: Next code takes user's group, need to change to task's assignee, and group call back here is null..
-        ((DBManager) Services.GetService(DBManager.class)).GetUserGroups(myTask.GetCreatorId(), new GroupsCallBack() {
+        ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
             @Override
-            public void onSuccess(ArrayList<Group> groups) {
+            public void onSuccess(ArrayList<User> users) {
                 taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
-                taskAssignees.SetUserGroups(groups, LinearLayoutCompat.HORIZONTAL, null);
+                taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, null);
             }
 
             @Override

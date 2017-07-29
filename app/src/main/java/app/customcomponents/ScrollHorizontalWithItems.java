@@ -43,7 +43,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText & IHasImage> void SetUserGroups(ArrayList<T> userGroups, @LinearLayoutCompat.OrientationMode int orientation, GotoGroupPageCallBack callBack) {
+    public <T extends IHasText & IHasImage> void SetScrollerItems(ArrayList<T> items, @LinearLayoutCompat.OrientationMode int orientation, GotoGroupPageCallBack callBack) {
         linearLayout.removeAllViews();
 
         linearLayout.setOrientation(orientation);
@@ -54,7 +54,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         setLayoutParamsMargin(layoutParamsImageButton);
         setLayoutParamsMargin(layoutParamsTextView);
 
-        for (T group : userGroups) {
+        for (T item : items) {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
             ImageButton imageButton = new ImageButton(this.getContext());
             TextView textView = new TextView(this.getContext());
@@ -62,7 +62,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
 
             textView.setLayoutParams(layoutParamsTextView);
-            textView.setText(group.GetName());
+            textView.setText(item.GetName());
             textView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
             textView.setTextColor(Color.BLACK);
 
@@ -77,7 +77,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
             imageButton.setLayoutParams(layoutParamsImageButton);
             imageButton.setBackground(shape);
-            imageButton.setOnClickListener(v -> callBack.onSuccess((Group) group));
+            imageButton.setOnClickListener(v -> callBack.onSuccess((Group) item));
 
             verticalLinearLayout.addView(imageButton);
             verticalLinearLayout.addView(textView);

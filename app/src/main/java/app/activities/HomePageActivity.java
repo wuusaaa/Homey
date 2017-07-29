@@ -122,7 +122,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
-                scrollHorizontalWithItems.SetUserGroups(groups, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
+                scrollHorizontalWithItems.SetScrollerItems(groups, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
                     @Override
                     public void onSuccess(Group group) {
                         Intent i = new Intent(context, GroupPageActivity.class);

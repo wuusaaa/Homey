@@ -1,12 +1,15 @@
 package app.logic.appcomponents;
 
+import app.activities.interfaces.IHasImage;
+import app.activities.interfaces.IHasText;
+
 /**
  * Created by Raz on 12/20/2016.
  *
  * user representation of the db user
  */
 
-public class User {
+public class User implements IHasText, IHasImage {
 
     private String name;
     private String email;
@@ -71,5 +74,20 @@ public class User {
 
     public void SetLevel(int level) {
         this.level = level;
+    }
+
+    @Override
+    public String GetName() {
+        return name;
+    }
+
+    @Override
+    public String GetDescription() {
+        return name;
+    }
+
+    @Override
+    public byte[] GetImage() {
+        return new byte[0];
     }
 }

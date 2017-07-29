@@ -5,7 +5,9 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import app.logic.appcomponents.Task;
+import app.logic.appcomponents.User;
 import callback.TasksCallBack;
+import callback.UsersCallBack;
 
 /**
  * Created by Raz on 12/20/2016.
@@ -48,5 +50,21 @@ public class TaskManager extends ManagerBase {
 //            tasks.add(new Task(String.format("example%s", String.valueOf(i)), 5, null, null, null, 0, null, null));
 //        }
 //        tasksCallBack.onSuccess(tasks);
+    }
+
+    public void GetTaskUsersByTaskId(UsersCallBack usersCallBack, int taskId) {
+        ((DBManager) (Services.GetService(DBManager.class))).GetTaskUsersByTaskId(taskId, new UsersCallBack() {
+            @Override
+            public void onSuccess(ArrayList<User> users) {
+                usersCallBack.onSuccess(users);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d("debug", error);
+                usersCallBack.onFailure(error);
+
+            }
+        });
     }
 }
