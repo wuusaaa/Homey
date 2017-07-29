@@ -91,7 +91,7 @@ public class TaskLayout extends LinearLayout {
         this.checkBox.setChecked(checked);
     }
 
-    public void SetOnClick(GoToTaskPageCallBack callback) {
+    public void SetTaskLayoutOnClick(GoToTaskPageCallBack callback) {
         this.setBackgroundResource(R.drawable.task_layout_selector);
 
         this.setOnClickListener(event ->
@@ -102,6 +102,10 @@ public class TaskLayout extends LinearLayout {
     }
 
     public void setCheckBoxOnClick(IonClicked checkBoxCallBack) {
-        checkBox.setOnClickListener(checkBoxCallBack::onClicked);
+        checkBox.setOnClickListener(c -> checkBoxCallBack.onClicked(this));
+    }
+
+    public Task getTask() {
+        return task;
     }
 }

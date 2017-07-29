@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 import app.activities.interfaces.IHasText;
+import app.enums.TaskStatus;
 
 /**
  * Created by Raz on 12/20/2016
@@ -56,6 +57,14 @@ public class Task implements IHasText, Parcelable {
         }
     };
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status.value();
+    }
+
     public String GetName() {
         return name;
     }
@@ -78,14 +87,6 @@ public class Task implements IHasText, Parcelable {
 
     public void SetDescription(String description) {
         this.description = description;
-    }
-
-    public String GetStatus() {
-        return status;
-    }
-
-    public void SetStatus(String status) {
-        this.status = status;
     }
 
     public String GetLocation() {

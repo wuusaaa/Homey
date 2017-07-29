@@ -50,7 +50,7 @@ public class ScrollVerticalWithItems extends ScrollView {
         tasks.forEach(task -> {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
             taskLayout.setTask((Task) task);
-            taskLayout.SetOnClick(callBack);
+            taskLayout.SetTaskLayoutOnClick(callBack);
             taskLayout.setCheckBoxOnClick(checkBoxCallBack);
             linearLayout.addView(taskLayout);
 

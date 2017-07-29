@@ -6,21 +6,26 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.activities.interfaces.IonClicked;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
+import app.customcomponents.TaskLayout;
+import app.enums.TaskProperty;
+import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
@@ -30,6 +35,7 @@ import callback.GoToTaskPageCallBack;
 import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
+import callback.UpdateCallBack;
 
 public class HomePageActivity extends ActivityWithHeaderBase {
 
@@ -43,7 +49,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private GoToTaskPageCallBack taskClickCallBack;
     private IonClicked taskCheckBoxClickCallBack;
     private Button buttonSubmit;
-    private int checkedBoxesCounter;
+    private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();
     //*****************************
 
     @Override
@@ -152,7 +158,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
 
     private void initSubmitButton() {
         buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        checkedBoxesCounter = 0;
+        taskLayoutsChecked.clear();
     }
 
     private void setProfileClick() {
@@ -175,20 +181,39 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         startActivity(intent);
     }
 
-    public void onSubmitClicked(View view) {
+    UpdateCallBack updateCallBack = new UpdateCallBack() {
+        @Override
+        public void onSuccess() {
+            Toast.makeText(getBaseContext(), R.string.tasksUpdatedSuccessfully, Toast.LENGTH_SHORT).show();
+        }
 
+        //TODO: handle the error message
+        @Override
+        public void onFailure(String errorMessage) {
+            Toast.makeText(getBaseContext(), R.string.tasksNotUpdatedSuccessfully, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    public void onSubmitClicked(View view) {
+        taskLayoutsChecked.forEach(taskLayout -> {
+            taskLayout.getTask().setStatus(TaskStatus.DONE);
+            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateCallBack);
+        });
     }
 
     public void onCheckBoxClicked(View view) {
-        CheckBox checkBox = (CheckBox) view;
+        TaskLayout taskLayout = (TaskLayout) view;
 
-        if (checkBox.isChecked()) {
-            checkedBoxesCounter++;
+        if (taskLayout.isChecked()) {
+            taskLayoutsChecked.add(taskLayout);
         } else {
-            checkedBoxesCounter--;
+            taskLayoutsChecked.remove(taskLayout);
         }
 
-        if (checkedBoxesCounter > 0) {
+        if (taskLayoutsChecked.size() > 0) {
             buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             buttonSubmit.setVisibility(View.VISIBLE);
         } else {
