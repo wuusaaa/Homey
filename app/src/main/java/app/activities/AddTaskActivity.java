@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import app.customcomponents.HomeyProgressDialog;
+import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.managers.DBManager;
@@ -38,7 +39,7 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
     private Spinner dropdown;
     private HomeyProgressDialog pDialog;
     private ArrayList<Group> userGroups;
-    private int selectedGroupId=0;
+    private int selectedGroupId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +49,16 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
         // Progress dialog
         pDialog = new HomeyProgressDialog(this);
 
-        dropdown = (Spinner)findViewById(R.id.spinnerTaskGroup);
+        dropdown = (Spinner) findViewById(R.id.spinnerTaskGroup);
 
-        Context context= this;
+        Context context = this;
         List<String> items = new ArrayList<>();
         pDialog.showDialog();
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups) {
                 userGroups = groups;
-                for (Group group:groups) {
+                for (Group group : groups) {
                     items.add(group.GetName());
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, items);
@@ -91,43 +92,35 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
         editTextName = (EditText) findViewById(R.id.editTextTaskName);
         editTextDesc = (EditText) findViewById(R.id.editTextTaskDesc);
         editTextLocation = (EditText) findViewById(R.id.editTextTaskLocation);
-        editTextStatus = (EditText) findViewById(R.id.editTextTaskStatus);
         editTextStart = (EditText) findViewById(R.id.editTextTaskStartDate);
         editTextEnd = (EditText) findViewById(R.id.editTextTaskEndDate);
         buttonAddTask = (Button) findViewById(R.id.buttonAddTaskToDB);
         int userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        buttonAddTask.setOnClickListener(new View.OnClickListener() {
-            //TODO get the correct group id
-            @Override
-            public void onClick(View v) {
-                ((DBManager) (Services.GetService(DBManager.class)))
-                        .AddTask(editTextName.getText().toString(),
-                                editTextDesc.getText().toString(), userId, selectedGroupId,
-                                editTextStatus.getText().toString(),
-                                editTextLocation.getText().toString(),
-                                new Date(editTextStart.getText().toString()),
-                                new Date(editTextEnd.getText().toString()),
-                                new TaskCallBack() {
-                    @Override
-                    public void onSuccess(Task result) {
-                            Toast.makeText(AddTaskActivity.this, "Task added!", Toast.LENGTH_SHORT).show();
-                    }
+        buttonAddTask.setOnClickListener(v -> ((DBManager) (Services.GetService(DBManager.class)))
+                .AddTask(editTextName.getText().toString(),
+                        editTextDesc.getText().toString(), userId, selectedGroupId,
+                        TaskStatus.INCOMPLETE.value(),
+                        editTextLocation.getText().toString(),
+                        new Date(editTextStart.getText().toString()),
+                        new Date(editTextEnd.getText().toString()),
+                        new TaskCallBack() {
+                            @Override
+                            public void onSuccess(Task result) {
+                                Toast.makeText(AddTaskActivity.this, "Task added!", Toast.LENGTH_SHORT).show();
+                            }
 
-                    @Override
-                    public void onFailure(String result) {
-                        Toast.makeText(AddTaskActivity.this, result, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+                            @Override
+                            public void onFailure(String result) {
+                                Toast.makeText(AddTaskActivity.this, result, Toast.LENGTH_SHORT).show();
+                            }
+                        }));
 
     }
 
 
-
-    private void getSelectedGroupId(String GroupName){
-        for (Group group:userGroups) {
-            if(group.GetName().equals(GroupName)){
+    private void getSelectedGroupId(String GroupName) {
+        for (Group group : userGroups) {
+            if (group.GetName().equals(GroupName)) {
                 selectedGroupId = Integer.parseInt(group.GetId());
             }
         }

@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import app.activities.interfaces.IHasText;
 import app.activities.interfaces.IonClicked;
+import app.enums.TaskStatus;
 import app.logic.appcomponents.Task;
 import callback.GoToTaskPageCallBack;
 
@@ -47,19 +48,21 @@ public class ScrollVerticalWithItems extends ScrollView {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         AtomicInteger i = new AtomicInteger(0);
 
-        tasks.forEach(task -> {
-            TaskLayout taskLayout = new TaskLayout(this.getContext());
-            taskLayout.setTask((Task) task);
-            taskLayout.SetTaskLayoutOnClick(callBack);
-            taskLayout.setCheckBoxOnClick(checkBoxCallBack);
-            linearLayout.addView(taskLayout);
+        tasks.stream()
+                .filter(task -> !((Task) (task)).getStatus().equals(TaskStatus.DONE.value()))
+                .forEach(task -> {
+                    TaskLayout taskLayout = new TaskLayout(this.getContext());
+                    taskLayout.setTask((Task) task);
+                    taskLayout.SetTaskLayoutOnClick(callBack);
+                    taskLayout.setCheckBoxOnClick(checkBoxCallBack);
+                    linearLayout.addView(taskLayout);
 
-            taskLayouts.add(taskLayout);
+                    taskLayouts.add(taskLayout);
 
-            if (i.getAndIncrement() != tasks.size() - 1) {
-                linearLayout.addView(new Spacer(getContext()));
-            }
-        });
+                    if (i.getAndIncrement() != tasks.size() - 1) {
+                        linearLayout.addView(new Spacer(getContext()));
+                    }
+                });
     }
 
 

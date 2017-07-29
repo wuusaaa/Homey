@@ -7,10 +7,11 @@ package app.enums;
 public enum TaskStatus {
 
     DONE("done"),
-    UNDONE("undone"),
+    INCOMPLETE("incomplete"),
     IN_PROGRESS("inProgress");
 
     TaskStatus(String status) {
+        this.status = status;
     }
 
     private String status;

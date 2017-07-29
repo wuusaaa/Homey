@@ -10,5 +10,4 @@ public interface IonClicked {
 
     void onClicked(View view);
 
-
 }

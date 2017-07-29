@@ -38,14 +38,6 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/editTextTaskStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Status"
-                android:inputType="textPersonName" />
-
-            <EditText
                 android:id="@+id/editTextTaskLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
