@@ -18,11 +18,15 @@ import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.appcomponents.User;
+import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
+import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
 import callback.GoToTaskPageCallBack;
 import callback.TasksCallBack;
+import callback.UsersCallBack;
 
 /**
  * Created by Raz on 7/6/2017
@@ -34,6 +38,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView screenName;
+    private boolean isAdmin; // Ugly but necessary. The other option is to implement empty methods around the project.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +118,24 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     // Checks if the user is one of the group admins
     //******************************************************
     private boolean isGroupAdmin() {
-        return true;
+        ((DBManager) Services.GetService(DBManager.class)).GetGroupAdmins(Integer.parseInt(group.GetId()), new UsersCallBack() {
+            @Override
+            public void onSuccess(ArrayList<User> users) {
+                isAdmin = false;
+                User theUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+                for (User user : users) {
+                    if (user.GetUserId() == theUser.GetUserId()) {
+                        isAdmin = true;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+            }
+        });
+        return isAdmin;
     }
 
     //******************************************************
