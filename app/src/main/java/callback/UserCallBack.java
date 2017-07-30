@@ -3,7 +3,7 @@ package callback;
 import app.logic.appcomponents.User;
 
 /**
- * Created by razze on 27/02/2017.
+ * Created by razze on 27/02/2017
  */
 
 public interface UserCallBack {

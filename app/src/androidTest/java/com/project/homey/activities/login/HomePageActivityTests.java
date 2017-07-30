@@ -35,7 +35,7 @@ public class HomePageActivityTests extends ActivityTestBase {
 
     @Test
     public void verifyAllUserTasksAreShown() {
-        int userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
+        String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
 //        int numOfTasksInDB = ((DBManager) (Services.GetService(DBManager.class))).GetUserTasks(userId, );
 
     }

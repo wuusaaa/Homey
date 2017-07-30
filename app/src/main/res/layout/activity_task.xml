@@ -90,6 +90,7 @@
                         android:id="@+id/taskActivityTakeButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:onClick="buttonTakeOnClicked"
                         android:text="@string/take" />
 
                     <TextView

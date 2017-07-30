@@ -5,7 +5,7 @@ import app.activities.interfaces.IHasText;
 
 /**
  * Created by Raz on 12/20/2016.
- *
+ * <p>
  * user representation of the db user
  */
 
@@ -14,17 +14,17 @@ public class User implements IHasText, IHasImage {
     private String name;
     private String email;
     private String createdAt;
-    private int uid;
+    private String userId;
     private int score;
     private int level;
 
-    public User(String _name, String _email, String _createdAt, int _uid, int score, int lvl) {
-        name = _name;
-        email = _email;
-        createdAt = _createdAt;
-        uid = _uid;
+    public User(String name, String email, String createdAt, String userId, int score, int level) {
+        this.name = name;
+        this.email = email;
+        this.createdAt = createdAt;
+        this.userId = userId;
         this.score = score;
-        level=lvl;
+        this.level = level;
     }
 
     public String getName() {
@@ -51,12 +51,12 @@ public class User implements IHasText, IHasImage {
         this.createdAt = createdAt;
     }
 
-    public int GetUserId() {
-        return uid;
+    public String GetUserId() {
+        return userId;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 

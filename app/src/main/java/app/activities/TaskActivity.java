@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.project.homey.R;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
@@ -20,9 +22,11 @@ import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
+import app.logic.managers.SessionManager;
 import callback.GroupCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
+import callback.UpdateTaskUsersByTaskIdCallBack;
 import callback.UserCallBack;
 import callback.UsersCallBack;
 
@@ -36,6 +40,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
     private Group taskGroup;
     private User taskCreator;
     private ScrollHorizontalWithItems taskAssignees;
+    private List<User> taskAssigneesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +111,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
             public void onSuccess(ArrayList<User> users) {
                 taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
                 taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, null);
+                taskAssigneesList = users;
             }
 
             @Override
@@ -131,5 +137,24 @@ public class TaskActivity extends ActivityWithHeaderBase {
         myTask.setStatus(TaskStatus.COMPLETED);
         ((DBManager) Services.GetService(DBManager.class)).UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
 
+    }
+
+    public void buttonTakeOnClicked(View view) {
+        String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
+        Stream<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId));
+
+        if (taskAssigneesStream.count() > 0) {
+            ((DBManager) Services.GetService(DBManager.class)).UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+
+                }
+            });
+        }
     }
 }
