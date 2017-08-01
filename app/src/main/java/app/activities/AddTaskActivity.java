@@ -94,7 +94,9 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         buttonAddTask.setOnClickListener(v -> ((DBManager) (Services.GetService(DBManager.class)))
                 .AddTask(editTextName.getText().toString(),
-                        editTextDesc.getText().toString(), userId, selectedGroupId,
+                        editTextDesc.getText().toString(),
+                        userId,
+                        selectedGroupId,
                         TaskStatus.INCOMPLETE.value(),
                         editTextLocation.getText().toString(),
                         new Date(editTextStart.getText().toString()),

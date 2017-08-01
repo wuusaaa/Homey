@@ -156,7 +156,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
     }
 
     public void buttonCompleteOnClicked(View view) {
-        UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext());
+        UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), 1);
 
         myTask.setStatus(TaskStatus.COMPLETED);
         ((DBManager) Services.GetService(DBManager.class)).UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
