@@ -1,10 +1,13 @@
 package app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.homey.R;
 
@@ -60,7 +63,16 @@ public class TaskActivity extends ActivityWithHeaderBase {
             public void onSuccess(User user) {
                 taskCreator = user;
                 ((TextView) findViewById(R.id.taskActivityCreatorLabel)).setText(taskCreator.getName());
-                //findViewById(R.id.taskActivityCreatorImage); SET HERE CREATOR IMAGE
+                ImageButton creatorImage = (ImageButton) findViewById(R.id.taskActivityCreatorImage);
+                creatorImage.setOnClickListener(view->
+                {
+                    Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("user", taskCreator);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                });
+                //TODO::SET HERE CREATOR IMAGE
             }
 
             @Override
@@ -75,7 +87,18 @@ public class TaskActivity extends ActivityWithHeaderBase {
             public void onSuccess(Group group) {
                 taskGroup = group;
                 ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText(taskGroup.GetName());
-                //findViewById(R.id.taskActivityGroupImage); SET HERE GROUP IMAGE
+                ImageButton groupImage = (ImageButton) findViewById(R.id.taskActivityGroupImage);
+
+                groupImage.setOnClickListener(view ->
+                {
+                    Intent intent = new Intent(getBaseContext(), GroupPageActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("group", taskGroup);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                });
+
+                //TODO:: SET HERE GROUP IMAGE
             }
 
             @Override
@@ -83,7 +106,6 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText("failed");
             }
         });
-
     }
 
     private void setTaskInfo() {

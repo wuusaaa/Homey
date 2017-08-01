@@ -1,5 +1,8 @@
 package app.logic.appcomponents;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
 
@@ -9,7 +12,7 @@ import app.activities.interfaces.IHasText;
  * user representation of the db user
  */
 
-public class User implements IHasText, IHasImage {
+public class User implements IHasText, IHasImage, Parcelable {
 
     private String name;
     private String email;
@@ -18,7 +21,8 @@ public class User implements IHasText, IHasImage {
     private int score;
     private int level;
 
-    public User(String name, String email, String createdAt, String userId, int score, int level) {
+    public User(String name, String email, String createdAt, String userId, int score, int level)
+    {
         this.name = name;
         this.email = email;
         this.createdAt = createdAt;
@@ -26,6 +30,27 @@ public class User implements IHasText, IHasImage {
         this.score = score;
         this.level = level;
     }
+
+    protected User(Parcel in) {
+        name = in.readString();
+        email = in.readString();
+        createdAt = in.readString();
+        userId = in.readString();
+        score = in.readInt();
+        level = in.readInt();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -89,5 +114,21 @@ public class User implements IHasText, IHasImage {
     @Override
     public byte[] GetImage() {
         return new byte[0];
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int i)
+    {
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeString(createdAt);
+        dest.writeString(userId);
+        dest.writeInt(score);
+        dest.writeInt(level);
     }
 }

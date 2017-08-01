@@ -754,7 +754,6 @@ public class DBManager extends ManagerBase {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
@@ -874,7 +873,6 @@ public class DBManager extends ManagerBase {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue

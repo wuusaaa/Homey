@@ -115,7 +115,6 @@ public class HomePageActivity extends ActivityWithHeaderBase {
                 pDialog.hideDialog();
             }
         });
-
     }
 
     private void loadGroups() {
