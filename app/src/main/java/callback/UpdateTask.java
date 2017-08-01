@@ -13,7 +13,8 @@ public class UpdateTask implements UpdateCallBack {
     private Context context;
     private int shouldPrintMassage;
     private int numOfTasks;
-    private Runnable consumer;
+    private Runnable loadTasks;
+    private Runnable initSubmitButton;
 
     public UpdateTask(Context context, int numOfTasks) {
         this.context = context;
@@ -25,15 +26,14 @@ public class UpdateTask implements UpdateCallBack {
         this.context = baseContext;
         shouldPrintMassage = 0;
         this.numOfTasks = size;
-        this.consumer = loadTasks;
+        this.loadTasks = loadTasks;
     }
-
 
     @Override
     public void onSuccess() {
         if (++shouldPrintMassage == numOfTasks) {
             Toast.makeText(context, R.string.tasksUpdatedSuccessfully, Toast.LENGTH_SHORT).show();
-            consumer.run();
+            loadTasks.run();
         }
     }
 

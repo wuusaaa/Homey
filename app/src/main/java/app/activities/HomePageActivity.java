@@ -183,7 +183,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     public void onSubmitClicked(View view) {
-        UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::loadTasks);
+        UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::initPage);
 
         taskLayoutsChecked.forEach(taskLayout -> {
             taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
