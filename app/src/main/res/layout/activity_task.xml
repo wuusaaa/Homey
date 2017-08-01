@@ -213,21 +213,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <app.customcomponents.ScrollHorizontalWithItems
                 android:id="@+id/taskActivityTaskAssignee"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_add_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2">
 
             <Button
-                android:id="@+id/buttonComplete"
-                android:layout_width="match_parent"
+                android:id="@+id/button_complete_task"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:background="#04B854"
+                android:drawableStart="@android:drawable/ic_menu_add"
                 android:onClick="buttonCompleteOnClicked"
-                android:text="@string/complete" />
+                android:text="@string/complete"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/button_delete_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:background="#D83402"
+                android:drawableEnd="@android:drawable/ic_menu_delete"
+                android:onClick="buttonDeleteTaskOnClicked"
+                android:text="@string/deleted_task"
+                android:textColor="#FFFFFF" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

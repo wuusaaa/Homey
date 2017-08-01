@@ -118,4 +118,5 @@
     <string name="added">Added!</string>
     <string name="tasksNotUpdatedSuccessfully">The tasks haven\'t been updated successfully. An error occurred, try again</string>
     <string name="tasksUpdatedSuccessfully">The tasks have been updated successfully</string>
+    <string name="deleted_task">Deleted Task</string>
 </resources>

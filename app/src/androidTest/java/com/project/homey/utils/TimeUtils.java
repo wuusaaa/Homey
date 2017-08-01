@@ -4,8 +4,6 @@ import android.support.test.espresso.core.deps.guava.base.Supplier;
 
 import org.hamcrest.Matcher;
 
-import java.util.function.Predicate;
-
 /**
  * Created by barakm on 20/03/2017
  */
@@ -16,7 +14,6 @@ public final class TimeUtils {
 
     private static long timeout = 1500;
     private static final long interval = 200;
-    private static Predicate<Object> predicate;
 
     public static void Wait() {
         try {

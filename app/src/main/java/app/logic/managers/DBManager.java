@@ -202,15 +202,15 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void RemoveGroup(final int groupId, final ServerCallBack callBack) {
+    public void RemoveGroup(final String groupId, final ServerCallBack callBack) {
         removeFromTable("group", groupId, callBack);
     }
 
-    public void RemoveTask(final int taskId, final ServerCallBack callBack) {
+    public void RemoveTask(final String taskId, final ServerCallBack callBack) {
         removeFromTable("task", taskId, callBack);
     }
 
-    private void removeFromTable(final String table, final int id, final ServerCallBack callBack) {
+    private void removeFromTable(final String table, final String id, final ServerCallBack callBack) {
         //TODO add this to the API server
     }
 

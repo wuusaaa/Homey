@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.homey.R;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.GroupCallBack;
+import callback.ServerCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
 import callback.UpdateTaskUsersByTaskIdCallBack;
@@ -178,5 +180,19 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 }
             });
         }
+    }
+
+    public void buttonDeleteTaskOnClicked(View view) {
+        ((DBManager) (Services.GetService(DBManager.class))).RemoveTask(myTask.GetTaskId(), new ServerCallBack() {
+            @Override
+            public void onSuccess(JSONObject result) {
+
+            }
+
+            @Override
+            public void onFailure(String result) {
+
+            }
+        });
     }
 }
