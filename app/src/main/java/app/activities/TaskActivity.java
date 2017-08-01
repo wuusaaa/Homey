@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.project.homey.R;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -28,7 +26,6 @@ import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.GroupCallBack;
-import callback.ServerCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
 import callback.UpdateTaskUsersByTaskIdCallBack;
@@ -183,14 +180,16 @@ public class TaskActivity extends ActivityWithHeaderBase {
     }
 
     public void buttonDeleteTaskOnClicked(View view) {
-        ((DBManager) (Services.GetService(DBManager.class))).RemoveTask(myTask.GetTaskId(), new ServerCallBack() {
+        String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
+        ((DBManager) (Services.GetService(DBManager.class))).LeaveTask(myTask.GetTaskId().toString(), userId, new UpdateCallBack() {
+
             @Override
-            public void onSuccess(JSONObject result) {
+            public void onSuccess() {
 
             }
 
             @Override
-            public void onFailure(String result) {
+            public void onFailure(String errorMessage) {
 
             }
         });

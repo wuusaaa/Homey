@@ -374,7 +374,7 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void AddTask(final String name, final String description, final String creatorId, final int groupId, final String status, final String location, final Date startTime, final Date endTime, final TaskCallBack callBack) {
+    public void AddTask(final String name, final String description, final String creatorId, final int groupId, final String status, final String location, final Date startTime, final Date endTime, final int score, final TaskCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add_task";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -394,7 +394,8 @@ public class DBManager extends ManagerBase {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date startTime1 = dateFormat.parse(jsonObject.getString("start_time"));
                     Date endTime1 = dateFormat.parse(jsonObject.getString("end_time"));
-                    callBack.onSuccess(new Task(id, name1, groupId1, description1, status1, location1, creatorId1, startTime1, endTime1));
+                    int scoreIn = jsonObject.getInt("score");
+                    callBack.onSuccess(new Task(id, name1, groupId1, description1, status1, location1, creatorId1, startTime1, endTime1, scoreIn));
                 } else {
 
                     // Error occurred while adding a task. Get the error
@@ -424,6 +425,7 @@ public class DBManager extends ManagerBase {
                 params.put("location", location);
                 params.put("start_time", new java.sql.Timestamp(startTime.getTime()).toString());
                 params.put("end_time", new java.sql.Timestamp(endTime.getTime()).toString());
+                params.put("score", score + "");
 
                 return params;
             }
@@ -728,7 +730,8 @@ public class DBManager extends ManagerBase {
                         Date startTime = dateFormat.parse(startTimeStr);
                         Date endTime = dateFormat.parse(endTimeStr);
                         Log.e("debug", obj.getString("start_time"));
-                        Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime);
+                        int scoreIn = obj.getInt("score");
+                        Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime, scoreIn);
 
                         tasks.add(task);
                     }
@@ -795,8 +798,9 @@ public class DBManager extends ManagerBase {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date startTime = dateFormat.parse(startTimeStr);
                         Date endTime = dateFormat.parse(endTimeStr);
+                        int scoreIn = obj.getInt("score");
 
-                        Task task = new Task(id, name, groupId1, description, status, location, creatorId, startTime, endTime);
+                        Task task = new Task(id, name, groupId1, description, status, location, creatorId, startTime, endTime, scoreIn);
 
                         tasks.add(task);
                     }

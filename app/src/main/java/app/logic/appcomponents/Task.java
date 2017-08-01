@@ -22,8 +22,9 @@ public class Task implements IHasText, Parcelable {
     private int creatorId;
     private Date startTime;
     private Date endTime;
+    private int score = 0;
 
-    public Task(String taskId, String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime) {
+    public Task(String taskId, String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime, int score) {
         this.taskId = taskId;
         this.name = name;
         this.groupId = groupId;
@@ -33,6 +34,7 @@ public class Task implements IHasText, Parcelable {
         this.creatorId = creatorId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.score = score;
     }
 
     protected Task(Parcel in) {

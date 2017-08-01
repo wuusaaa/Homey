@@ -101,6 +101,7 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
                         editTextLocation.getText().toString(),
                         new Date(editTextStart.getText().toString()),
                         new Date(editTextEnd.getText().toString()),
+                        50,
                         new TaskCallBack() {
                             @Override
                             public void onSuccess(Task result) {
