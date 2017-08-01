@@ -1,5 +1,6 @@
 package app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -35,5 +36,15 @@ public class AddGroupActivity extends ActivityWithHeaderBase {
                 ((EditText) findViewById(R.id.editTextGroupName)).setText(error);
             }
         });
+    }
+
+    public void buttonChangePicture_OnClick(View view) {
+        Intent i = new Intent();
+        i.setType("image/*");
+        //i.setType("video/*");
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(
+                Intent.createChooser(i, "android.intent.action.SEND_MULTIPLE"), 1);
     }
 }
