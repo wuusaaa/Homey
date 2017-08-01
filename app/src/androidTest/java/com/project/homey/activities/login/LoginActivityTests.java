@@ -39,6 +39,11 @@ public class LoginActivityTests extends ActivityTestBase {
 
     @Override
     public void BeforeTest() {
+        TimeUtils.Wait();
+        if (getViewById(R.id.activity_home_page).isExists()) {
+            logout();
+        }
+
         emailField = getViewById(R.id.email);
         passwordField = getViewById(R.id.password);
         loginButton = getViewById(R.id.buttonLogin);
@@ -58,7 +63,7 @@ public class LoginActivityTests extends ActivityTestBase {
     }
 
     @Test
-    public void LoginWithExistingUser() {
+    public void LoginWithExistingUser() throws InterruptedException {
         // Insert credentials.
         emailField.insertText(userName);
         passwordField.insertText(password);
@@ -67,8 +72,7 @@ public class LoginActivityTests extends ActivityTestBase {
         loginButton.click();
 
         //Verify home page has loaded.
-        TimeUtils.Wait(10000);
-//        TimeUtils.busyWait(5000, is(true), () -> getViewById(R.id.activity_home_page).isDisplayed());
+        TimeUtils.busyWait(5000, is(true), () -> getViewById(R.id.activity_home_page).isExists());
         getViewById(R.id.activity_home_page).isDisplayed();
 
         logout();
@@ -90,7 +94,7 @@ public class LoginActivityTests extends ActivityTestBase {
     }
 
     private void logout() {
-        getViewById(R.id.loginActivity).click();
+        getViewById(R.id.buttonLogout).click();
         getViewById(R.id.buttonLogout).click();
     }
 

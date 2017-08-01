@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.project.homey.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,9 +19,9 @@ import callback.GoToTaskPageCallBack;
 
 public class ScrollVerticalWithItems extends ScrollView {
 
-    final LinearLayout linearLayout;
+    private final LinearLayout linearLayout;
 
-    List<TaskLayout> taskLayouts = new ArrayList<>();
+    private final List<TaskLayout> taskLayouts = new ArrayList<>();
 
     public ScrollVerticalWithItems(Context context) {
         super(context);
@@ -52,6 +54,7 @@ public class ScrollVerticalWithItems extends ScrollView {
                 .filter(task -> !((Task) (task)).getStatus().equals(TaskStatus.COMPLETED.value()))
                 .forEach(task -> {
                     TaskLayout taskLayout = new TaskLayout(this.getContext());
+                    taskLayout.setId(createIdForTaskLayout(i));
                     taskLayout.setTask((Task) task);
                     taskLayout.SetTaskLayoutOnClick(callBack);
                     taskLayout.setCheckBoxOnClick(checkBoxCallBack);
@@ -63,6 +66,10 @@ public class ScrollVerticalWithItems extends ScrollView {
                         linearLayout.addView(new Spacer(getContext()));
                     }
                 });
+    }
+
+    private int createIdForTaskLayout(AtomicInteger i) {
+        return R.id.homePageActivityTasksHolder + i.get() + 1;
     }
 
 

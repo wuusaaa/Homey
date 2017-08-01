@@ -1,5 +1,6 @@
 package com.project.homey.elementsproxy;
 
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -53,9 +54,14 @@ public class ViewInteractionProxy {
     public void textEquals(String viewText) {
         viewInteraction.check(matches(withText(viewText)));
     }
-//
-//    public IViewInteractionVerifier verifyThat(){
-//        return new ViewInteractionVerifier();
-//    }
 
+    public boolean isExists() {
+        try {
+            isDisplayed();
+        } catch (NoMatchingViewException noMatchingException) {
+            return false;
+        }
+
+        return true;
+    }
 }

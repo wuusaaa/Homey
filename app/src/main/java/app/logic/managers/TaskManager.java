@@ -17,17 +17,7 @@ public class TaskManager extends ManagerBase {
 
     public void GetUserTasks(TasksCallBack tasksCallBack) {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        ((DBManager) (Services.GetService(DBManager.class))).GetUserTasks(userId, new TasksCallBack() {
-            @Override
-            public void onSuccess(ArrayList<Task> tasks) {
-                tasksCallBack.onSuccess(tasks);
-            }
-
-            @Override
-            public void onFailure(String error) {
-                Log.d("debug", error);
-            }
-        });
+        ((DBManager) (Services.GetService(DBManager.class))).GetUserTasks(userId, tasksCallBack);
     }
 
     public void GetGroupTasks(TasksCallBack tasksCallBack,int groupId) {

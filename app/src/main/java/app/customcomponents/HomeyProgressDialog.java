@@ -15,6 +15,7 @@ public class HomeyProgressDialog extends ProgressDialog {
     public HomeyProgressDialog(Context context) {
         super(context);
     }
+
     public void showDialog() {
         dialogSemaphore++;
         if (!this.isShowing())
@@ -25,7 +26,7 @@ public class HomeyProgressDialog extends ProgressDialog {
         if (this.isShowing())
             dialogSemaphore--;
         //only hide the loader if there is no other loading component
-        if(dialogSemaphore==0) {
+        if (dialogSemaphore == 0) {
             this.dismiss();
         }
     }
