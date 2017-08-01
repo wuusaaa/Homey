@@ -39,11 +39,11 @@ public class AddGroupActivity extends ActivityWithHeaderBase {
     }
 
     public void buttonChangePicture_OnClick(View view) {
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        i.setAction(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(
-                Intent.createChooser(i, "android.intent.action.SEND_MULTIPLE"), 1);
+                Intent.createChooser(intent, "android.intent.action.SEND_MULTIPLE"), 1);
     }
 }
