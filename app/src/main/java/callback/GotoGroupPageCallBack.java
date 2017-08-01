@@ -8,6 +8,7 @@ import app.activities.interfaces.IHasText;
  */
 
 public interface GotoGroupPageCallBack {
+
     <T extends IHasImage & IHasText> void onSuccess(T item);
 
     void onFailure(String error);
