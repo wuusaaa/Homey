@@ -3,6 +3,7 @@ package com.project.homey.activities.login;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.LinearLayout;
 
 import com.project.homey.R;
 import com.project.homey.bases.ActivityTestBase;
@@ -18,14 +19,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import app.activities.HomePageActivity;
+import app.customcomponents.ScrollVerticalWithItems;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Task;
 import app.logic.managers.Services;
 import app.logic.managers.TaskManager;
 import callback.TasksCallBack;
 
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by barakm on 19/07/2017
@@ -70,16 +72,15 @@ public class HomePageActivityTests extends ActivityTestBase {
                 .filter(task -> !task.getStatus().equals(TaskStatus.COMPLETED.value()))
                 .collect(Collectors.toList());
 
-        int i;
-        for (i = 1; ; ) {
-            if (getViewById(R.id.homePageActivityTasksHolder + i).isExists()) {
-                i++;
-            } else {
-                break;
+        ScrollVerticalWithItems scrollVerticalWithItems = (ScrollVerticalWithItems) (homePageActivityActivityTestRule.getActivity().findViewById(R.id.homePageActivityTasksHolder));
+        LinearLayout linearLayout = ((LinearLayout) (scrollVerticalWithItems.getChildAt(0)));
+
+        int i, taskLayoutCounter = 0;
+        for (i = 0; i < linearLayout.getChildCount(); i++) {
+            if (linearLayout.getChildAt(i).getClass().toString().contains("TaskLayout")) {
+                taskLayoutCounter++;
             }
         }
-        assertThat("Not all tasks are shown", i, is(incompleteTasks.size()));
+        assertEquals("Not all tasks are shown", taskLayoutCounter, incompleteTasks.size());
     }
-
-
 }
