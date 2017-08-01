@@ -137,4 +137,6 @@ public class HomePageActivityTests extends ActivityTestBase {
         TimeUtils.Wait();
         getViewById(R.id.activity_profile).isDisplayed();
     }
+
+    //TODO: Barak - test for submit button
 }
