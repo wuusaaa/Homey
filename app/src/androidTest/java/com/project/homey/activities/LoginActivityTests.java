@@ -1,4 +1,4 @@
-package com.project.homey.activities.login;
+package com.project.homey.activities;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
