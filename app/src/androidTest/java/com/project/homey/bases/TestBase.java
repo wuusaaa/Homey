@@ -14,6 +14,8 @@ import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UserCallBack;
 
+import static android.support.test.InstrumentationRegistry.getContext;
+
 /**
  * Created by barakm on 20/03/2017
  */
@@ -29,7 +31,9 @@ public abstract class TestBase {
         ((DBManager) (Services.GetService(DBManager.class))).Login(userName, password, new UserCallBack() {
             @Override
             public void onSuccess(User user) {
+                ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getContext());
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
+                ((SessionManager) (Services.GetService(SessionManager.class))).setLogin(true);
             }
 
             @Override

@@ -114,7 +114,6 @@ public class LoginActivity extends ActivityBase {
         ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
 
 
-
         // Check if user is already logged in or not
         if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
             ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName("Home Page");
@@ -175,7 +174,7 @@ public class LoginActivity extends ActivityBase {
 
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
 
-                db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(),user.GetScore(),user.GetLevel());
+                db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(), user.GetScore(), user.GetLevel());
 
                 pDialog.hideDialog();
 

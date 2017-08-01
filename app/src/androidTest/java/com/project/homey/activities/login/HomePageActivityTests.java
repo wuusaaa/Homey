@@ -19,11 +19,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import app.activities.HomePageActivity;
+import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.enums.TaskStatus;
+import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.TaskManager;
+import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
 import static org.hamcrest.Matchers.is;
@@ -82,5 +86,55 @@ public class HomePageActivityTests extends ActivityTestBase {
             }
         }
         assertEquals("Not all tasks are shown", taskLayoutCounter, incompleteTasks.size());
+    }
+
+    @Test
+    public void verifyAllUserGroupsAreShown() throws InterruptedException {
+        final List<Group> groupsFromDb = new ArrayList<>();
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+        ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Group> groups) {
+                groupsFromDb.addAll(groups);
+                atomicBoolean.set(true);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                atomicBoolean.set(true);
+            }
+        });
+
+        TimeUtils.busyWait(5000, is(true), atomicBoolean::get);
+
+        ScrollHorizontalWithItems scrollHorizontalWithItems = (ScrollHorizontalWithItems) (homePageActivityActivityTestRule.getActivity().findViewById(R.id.GroupsHolder));
+        LinearLayout linearLayout = ((LinearLayout) (scrollHorizontalWithItems.getChildAt(0)));
+
+        int i, linearLayoutCounter = 0;
+        for (i = 0; i < linearLayout.getChildCount(); i++) {
+            if (linearLayout.getChildAt(i).getClass().toString().contains("LinearLayout")) {
+                linearLayoutCounter++;
+            }
+        }
+        assertEquals("Not all tasks are shown", linearLayoutCounter, groupsFromDb.size());
+    }
+
+    @Test
+    public void hasLogoutButton() {
+        TimeUtils.Wait();
+        getViewById(R.id.buttonLogout).isDisplayed();
+        getViewById(R.id.buttonLogout).click();
+        TimeUtils.Wait();
+        getViewById(R.id.logoutActivity).isDisplayed();
+    }
+
+    @Test
+    public void hasProfileImageButton() {
+        TimeUtils.Wait();
+        getViewById(R.id.profileImage).isDisplayed();
+        getViewById(R.id.profileImage).click();
+        TimeUtils.Wait();
+        getViewById(R.id.activity_profile).isDisplayed();
     }
 }
