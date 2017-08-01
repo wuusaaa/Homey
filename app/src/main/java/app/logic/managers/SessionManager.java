@@ -1,7 +1,7 @@
 package app.logic.managers;
 
 /**
- * Created by razze on 18/02/2017.
+ * Created by razze on 18/02/2017
  */
 
 import android.content.Context;

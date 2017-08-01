@@ -3,7 +3,7 @@ package callback;
 import app.logic.appcomponents.Group;
 
 /**
- * Created by razze on 09/03/2017.
+ * Created by razze on 09/03/2017
  */
 
 public interface GroupCallBack {

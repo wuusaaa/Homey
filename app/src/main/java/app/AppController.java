@@ -1,6 +1,6 @@
 package app;
 /**
- * Created by razze on 18/02/2017.
+ * Created by razze on 18/02/2017
  */
 
 import android.app.Application;

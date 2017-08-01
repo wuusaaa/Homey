@@ -14,7 +14,6 @@ public class UpdateTask implements UpdateCallBack {
     private int shouldPrintMassage;
     private int numOfTasks;
     private Runnable loadTasks;
-    private Runnable initSubmitButton;
 
     public UpdateTask(Context context, int numOfTasks) {
         this.context = context;
