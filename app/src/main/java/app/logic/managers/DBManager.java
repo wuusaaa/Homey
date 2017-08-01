@@ -1023,6 +1023,66 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public void GetGroupUsersByGroupId(final int groupId, final UsersCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_group_users";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupUsersURL(), response -> {
+
+            try {
+                JSONObject jObj = new JSONObject(response);
+                boolean error = jObj.getBoolean("error");
+                if (!error) {
+                    ArrayList<User> users = new ArrayList<>();
+                    JSONArray resArr = new JSONArray(jObj.getString("result"));
+                    Log.d("debug", resArr.toString());
+                    for (int i = 0; i < resArr.length(); i++) {
+                        JSONObject obj = resArr.getJSONObject(i);
+                        // User successfully pulled from MySQL
+                        String userId = obj.getString("uid");
+                        JSONObject userObj = obj.getJSONObject("user");
+                        String name = userObj.getString("name");
+                        String email = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+
+                        // Inserting row in users table
+                        User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl));
+
+                        users.add(user);
+                    }
+                    callBack.onSuccess(users);
+
+                } else {
+
+                    // Error occurred in getting users. Get the error
+                    // message
+                    String errorMsg = jObj.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            }
+
+        }, error -> callBack.onFailure("Volley ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to groups url
+                Map<String, String> params = new HashMap<>();
+                params.put("id", groupId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     //TODO delete this when finishing testing
     public void test(final ServerCallBack callBack) {
         driver.RunSqlQuery("SELECT * FROM users", new ServerCallBack() {
