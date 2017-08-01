@@ -44,6 +44,10 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIUpdateTableValueURL = "https://www.crossword-clues.com/homey/update-table-value.php";
 
+    private final String APILeaveTaskURL = "https://www.crossword-clues.com/homey/leave-task.php";
+
+    private final String APILeaveGroupURL = "https://www.crossword-clues.com/homey/leave-group.php";
+
     private final String APIRemoveFromTableURL = "https://www.crossword-clues.com/homey/remove-from-table.php";
 
     private final String serverSecurityToken = "&t5h5th%TH&&gr4gjkbddr%THsdfd21";
@@ -231,5 +235,23 @@ public class EnvironmentManager extends ManagerBase {
      */
     public String GetAPIGetTaskUsersURL() {
         return APIGetTaskUsersURL;
+    }
+
+    /**
+     * getter for the APILeaveTaskURL
+     *
+     * @return String
+     */
+    public String GetAPILeaveTaskURL() {
+        return APILeaveTaskURL;
+    }
+
+    /**
+     * getter for the APILeaveGroupURL
+     *
+     * @return String
+     */
+    public String GetAPILeaveGroupURL() {
+        return APILeaveGroupURL;
     }
 }
