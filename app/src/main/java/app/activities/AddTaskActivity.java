@@ -85,10 +85,6 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
             }
         });
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        dropdown.setAdapter(adapter);
-//        dropdown.setOnItemSelectedListener(this);
         editTextName = (EditText) findViewById(R.id.editTextTaskName);
         editTextDesc = (EditText) findViewById(R.id.editTextTaskDesc);
         editTextLocation = (EditText) findViewById(R.id.editTextTaskLocation);
