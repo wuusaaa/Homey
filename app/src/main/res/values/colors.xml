@@ -20,4 +20,7 @@
     <color name="btn_logut_bg">#ff6861</color>
     <color name="light_gray">#EAEAEA</color>
     <color name="theme_color">#01A9D9</color>
+    <color name="accept_color">#04B854</color>
+    <color name="decline_color">#D83402</color>
+
 </resources>
