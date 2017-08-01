@@ -41,7 +41,6 @@ public class AddGroupActivity extends ActivityWithHeaderBase {
     public void buttonChangePicture_OnClick(View view) {
         Intent i = new Intent();
         i.setType("image/*");
-        //i.setType("video/*");
         i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(
