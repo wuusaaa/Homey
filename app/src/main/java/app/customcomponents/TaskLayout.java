@@ -1,8 +1,11 @@
 package app.customcomponents;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,13 +44,17 @@ public class TaskLayout extends LinearLayout {
         textViewLayoutParams.setMargins(15, 15, 0, 15);
         // Group icon
         groupIcon = new ImageButton(getContext());
+
         LayoutParams imageButtonLayoutParams = new LayoutParams(300, 300);
-        groupIcon.setImageResource(R.drawable.profilepicturetest);
         groupIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         groupIcon.setLayoutParams(imageButtonLayoutParams);
-        GradientDrawable shape = new GradientDrawable();
-        shape.setCornerRadius(500);
-        groupIcon.setBackground(shape);
+        groupIcon.setBackgroundColor(getResources().getColor(R.color.white, null));
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profilepicturetest);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        groupIcon.setImageDrawable(roundedBitmapDrawable);
+
         // Task info
         taskInfo = new LinearLayout(getContext());
         taskInfo.setOrientation(VERTICAL);
