@@ -40,15 +40,15 @@ public class TaskLayout extends LinearLayout {
         super(context);
 
         setOrientation(HORIZONTAL);
-        LayoutParams textViewLayoutParams = new LayoutParams(1000, LayoutParams.WRAP_CONTENT);
-        textViewLayoutParams.setMargins(15, 15, 0, 15);
+        LayoutParams textViewLayoutParams = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
+        textViewLayoutParams.setMargins(getDpSize(15), getDpSize(5), getDpSize(0), getDpSize(5));
         // Group icon
         groupIcon = new ImageButton(getContext());
 
-        LayoutParams imageButtonLayoutParams = new LayoutParams(300, 300);
+        LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(100), getDpSize(100));
         groupIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         groupIcon.setLayoutParams(imageButtonLayoutParams);
-        groupIcon.setBackgroundColor(getResources().getColor(R.color.white, null));
+        groupIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profilepicturetest);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
@@ -114,5 +114,10 @@ public class TaskLayout extends LinearLayout {
 
     public Task getTask() {
         return task;
+    }
+
+    public int getDpSize(int size) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (size * scale + 0.5f);
     }
 }
