@@ -46,9 +46,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         setContentView(R.layout.activity_group_page);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
 
-        screenName = (TextView) findViewById(R.id.textViewScreenName);
-        screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
-
         Bundle b = this.getIntent().getExtras();
         if (b != null)
             group = b.getParcelable("group");
@@ -61,6 +58,14 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
         // Arrange group buttons
         arrangeButtons();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        screenName = (TextView) findViewById(R.id.textViewScreenName);
+        screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
     }
 
     private void loadTasks() {

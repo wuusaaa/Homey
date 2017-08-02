@@ -26,6 +26,7 @@ import app.enums.TaskProperty;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
@@ -165,7 +166,11 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private void setProfileClick() {
         buttonProfile.setOnClickListener(clickedButton ->
         {
-            Intent intent = new Intent(this, ProfileActivity.class);
+            Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
+            Bundle bundle = new Bundle();
+            User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+            bundle.putParcelable("user", self);
+            intent.putExtras(bundle);
             startActivity(intent);
         });
     }

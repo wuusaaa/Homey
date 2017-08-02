@@ -35,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/accept_color"
-                android:text="Save Changes" />
+                android:text="Save Changes"
+                android:onClick="onSaveChangesClick"/>
 
             <Button
                 android:id="@+id/profileEditCancel"
