@@ -12,7 +12,6 @@ import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import callback.GroupCallBack;
 
-
 public class AddGroupActivity extends ActivityWithHeaderBase {
 
     @Override

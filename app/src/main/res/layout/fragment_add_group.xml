@@ -1,0 +1,69 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="layout.FragmentAddGroup"
+    android:id="@+id/AddGroupFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="10dp"
+                android:hint="@string/description" />
+
+            <EditText
+                android:id="@+id/editTextGroupName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="10dp"
+                android:hint="@string/group_name"/>
+
+            <Button
+                android:id="@+id/ButtonCreateGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Create Group"
+                android:onClick="onCreateGroupClicked"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3">
+
+            <ImageButton
+                android:id="@+id/choosenGroupImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/Transparent"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_upload_image_group" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Picture"
+                android:onClick="onChooseImageClicked" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

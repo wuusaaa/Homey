@@ -31,4 +31,12 @@
         android:layout_height="wrap_content"
         android:text="@string/add_member" />
 
+    <android.support.v7.widget.FitWindowsLinearLayout
+        android:id="@+id/PlusActivityFragmentHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </android.support.v7.widget.FitWindowsLinearLayout>
+
 </LinearLayout>
