@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.project.homey.R;
 
-import app.activities.interfaces.IonClicked;
+import java.util.function.Consumer;
+
 import app.logic.appcomponents.Task;
-import callback.GoToTaskPageCallBack;
 
 
 /**
@@ -98,18 +98,17 @@ public class TaskLayout extends LinearLayout {
         this.checkBox.setChecked(checked);
     }
 
-    public void SetTaskLayoutOnClick(GoToTaskPageCallBack callback) {
+    public void SetTaskLayoutOnClick(Consumer<Task> callback) {
         this.setBackgroundResource(R.drawable.task_layout_selector);
 
-        this.setOnClickListener(event ->
-        {
+        this.setOnClickListener(event -> {
             this.setPressed(true);
-            callback.onSuccess(task);
+            callback.accept(task);
         });
     }
 
-    public void setCheckBoxOnClick(IonClicked checkBoxCallBack) {
-        checkBox.setOnClickListener(c -> checkBoxCallBack.onClicked(this));
+    public void setCheckBoxOnClick(Consumer<TaskLayout> checkBoxCallBack) {
+        checkBox.setOnClickListener(c -> checkBoxCallBack.accept(this));
     }
 
     public Task getTask() {

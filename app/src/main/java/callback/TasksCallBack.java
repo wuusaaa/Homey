@@ -1,6 +1,6 @@
 package callback;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import app.logic.appcomponents.Task;
 
@@ -9,7 +9,7 @@ import app.logic.appcomponents.Task;
  */
 
 public interface TasksCallBack {
-    void onSuccess(ArrayList<Task> tasks);
+    void onSuccess(List<Task> tasks);
 
     void onFailure(String error);
 }

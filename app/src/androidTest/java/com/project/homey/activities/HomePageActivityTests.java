@@ -59,7 +59,7 @@ public class HomePageActivityTests extends ActivityTestBase {
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
-            public void onSuccess(ArrayList<Task> tasks) {
+            public void onSuccess(List<Task> tasks) {
                 tasksFromDb.addAll(tasks);
                 atomicBoolean.set(true);
             }

@@ -1020,7 +1020,6 @@ public class DBManager extends ManagerBase {
         String tag_string_req = "req_get_group_users";
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupUsersURL(), response -> {
-
             try {
                 JSONObject jObj = new JSONObject(response);
                 boolean error = jObj.getBoolean("error");

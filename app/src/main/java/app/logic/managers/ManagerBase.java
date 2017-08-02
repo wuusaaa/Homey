@@ -4,13 +4,13 @@ package app.logic.managers;
  * Created by barakm on 12/03/2017
  */
 
-public abstract class ManagerBase {
+abstract class ManagerBase {
 
-    protected ManagerBase() {
+    ManagerBase() {
         registerService();
     }
 
-    protected void registerService() {
+    private void registerService() {
         Services.AddService(this);
     }
 }

@@ -5,17 +5,20 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.project.homey.R;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 import app.activities.interfaces.IHasText;
-import app.activities.interfaces.IonClicked;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Task;
-import callback.GoToTaskPageCallBack;
+import app.logic.appcomponents.User;
+import app.logic.managers.DBManager;
+import app.logic.managers.Services;
+import app.logic.managers.SessionManager;
+import callback.UsersCallBack;
 
 public class ScrollVerticalWithItems extends ScrollView {
 
@@ -44,8 +47,9 @@ public class ScrollVerticalWithItems extends ScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText> void SetTasks(ArrayList<T> tasks, GoToTaskPageCallBack callBack, IonClicked checkBoxCallBack) {
+    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
         linearLayout.removeAllViews();
+        taskLayouts.clear();
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         AtomicInteger i = new AtomicInteger(0);
@@ -54,7 +58,6 @@ public class ScrollVerticalWithItems extends ScrollView {
                 .filter(task -> !((Task) (task)).getStatus().equals(TaskStatus.COMPLETED.value()))
                 .forEach(task -> {
                     TaskLayout taskLayout = new TaskLayout(this.getContext());
-                    taskLayout.setId(createIdForTaskLayout(i));
                     taskLayout.setTask((Task) task);
                     taskLayout.SetTaskLayoutOnClick(callBack);
                     taskLayout.setCheckBoxOnClick(checkBoxCallBack);
@@ -68,9 +71,77 @@ public class ScrollVerticalWithItems extends ScrollView {
                 });
     }
 
-    private int createIdForTaskLayout(AtomicInteger i) {
-        return R.id.homePageActivityTasksHolder + i.get() + 1;
+    public void visibleAllItems(Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
+        List<Task> taskToDisplay = new ArrayList<>();
+        taskLayouts.forEach(taskLayout -> taskToDisplay.add(taskLayout.getTask()));
+        SetTasks(taskToDisplay, callBack, checkBoxCallBack);
+    }
+
+    public void filterMyTasks(Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
+        String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
+        List<Task> tasksToDisplay = new ArrayList<>();
+        List<TaskLayout> taskLayoutsCopy = new ArrayList<>();
+        AtomicInteger i = new AtomicInteger(1);
+
+        taskLayoutsCopy.addAll(taskLayouts);
+
+        taskLayouts.forEach(taskLayout -> ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
+            @Override
+            public void onSuccess(ArrayList<User> users) {
+                if (isUserAssignee(userId, users)) {
+                    tasksToDisplay.add(taskLayout.getTask());
+                }
+
+                if (i.getAndIncrement() == taskLayouts.size()) {
+                    SetTasks(tasksToDisplay, callBack, checkBoxCallBack);
+                    taskLayouts.addAll(taskLayoutsCopy);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        }));
+
     }
 
 
+    public void filterOthers(Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
+        String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
+        List<Task> tasksToDisplay = new ArrayList<>();
+        List<TaskLayout> taskLayoutsCopy = new ArrayList<>();
+        AtomicInteger i = new AtomicInteger(1);
+
+        taskLayoutsCopy.addAll(taskLayouts);
+
+        taskLayouts.forEach(taskLayout -> ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
+            @Override
+            public void onSuccess(ArrayList<User> users) {
+                if (!isUserAssignee(userId, users)) {
+                    tasksToDisplay.add(taskLayout.getTask());
+                }
+
+                if (i.getAndIncrement() == taskLayouts.size()) {
+                    SetTasks(tasksToDisplay, callBack, checkBoxCallBack);
+                    taskLayouts.addAll(taskLayoutsCopy);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        }));
+    }
+
+    private boolean isUserAssignee(String userId, ArrayList<User> users) {
+        AtomicBoolean isIdFound = new AtomicBoolean(false);
+        users.forEach(user -> {
+            if (user.GetUserId().equals(userId))
+                isIdFound.set(true);
+        });
+
+        return isIdFound.get();
+    }
 }

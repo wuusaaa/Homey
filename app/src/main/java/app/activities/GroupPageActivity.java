@@ -1,18 +1,19 @@
 package app.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import app.activities.interfaces.IonClicked;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -24,7 +25,6 @@ import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
-import callback.GoToTaskPageCallBack;
 import callback.TasksCallBack;
 import callback.UsersCallBack;
 
@@ -58,6 +58,8 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
         // Arrange group buttons
         arrangeButtons();
+
+        tasksOwnerFilter();
     }
 
     @Override
@@ -70,30 +72,11 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
     private void loadTasks() {
         pDialog.showDialog();
-        Context context = this;
-
-        GoToTaskPageCallBack taskClickCallBack = new GoToTaskPageCallBack() {
-            @Override
-            public void onSuccess(Task task) {
-                Intent intent = new Intent(context, TaskActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("task", task);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(String error) {
-
-            }
-        };
-
-        IonClicked taskLayoutCheckBoxCallBack = this::onCheckBoxClicked;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
-            public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack, taskLayoutCheckBoxCallBack);
+            public void onSuccess(List<Task> tasks) {
+                scrollVerticalWithItems.SetTasks(tasks, t -> goToTask(t), c -> onCheckBoxClicked(c));
                 pDialog.hideDialog();
             }
 
@@ -102,6 +85,14 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                 pDialog.hideDialog();
             }
         }, Integer.parseInt(group.GetId()));
+    }
+
+    private void goToTask(Task task) {
+        Intent intent = new Intent(this, TaskActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("task", task);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     //******************************************************
@@ -165,5 +156,43 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
     public void onCheckBoxClicked(View view) {
         //TODO
+    }
+
+
+    public void tasksOwnerFilter() {
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerTasksOwners);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                switch (selectedItem) {
+                    case "All":
+                        doAll();
+                        break;
+                    case "My Tasks":
+                        doMyTasks();
+                        break;
+
+                    case "Others":
+                        doOthers();
+                        break;
+                }
+            } // to close the onItemSelected
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void doOthers() {
+        scrollVerticalWithItems.filterOthers(this::goToTask, this::onCheckBoxClicked);
+    }
+
+    private void doMyTasks() {
+        scrollVerticalWithItems.filterMyTasks(this::goToTask, this::onCheckBoxClicked);
+    }
+
+    private void doAll() {
+        scrollVerticalWithItems.visibleAllItems(this::goToTask, this::onCheckBoxClicked);
     }
 }

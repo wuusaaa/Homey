@@ -36,19 +36,23 @@
                 android:orientation="horizontal">
 
                 <Spinner
-                    android:layout_width="130dp"
-                    android:layout_height="match_parent" />
+                    android:id="@+id/spinnerTasksOwners"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:entries="@array/mineNotMineTasks" />
 
                 <ImageView
                     android:id="@+id/groupActivityImage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:srcCompat="@android:drawable/btn_star_big_on" />
 
                 <Spinner
-                    android:layout_width="130dp"
-                    android:layout_height="match_parent" />
+                    android:id="@+id/spinnerCompleteOrIncomplete"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:entries="@array/completeIncompleteTasks" />
             </LinearLayout>
 
             <include

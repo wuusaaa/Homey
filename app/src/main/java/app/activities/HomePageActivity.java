@@ -17,7 +17,6 @@ import java.util.List;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
-import app.activities.interfaces.IonClicked;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -33,7 +32,6 @@ import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
-import callback.GoToTaskPageCallBack;
 import callback.GotoGroupPageCallBack;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
@@ -49,8 +47,6 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private TextView textViewUserName;
     private ImageButton buttonProfile;
     private HomeyProgressDialog pDialog;
-    private GoToTaskPageCallBack taskClickCallBack;
-    private IonClicked taskCheckBoxClickCallBack;
     private Button buttonSubmit;
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();
     //*****************************
@@ -84,30 +80,11 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //******* Init functions: ********************
     private void loadTasks() {
         pDialog.showDialog();
-        Context context = this;
-
-        taskClickCallBack = new GoToTaskPageCallBack() {
-            @Override
-            public void onSuccess(Task task) {
-                Intent intent = new Intent(context, TaskActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("task", task);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(String error) {
-
-            }
-        };
-
-        taskCheckBoxClickCallBack = this::onCheckBoxClicked;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
-            public void onSuccess(ArrayList<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, taskClickCallBack, taskCheckBoxClickCallBack);
+            public void onSuccess(List<Task> tasks) {
+                scrollVerticalWithItems.SetTasks(tasks, t -> goToTask(t), c -> onCheckBoxClicked(c));
                 pDialog.hideDialog();
             }
 
@@ -116,6 +93,14 @@ public class HomePageActivity extends ActivityWithHeaderBase {
                 pDialog.hideDialog();
             }
         });
+    }
+
+    private void goToTask(Task task) {
+        Intent intent = new Intent(this, TaskActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("task", task);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void loadGroups() {
@@ -150,7 +135,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void initPage() {
+    public void initPage() {
         loadGroups();
         loadTasks();
         fetchUserName();

@@ -3,6 +3,7 @@ package app.logic.managers;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
@@ -23,7 +24,7 @@ public class TaskManager extends ManagerBase {
     public void GetGroupTasks(TasksCallBack tasksCallBack,int groupId) {
         ((DBManager) (Services.GetService(DBManager.class))).GetGroupTasks(groupId, new TasksCallBack() {
             @Override
-            public void onSuccess(ArrayList<Task> tasks) {
+            public void onSuccess(List<Task> tasks) {
                 tasksCallBack.onSuccess(tasks);
             }
 
