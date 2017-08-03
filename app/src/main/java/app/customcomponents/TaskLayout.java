@@ -1,13 +1,8 @@
 package app.customcomponents;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +22,7 @@ public class TaskLayout extends LinearLayout {
     private TextView nameTextView;
     private CheckBox checkBox;
     private Task task;
-    private ImageButton groupIcon;
+    private CircleImageButton groupIcon;
     private LinearLayout taskInfo;
 
     public void setTask(Task task) {
@@ -41,20 +36,15 @@ public class TaskLayout extends LinearLayout {
 
         setOrientation(HORIZONTAL);
         LayoutParams textViewLayoutParams = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
-        textViewLayoutParams.setMargins(getDpSize(15), getDpSize(5), getDpSize(0), getDpSize(5));
+        textViewLayoutParams.setMargins(getDpSize(5), getDpSize(20), getDpSize(0), getDpSize(0));
+        LayoutParams textViewLayoutParamsdesc = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
+        textViewLayoutParamsdesc.setMargins(getDpSize(5), getDpSize(0), getDpSize(0), getDpSize(0));
         // Group icon
-        groupIcon = new ImageButton(getContext());
-
+        groupIcon = new CircleImageButton(getContext(), R.drawable.profilepicturetest);
         LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(100), getDpSize(100));
         groupIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         groupIcon.setLayoutParams(imageButtonLayoutParams);
         groupIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profilepicturetest);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        groupIcon.setImageDrawable(roundedBitmapDrawable);
-
         // Task info
         taskInfo = new LinearLayout(getContext());
         taskInfo.setOrientation(VERTICAL);
@@ -66,7 +56,7 @@ public class TaskLayout extends LinearLayout {
 
         descriptionTextView = new TextView(getContext());
         descriptionTextView.setTextSize(18);
-        descriptionTextView.setLayoutParams(textViewLayoutParams);
+        descriptionTextView.setLayoutParams(textViewLayoutParamsdesc);
 
         taskInfo.addView(nameTextView);
         taskInfo.addView(descriptionTextView);
