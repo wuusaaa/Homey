@@ -1,6 +1,8 @@
 package app.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,6 +57,15 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         loadTasks();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
         // TODO: Set group icon
+        if (group.GetImage() != null)
+        {
+            Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
+            ((ImageView)findViewById(R.id.groupActivityImage)).setImageBitmap(bitMapImage);
+        }
+        else
+        {
+            ((ImageView)findViewById(R.id.groupActivityImage)).setImageResource(R.mipmap.ic_group_default);
+        }
 
         // Arrange group buttons
         arrangeButtons();

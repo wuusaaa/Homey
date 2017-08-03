@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.homey.R;
@@ -87,6 +88,7 @@ public class FragmentProfileEdit extends Fragment
         DBManager dataBaseManager = (DBManager) Services.GetService(DBManager.class);
         if (hasFirstNameChanged)
         {
+            user.setName(editTextFirstName.getText().toString());
             dataBaseManager.UpdateUser(user.GetUserId(), "name", editTextFirstName.getText().toString(), new UpdateCallBack() {
                 @Override
                 public void onSuccess() {
@@ -101,8 +103,7 @@ public class FragmentProfileEdit extends Fragment
             user.setName(editTextFirstName.getText().toString());
         }
 
-        //TODO: Change last name
-
+        //TODO: Change last nam
 
     }
 }
