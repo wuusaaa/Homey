@@ -1,8 +1,12 @@
 package app.activities;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.Button;
@@ -135,11 +139,34 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     public void initPage() {
+        sendNotification();
         loadGroups();
         loadTasks();
         fetchUserName();
         setProfileClick();
         initSubmitButton();
+    }
+
+    private void sendNotification(){
+        Intent intent = new Intent(this, HomePageActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder b = new NotificationCompat.Builder(this);
+
+        b.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.mipmap.ic_header_logo)
+                .setTicker("Raz")
+                .setContentTitle("Logged In!")
+                .setContentText("Welcome to Homey!.")
+                .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
+                .setContentIntent(contentIntent)
+                .setContentInfo("Info");
+
+
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, b.build());
     }
 
     private void initSubmitButton() {
