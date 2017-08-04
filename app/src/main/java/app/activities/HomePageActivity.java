@@ -43,7 +43,6 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //***** Class components: *****
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
-    private TextView screenName;
     private TextView textViewUserName;
     private ImageButton buttonProfile;
     private HomeyProgressDialog pDialog;

@@ -11,6 +11,7 @@ import com.project.homey.R;
 
 public class ActivityBase extends AppCompatActivity {
 
+    protected TextView screenName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

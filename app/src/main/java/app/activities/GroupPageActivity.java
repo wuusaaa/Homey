@@ -39,7 +39,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private ScrollHorizontalWithItems participantsHolder;
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
-    private TextView screenName;
     private boolean isAdmin; // Ugly but necessary. The other option is to implement empty methods around the project.
 
     @Override
