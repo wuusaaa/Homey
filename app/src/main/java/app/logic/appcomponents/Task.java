@@ -23,8 +23,9 @@ public class Task implements IHasText, Parcelable {
     private Date startTime;
     private Date endTime;
     private int score = 0;
+    private byte[] img;
 
-    public Task(String taskId, String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime, int score) {
+    public Task(String taskId, String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime, int score, byte[] img) {
         this.taskId = taskId;
         this.name = name;
         this.groupId = groupId;
@@ -35,6 +36,7 @@ public class Task implements IHasText, Parcelable {
         this.startTime = startTime;
         this.endTime = endTime;
         this.score = score;
+        this.img = img;
     }
 
     protected Task(Parcel in) {
@@ -139,5 +141,13 @@ public class Task implements IHasText, Parcelable {
         dest.writeInt(creatorId);
         dest.writeLong(startTime.getTime());
         dest.writeLong(endTime.getTime());
+    }
+
+    public byte[] GetImg() {
+        return img;
+    }
+
+    public void SetImg(byte[] img) {
+        this.img = img;
     }
 }

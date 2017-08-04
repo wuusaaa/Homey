@@ -55,7 +55,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
-        // TODO: Set group icon
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
         if (bitMapImage != null)
         {

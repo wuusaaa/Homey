@@ -2,6 +2,7 @@ package app.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -85,6 +86,7 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
             }
         });
 
+        //TODO score and IMG
         editTextName = (EditText) findViewById(R.id.editTextTaskName);
         editTextDesc = (EditText) findViewById(R.id.editTextTaskDesc);
         editTextLocation = (EditText) findViewById(R.id.editTextTaskLocation);
@@ -102,6 +104,7 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
                         new Date(editTextStart.getText().toString()),
                         new Date(editTextEnd.getText().toString()),
                         50,
+                        new byte[5],
                         new TaskCallBack() {
                             @Override
                             public void onSuccess(Task result) {
