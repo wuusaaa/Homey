@@ -38,6 +38,13 @@ public class FragmentAddGroup extends Fragment {
         return inflater.inflate(R.layout.fragment_add_group, container, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        choosedPicture = null;
+    }
+
     public void onCreateGroup()
     {
         GroupManager groupManager = (GroupManager) Services.GetService(GroupManager.class);
@@ -72,9 +79,6 @@ public class FragmentAddGroup extends Fragment {
             Uri image = data.getData();
             choosedPicture = getBytes(image);
             ((ImageButton)getView().findViewById(R.id.choosenGroupImage)).setImageURI(image);
-
-            //TODO: delete this, its for tests:
-            //((ImageButton)getView().findViewById(R.id.choosenGroupImage)).setImageBitmap(BitmapFactory.decodeByteArray(choosedPicture, 0, choosedPicture.length));
         }
     }
 

@@ -1,5 +1,6 @@
 package app.logic.managers;
 
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -554,7 +555,7 @@ public class DBManager extends ManagerBase {
                 if (!error) {// Group successfully stored in MySQL
                     String name1 = jObj.getString("name");
                     String id = jObj.getString("id");
-                    byte[] img1 = jObj.getString("img").getBytes();
+                    byte[] img1 = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
                     callBack.onSuccess(new Group(id, name1, img1));
                 } else {
 
@@ -578,7 +579,8 @@ public class DBManager extends ManagerBase {
                 params.put("name", name);
                 params.put("creator_id", creatorId + "");
                 params.put("created", new java.sql.Timestamp(new Date().getTime()).toString());
-                params.put("img", Arrays.toString(img));
+                String encodedImage = Base64.encodeToString(img,Base64.DEFAULT);
+                params.put("img", encodedImage);
 
                 return params;
             }
@@ -604,7 +606,8 @@ public class DBManager extends ManagerBase {
                     String id = jObj.getString("id");
                     String name = jObj.getString("name");
                     String createdStr = jObj.getString("created");
-                    byte[] img = jObj.getString("img").getBytes();
+
+                    byte[] img = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date created = dateFormat.parse(createdStr);
@@ -660,7 +663,7 @@ public class DBManager extends ManagerBase {
                     String id = jObj.getString("id");
                     String name = jObj.getString("name");
                     String createdStr = jObj.getString("created");
-                    byte[] img = jObj.getString("img").getBytes();
+                    byte[] img = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date created = dateFormat.parse(createdStr);
@@ -854,7 +857,7 @@ public class DBManager extends ManagerBase {
                         String id = obj.getString("id");
                         String name = obj.getString("name");
                         String createdStr = obj.getString("created");
-                        byte[] img = obj.getString("img").getBytes();
+                        byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date created = dateFormat.parse(createdStr);
