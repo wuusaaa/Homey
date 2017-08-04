@@ -56,9 +56,9 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         loadTasks();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
         // TODO: Set group icon
-        if (group.GetImage() != null)
+        Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
+        if (bitMapImage != null)
         {
-            Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
             ((ImageView)findViewById(R.id.groupActivityImage)).setImageBitmap(bitMapImage);
         }
         else
