@@ -42,7 +42,7 @@ public class FragmentAddGroup extends Fragment {
     public void onStart() {
         super.onStart();
 
-        choosedPicture = null;
+        //choosedPicture = null;
     }
 
     public void onCreateGroup()
