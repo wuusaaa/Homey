@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.project.homey.R;
 
@@ -15,9 +16,10 @@ import layout.FragmentAddGroup;
 
 public class PlusActivity extends ActivityBase {
 
-    Button addTaskButton;
-    Button addGroupButton;
-    Fragment currentFragment;
+    private Button addTaskButton;
+    private Button addGroupButton;
+    private Fragment currentFragment;
+    private boolean isChoosePicture = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,10 +40,32 @@ public class PlusActivity extends ActivityBase {
             setAddGroupFragment();
         });
 
-        setDefaultFragment();
+        startFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!isChoosePicture)
+        {
+            setDefaultFragment();
+        }
+
+        isChoosePicture = false;
     }
 
     private void setDefaultFragment()
+    {
+        Fragment emptyFragment = new EmptyFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.PlusActivityFragmentHolder, emptyFragment);
+        transaction.commit();
+        currentFragment = emptyFragment;
+    }
+
+    private void startFragment()
     {
         Fragment emptyFragment = new EmptyFragment();
         FragmentManager fragmentManager = getFragmentManager();
@@ -63,11 +87,15 @@ public class PlusActivity extends ActivityBase {
 
     public void onCreateGroupClicked(View view)
     {
-        ((FragmentAddGroup)currentFragment).onCreateGroup();
+        if (!((EditText) findViewById(R.id.editTextGroupName)).getText().toString().isEmpty())
+        {
+            ((FragmentAddGroup)currentFragment).onCreateGroup();
+        }
     }
 
     public void onChooseImageClicked(View view)
     {
+        isChoosePicture = true;
         ((FragmentAddGroup)currentFragment).onChooseImageClicked();
     }
 }

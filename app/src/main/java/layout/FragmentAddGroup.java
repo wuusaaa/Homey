@@ -1,6 +1,7 @@
 package layout;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import app.activities.GroupPageActivity;
 import app.logic.appcomponents.Group;
+import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import callback.GroupCallBack;
@@ -29,6 +32,7 @@ import static android.app.Activity.RESULT_OK;
 public class FragmentAddGroup extends Fragment {
 
     private static final int RESULT_LOAD_IMAGE = 1;
+    private boolean hasPicture = false;
     private byte[] choosedPicture;
 
     @Override
@@ -49,10 +53,21 @@ public class FragmentAddGroup extends Fragment {
     {
         GroupManager groupManager = (GroupManager) Services.GetService(GroupManager.class);
         String name = ((EditText) getView().findViewById(R.id.editTextGroupName)).getText().toString();
+        if (!hasPicture)
+        {
+            choosedPicture = new byte[]{0};
+        }
+
         groupManager.AddNewGroup(name, choosedPicture, new GroupCallBack() {
             @Override
-            public void onSuccess(Group group) {
-                ((EditText) getView().findViewById(R.id.editTextGroupName)).setText("blabla");
+            public void onSuccess(Group group)
+            {
+                Intent i = new Intent(getContext(), GroupPageActivity.class);
+                Bundle b = new Bundle();
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName(group.GetName());
+                b.putParcelable("group", group);
+                i.putExtras(b);
+                startActivity(i);
             }
 
             @Override
@@ -78,6 +93,7 @@ public class FragmentAddGroup extends Fragment {
         {
             Uri image = data.getData();
             choosedPicture = getBytes(image);
+            hasPicture = true;
             ((ImageButton)getView().findViewById(R.id.choosenGroupImage)).setImageURI(image);
         }
     }
