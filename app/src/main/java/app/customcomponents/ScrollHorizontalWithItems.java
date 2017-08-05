@@ -7,8 +7,11 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -55,7 +58,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
         for (T item : items) {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
-            ImageButton imageButton = new ImageButton(this.getContext());
+            CircleImageButton groupIcon = new CircleImageButton(this.getContext(), item.GetImage(), R.mipmap.ic_group_default);
             TextView textView = new TextView(this.getContext());
 
             verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -65,25 +68,24 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             textView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
             textView.setTextColor(Color.BLACK);
 
-            GradientDrawable shape = new GradientDrawable();
-            shape.setCornerRadius(500);
+            groupIcon.setOnClickListener(v -> callBack.onSuccess(item));
+            LinearLayout.LayoutParams imageButtonLayoutParams = new LinearLayout.LayoutParams(getDpSize(100), getDpSize(100));
+            groupIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            groupIcon.setLayoutParams(imageButtonLayoutParams);
+            groupIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
 
-            if (i.getAndIncrement() % 2 == 0) {
-                shape.setColor(Color.parseColor("#D8EAF6"));
-            } else {
-                shape.setColor(Color.parseColor("#EAEAEA"));
-            }
-
-            imageButton.setLayoutParams(layoutParamsImageButton);
-            imageButton.setBackground(shape);
-            imageButton.setOnClickListener(v -> callBack.onSuccess(item));
-
-            verticalLinearLayout.addView(imageButton);
+            verticalLinearLayout.addView(groupIcon);
             verticalLinearLayout.addView(textView);
             linearLayout.addView(verticalLinearLayout);
         }
 
 
+    }
+
+    public int getDpSize(int size)
+    {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (size * scale + 0.5f);
     }
 
     private void setLayoutParamsMargin(LayoutParams layoutParams) {

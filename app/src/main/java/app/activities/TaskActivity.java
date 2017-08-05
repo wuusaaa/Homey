@@ -47,7 +47,8 @@ public class TaskActivity extends ActivityWithHeaderBase {
     private List<User> taskAssigneesList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         pDialog = new HomeyProgressDialog(this);
@@ -112,7 +113,8 @@ public class TaskActivity extends ActivityWithHeaderBase {
             }
 
             @Override
-            public void onFailure(String error) {
+            public void onFailure(String error)
+            {
                 ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText("failed");
             }
         });
@@ -140,7 +142,8 @@ public class TaskActivity extends ActivityWithHeaderBase {
         //TODO:: Next code takes user's group, need to change to task's assignee, and group call back here is null..
         ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
             @Override
-            public void onSuccess(ArrayList<User> users) {
+            public void onSuccess(ArrayList<User> users)
+            {
                 taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
                 taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, null);
                 taskAssigneesList = users;

@@ -31,7 +31,7 @@ public class TaskLayout extends LinearLayout {
         setName(task.GetName());
         setDescription(task.GetDescription());
         this.task = task;
-        setImage(taskIcon);
+        setImage();
     }
 
     public TaskLayout(Context context) {
@@ -42,12 +42,14 @@ public class TaskLayout extends LinearLayout {
         textViewLayoutParams.setMargins(getDpSize(5), getDpSize(20), getDpSize(0), getDpSize(0));
         LayoutParams textViewLayoutParamsdesc = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
         textViewLayoutParamsdesc.setMargins(getDpSize(5), getDpSize(0), getDpSize(0), getDpSize(0));
-        // Group icon
+
+        // Task icon
         taskIcon = new CircleImageButton(getContext(), R.mipmap.ic_task_default);
         LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(100), getDpSize(100));
         taskIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         taskIcon.setLayoutParams(imageButtonLayoutParams);
         taskIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
+
         // Task info
         taskInfo = new LinearLayout(getContext());
         taskInfo.setOrientation(VERTICAL);
@@ -71,16 +73,16 @@ public class TaskLayout extends LinearLayout {
         this.addView(checkBox);
     }
 
-    private void setImage(CircleImageButton groupIcon)
+    private void setImage()
     {
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(task.GetImg(), 0, task.GetImg().length);
         if (bitMapImage != null)
         {
-            groupIcon.setImageBitmap(bitMapImage);
+            taskIcon.setImageBitmap(bitMapImage);
         }
         else
         {
-            groupIcon.setImageResource(R.mipmap.ic_task_default);
+            taskIcon.setImageResource(R.mipmap.ic_task_default);
         }
     }
 

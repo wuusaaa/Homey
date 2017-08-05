@@ -21,6 +21,11 @@ public class CircleImageButton extends android.support.v7.widget.AppCompatImageB
         setImage(image);
     }
 
+    public CircleImageButton(Context context, byte[] image, int defaultImageId) {
+        super(context);
+        setImageBytes(image, defaultImageId);
+    }
+
     public CircleImageButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -29,12 +34,29 @@ public class CircleImageButton extends android.support.v7.widget.AppCompatImageB
         super(context, attrs, defStyleAttr);
     }
 
-    public void setImage(int image) {
+    public void setImage(int image)
+    {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), image);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         this.setImageDrawable(roundedBitmapDrawable);
     }
+
+    private void setImageBytes(byte[] image, int defaultImageId)
+    {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        if (bitmap != null && defaultImageId != 0)
+        {
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            this.setImageDrawable(roundedBitmapDrawable);
+        }
+        else
+        {
+            setImage(defaultImageId);
+        }
+    }
+
 
 
 }

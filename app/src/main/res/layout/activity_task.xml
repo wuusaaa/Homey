@@ -7,233 +7,199 @@
     android:weightSum="12"
     tools:context="app.activities.TaskActivity">
 
+    <include
+        layout="@layout/header_items"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <LinearLayout
         android:id="@+id/Body"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="12"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1">
-
-        <include
-            layout="@layout/header_items"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+        android:weightSum="8">
 
         <LinearLayout
-            android:id="@+id/taskActivityBody"
+            android:id="@+id/taskActivityDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/taskActivityDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/taskActivityGroupImage"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/taskActivityGroupLabel"
-                        android:background="@color/Transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/profilepicturetest" />
-
-                    <TextView
-                        android:id="@+id/taskActivityGroupLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:text="@string/group"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/taskActivityStartDateLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/start_date"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/taskActivityStartDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textAlignment="center" />
-
-                    <Button
-                        android:id="@+id/taskActivityTakeButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:onClick="buttonTakeOnClicked"
-                        android:text="@string/take" />
-
-                    <TextView
-                        android:id="@+id/taskActivityEndDateLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/end_date"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/taskActivityEndDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/taskActivityCreatorImage"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/taskActivityCreatorLabel"
-                        android:background="@color/Transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/profilepicturetest" />
-
-                    <TextView
-                        android:id="@+id/taskActivityCreatorLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:text="@string/creator"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <include
-                    layout="@layout/separator"
+                <ImageButton
+                    android:id="@+id/taskActivityGroupImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="100dp"
+                    android:background="@color/Transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/profilepicturetest" />
+
+                <TextView
+                    android:id="@+id/taskActivityGroupLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/group"
+                    android:textAlignment="center" />
 
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-
-                <RelativeLayout
-                    android:id="@+id/taskActivityTimeAndAssigneeHolder"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/taskActivityStartDateLabel"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/start_date"
+                    android:textAlignment="center" />
 
-                    <ImageButton
-                        android:id="@+id/taskActivityTaskImage"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="10dp"
-                        android:background="@color/Transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/profilepicturetest" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/taskActivityDescriptionHolder"
-                    android:layout_width="270dp"
+                <TextView
+                    android:id="@+id/taskActivityStartDate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/taskActivityTakeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="buttonTakeOnClicked"
+                    android:text="@string/take" />
+
+                <TextView
+                    android:id="@+id/taskActivityEndDateLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:text="@string/end_date"
+                    android:textAlignment="center" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/description" />
+                <TextView
+                    android:id="@+id/taskActivityEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/taskActivityDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" />
 
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/taskActivityCreatorImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/taskActivityCreatorLabel"
+                    android:background="@color/Transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/profilepicturetest" />
+
+                <TextView
+                    android:id="@+id/taskActivityCreatorLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/creator"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <include
+            layout="@layout/separator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description" />
+
+                <TextView
+                    android:id="@+id/taskActivityDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/taskActivityTaskImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/Transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profilepicturetest" />
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/separator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.5"
+            android:orientation="vertical">
 
             <app.customcomponents.ScrollHorizontalWithItems
                 android:id="@+id/taskActivityTaskAssignee"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/group_add_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="2">
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button_complete_task"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#04B854"
                 android:drawableStart="@android:drawable/ic_menu_add"
                 android:onClick="buttonCompleteOnClicked"
@@ -243,8 +209,8 @@
             <Button
                 android:id="@+id/button_delete_task"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#D83402"
                 android:drawableEnd="@android:drawable/ic_menu_delete"
                 android:onClick="buttonDeleteTaskOnClicked"
