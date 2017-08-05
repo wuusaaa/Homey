@@ -69,6 +69,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         arrangeButtons();
 
         tasksOwnerFilter();
+        tasksCompleteFilter();
     }
 
     @Override
@@ -129,7 +130,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                 isAdmin = false;
                 User theUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
                 for (User user : users) {
-                    if (user.GetUserId() == theUser.GetUserId()) {
+                    if (user.GetUserId().equals(theUser.GetUserId())) {
                         isAdmin = true;
                         break;
                     }
@@ -175,14 +176,13 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 switch (selectedItem) {
                     case "All":
-                        doAll();
+                        showAllOwners();
                         break;
                     case "My Tasks":
-                        doMyTasks();
+                        showMyTasks();
                         break;
-
                     case "Others":
-                        doOthers();
+                        showOthers();
                         break;
                 }
             } // to close the onItemSelected
@@ -193,15 +193,53 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void doOthers() {
-        scrollVerticalWithItems.filterOthers(this::goToTask, this::onCheckBoxClicked);
+    public void tasksCompleteFilter() {
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerCompleteOrIncomplete);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                switch (selectedItem) {
+                    case "All":
+                        showAll();
+                        break;
+                    case "Completed":
+                        showCompletedTasks();
+                        break;
+                    case "Incomplete":
+                        showIncompleteTasks();
+                        break;
+                }
+            } // to close the onItemSelected
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-    private void doMyTasks() {
-        scrollVerticalWithItems.filterMyTasks(this::goToTask, this::onCheckBoxClicked);
+    private void showCompletedTasks() {
+        scrollVerticalWithItems.showCompletedTasks();
     }
 
-    private void doAll() {
-        scrollVerticalWithItems.visibleAllItems(this::goToTask, this::onCheckBoxClicked);
+    private void showIncompleteTasks() {
+        scrollVerticalWithItems.showIncompleteTasks();
     }
+
+    private void showOthers() {
+        scrollVerticalWithItems.filterOthers();
+    }
+
+    private void showMyTasks() {
+        scrollVerticalWithItems.filterMyTasks();
+    }
+
+    private void showAllOwners() {
+        scrollVerticalWithItems.showAllTasksOwners();
+    }
+
+    private void showAll() {
+        scrollVerticalWithItems.showAllTasks();
+    }
+
+
 }
