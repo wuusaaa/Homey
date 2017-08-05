@@ -63,6 +63,11 @@ public class ScrollVerticalWithItems extends ScrollView {
             taskLayout.setCheckBoxOnClick(checkBoxCallBack);
             linearLayout.addView(taskLayout);
 
+            if (((Task) task).getStatus().equals(TaskStatus.COMPLETED.value()))
+                taskLayout.setCheckBox(true);
+
+
+
             taskLayouts.add(taskLayout);
             spinnerOwner.add(taskLayout);
             spinnerStatus.add(taskLayout);
@@ -71,8 +76,6 @@ public class ScrollVerticalWithItems extends ScrollView {
                 linearLayout.addView(new Spacer(getContext()));
             }
         });
-
-        showIncompleteTasks();
     }
 
 

@@ -24,7 +24,6 @@ import app.logic.managers.SessionManager;
 import callback.UserCallBack;
 
 public class LoginActivity extends ActivityBase {
-    private static final String TAG = LoginActivity.class.getSimpleName();
     private Button loginButton;
     private Button forgotPassButton;
     private Button linkToRegisterButton;

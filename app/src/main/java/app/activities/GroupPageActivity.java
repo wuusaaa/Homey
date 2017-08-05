@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.customcomponents.HomeyProgressDialog;
-import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
@@ -35,8 +34,12 @@ import callback.UsersCallBack;
  */
 
 public class GroupPageActivity extends ActivityWithHeaderBase {
+    private final String ALL = "All";
+    private final String COMPLETED = "Completed";
+    private final String INCOMPLETE = "Incomplete";
+    private final String MY_TASKS = "My Tasks";
+    private final String OTHERS = "Others";
     private Group group;
-    private ScrollHorizontalWithItems participantsHolder;
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private boolean isAdmin; // Ugly but necessary. The other option is to implement empty methods around the project.
@@ -50,7 +53,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         Bundle b = this.getIntent().getExtras();
         if (b != null)
             group = b.getParcelable("group");
-        participantsHolder = (ScrollHorizontalWithItems) findViewById(R.id.groupPageActivityParticipantsHolder);
 
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
@@ -175,13 +177,13 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 switch (selectedItem) {
-                    case "All":
+                    case ALL:
                         showAllOwners();
                         break;
-                    case "My Tasks":
+                    case MY_TASKS:
                         showMyTasks();
                         break;
-                    case "Others":
+                    case OTHERS:
                         showOthers();
                         break;
                 }
@@ -199,13 +201,13 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 switch (selectedItem) {
-                    case "All":
+                    case ALL:
                         showAll();
                         break;
-                    case "Completed":
+                    case COMPLETED:
                         showCompletedTasks();
                         break;
-                    case "Incomplete":
+                    case INCOMPLETE:
                         showIncompleteTasks();
                         break;
                 }

@@ -88,6 +88,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
             @Override
             public void onSuccess(List<Task> tasks) {
                 scrollVerticalWithItems.SetTasks(tasks, t -> goToTask(t), c -> onCheckBoxClicked(c));
+                scrollVerticalWithItems.showIncompleteTasks();
                 pDialog.hideDialog();
             }
 

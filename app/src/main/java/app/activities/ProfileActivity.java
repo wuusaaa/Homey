@@ -3,15 +3,12 @@ package app.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.project.homey.R;
 
 import app.logic.appcomponents.User;
-import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import layout.FragmentProfileEdit;

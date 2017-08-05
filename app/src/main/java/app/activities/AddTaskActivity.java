@@ -2,7 +2,6 @@ package app.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
