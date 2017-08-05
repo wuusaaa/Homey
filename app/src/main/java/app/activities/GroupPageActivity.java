@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -18,6 +19,9 @@ import java.util.List;
 
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollVerticalWithItems;
+import app.customcomponents.TaskLayout;
+import app.enums.TaskProperty;
+import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
@@ -27,6 +31,8 @@ import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
 import callback.TasksCallBack;
+import callback.UpdateCallBack;
+import callback.UpdateTask;
 import callback.UsersCallBack;
 
 /**
@@ -43,6 +49,9 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private boolean isAdmin; // Ugly but necessary. The other option is to implement empty methods around the project.
+    private Button buttonSubmit; // TODO: need to avoid duplicate code in home page activity
+    private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();// TODO: need to avoid duplicate code in home page activity
+    private List<TaskLayout> taskLayoutsUnchecked = new ArrayList<>();// TODO: need to avoid duplicate code in home page activity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,14 +67,13 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         loadTasks();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
-        if (bitMapImage != null)
-        {
-            ((ImageView)findViewById(R.id.groupActivityImage)).setImageBitmap(bitMapImage);
+        if (bitMapImage != null) {
+            ((ImageView) findViewById(R.id.groupActivityImage)).setImageBitmap(bitMapImage);
+        } else {
+            ((ImageView) findViewById(R.id.groupActivityImage)).setImageResource(R.mipmap.ic_group_default);
         }
-        else
-        {
-            ((ImageView)findViewById(R.id.groupActivityImage)).setImageResource(R.mipmap.ic_group_default);
-        }
+
+        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
 
         // Arrange group buttons
         arrangeButtons();
@@ -166,11 +174,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         // TODO
     }
 
-    public void onCheckBoxClicked(View view) {
-        //TODO
-    }
-
-
     public void tasksOwnerFilter() {
         Spinner spinner = (Spinner) findViewById(R.id.spinnerTasksOwners);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -243,5 +246,61 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         scrollVerticalWithItems.showAllTasks();
     }
 
+    private void initSubmitButton() {
+        buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        taskLayoutsChecked.clear();
+        taskLayoutsUnchecked.clear();
+    }
 
+    public void onCheckBoxClicked(View view) {
+        TaskLayout taskLayout = (TaskLayout) view;
+
+        if (taskLayout.isChecked()) {
+            if (taskLayoutsUnchecked.contains(taskLayout)) {
+                taskLayoutsUnchecked.remove(taskLayout);
+            } else {
+                taskLayoutsChecked.add(taskLayout);
+            }
+        } else {
+            if (taskLayoutsChecked.contains(taskLayout)) {
+                taskLayoutsChecked.remove(taskLayout);
+
+            } else {
+                taskLayoutsUnchecked.add(taskLayout);
+            }
+        }
+
+        if (taskLayoutsChecked.size() > 0 || taskLayoutsUnchecked.size() > 0) {
+            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        } else {
+            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        }
+    }
+
+
+    public void onSubmitClicked(View view) {
+        UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
+        UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
+
+        taskLayoutsChecked.forEach(taskLayout -> {
+            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
+            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateCheckedTasks);
+        });
+
+        taskLayoutsUnchecked.forEach(taskLayout -> {
+            taskLayout.getTask().setStatus(TaskStatus.INCOMPLETE);
+            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateUncheckedTasks);
+        });
+    }
+
+    private void refreshTasks() {
+        initSubmitButton();
+        loadTasks();
+    }
 }
