@@ -1,0 +1,97 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="layout.FragmentAddTask"
+    android:id="@+id/addTaskFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <EditText
+                android:id="@+id/editTextTaskName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextTaskDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextTaskLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Location"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextTaskStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="10/10/2011"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/editTextTaskEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="11/11/2010"
+                android:inputType="date" />
+
+            <Spinner
+                android:id="@+id/spinnerTaskGroups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_task"
+                android:onClick="onAddTaskClicked"
+                android:background="@color/accept_color"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/imageViewAddTask"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@mipmap/ic_task_default"/>
+
+            <Button
+                android:id="@+id/buttonTaskChosePicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose picture"
+                android:onClick="onTaskChooseImageClicked"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -47,6 +47,7 @@ public class Task implements IHasText, Parcelable {
         status = in.readString();
         location = in.readString();
         creatorId = in.readInt();
+        img = in.createByteArray();
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {
@@ -141,6 +142,7 @@ public class Task implements IHasText, Parcelable {
         dest.writeInt(creatorId);
         dest.writeLong(startTime.getTime());
         dest.writeLong(endTime.getTime());
+        dest.writeByteArray(img);
     }
 
     public byte[] GetImg() {

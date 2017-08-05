@@ -45,8 +45,6 @@ public class FragmentAddGroup extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        //choosedPicture = null;
     }
 
     public void onCreateGroup()

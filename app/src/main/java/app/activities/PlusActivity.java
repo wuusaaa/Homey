@@ -13,11 +13,10 @@ import com.project.homey.R;
 
 import layout.EmptyFragment;
 import layout.FragmentAddGroup;
+import layout.FragmentAddTask;
 
 public class PlusActivity extends ActivityBase {
 
-    private Button addTaskButton;
-    private Button addGroupButton;
     private Fragment currentFragment;
     private boolean isChoosePicture = false;
 
@@ -26,19 +25,6 @@ public class PlusActivity extends ActivityBase {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus);
-
-        addTaskButton = (Button) findViewById(R.id.buttonAddTask);
-
-        addTaskButton.setOnClickListener(v -> {
-            Intent intent = new Intent(PlusActivity.this, AddTaskActivity.class);
-            startActivity(intent);
-        });
-
-        addGroupButton = (Button) findViewById(R.id.buttonAddGroup);
-
-        addGroupButton.setOnClickListener(v -> {
-            setAddGroupFragment();
-        });
 
         startFragment();
     }
@@ -54,6 +40,8 @@ public class PlusActivity extends ActivityBase {
 
         isChoosePicture = false;
     }
+
+    //************* Set Fragments: ****************
 
     private void setDefaultFragment()
     {
@@ -75,7 +63,7 @@ public class PlusActivity extends ActivityBase {
         currentFragment = emptyFragment;
     }
 
-    private void setAddGroupFragment()
+    public void setAddGroupFragment(View view)
     {
         Fragment addGroupFragment = new FragmentAddGroup();
         FragmentManager fragmentManager = getFragmentManager();
@@ -85,6 +73,20 @@ public class PlusActivity extends ActivityBase {
         currentFragment = addGroupFragment;
     }
 
+    public  void setAddTaskFragment(View view)
+    {
+        Fragment addTaskFragment = new FragmentAddTask();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.PlusActivityFragmentHolder, addTaskFragment);
+        transaction.commit();
+        currentFragment = addTaskFragment;
+    }
+
+    //************* Set Fragments end. ************
+
+    //************* On Click methods: *************
+
     public void onCreateGroupClicked(View view)
     {
         if (!((EditText) findViewById(R.id.editTextGroupName)).getText().toString().isEmpty())
@@ -93,9 +95,27 @@ public class PlusActivity extends ActivityBase {
         }
     }
 
-    public void onChooseImageClicked(View view)
+    public void onGroupChooseImageClicked(View view)
     {
         isChoosePicture = true;
         ((FragmentAddGroup)currentFragment).onChooseImageClicked();
     }
+
+    public void onTaskChooseImageClicked(View view)
+    {
+        isChoosePicture = true;
+        ((FragmentAddTask)currentFragment).onChooseImageClicked();
+    }
+
+    public void onAddTaskClicked(View view)
+    {
+
+        if (!((EditText) findViewById(R.id.editTextTaskName)).getText().toString().isEmpty())
+        {
+            ((FragmentAddTask)currentFragment).onAddTaskClick();
+        }
+    }
+
+    //********** On Click methods end. ************
+
 }

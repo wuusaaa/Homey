@@ -116,7 +116,6 @@ public class AddTaskActivity extends ActivityWithHeaderBase {
                                 Toast.makeText(AddTaskActivity.this, result, Toast.LENGTH_SHORT).show();
                             }
                         }));
-
     }
 
 
