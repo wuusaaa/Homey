@@ -67,7 +67,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in app.database
      */
-    public void addUser(String name, String email, String uid, String created_at, int score, int lvl) {
+    public void addUser(String name, String email, String uid, String created_at, int score, int lvl, byte[] img) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -77,7 +77,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_SCORE, score); // score
         values.put(KEY_LEVEL, lvl); // level
         values.put(KEY_CREATED_AT, created_at); // Created At
-        values.put(KEY_IMG, created_at); // img
+        values.put(KEY_IMG, img); // img
 
         // Inserting Row
         long id = db.insert(TABLE_USER, null, values);
