@@ -928,7 +928,7 @@ public class DBManager extends ManagerBase {
                         String created_at = userObj.getString("created_at");
                         String score = userObj.getString("score");
                         String lvl = userObj.getString("level");
-                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                        byte[] imgByteArr = Base64.decode(userObj.getString("profile_pic"), Base64.DEFAULT);
 
                         // Inserting row in users table
                         User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr);
@@ -1048,7 +1048,7 @@ public class DBManager extends ManagerBase {
                         String created_at = userObj.getString("created_at");
                         String score = userObj.getString("score");
                         String lvl = userObj.getString("level");
-                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                        byte[] imgByteArr = Base64.decode(userObj.getString("profile_pic"), Base64.DEFAULT);
 
                         // Inserting row in users table
                         User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr);
