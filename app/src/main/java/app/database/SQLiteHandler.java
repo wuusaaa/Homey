@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Base64;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -76,8 +77,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_UID, uid); // Email
         values.put(KEY_SCORE, score); // score
         values.put(KEY_LEVEL, lvl); // level
+        values.put(KEY_IMG, Base64.encodeToString(img,Base64.DEFAULT)); // img
         values.put(KEY_CREATED_AT, created_at); // Created At
-        values.put(KEY_IMG, img); // img
 
         // Inserting Row
         long id = db.insert(TABLE_USER, null, values);
@@ -101,10 +102,10 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("name", cursor.getString(1));
             user.put("email", cursor.getString(2));
             user.put("uid", cursor.getString(3));
-            user.put("created_at", cursor.getString(6));
             user.put("score", cursor.getString(4));
             user.put("level", cursor.getString(5));
-            user.put("img", cursor.getString(7));
+            user.put("img", cursor.getString(6));
+            user.put("created_at", cursor.getString(7));
         }
         cursor.close();
         db.close();

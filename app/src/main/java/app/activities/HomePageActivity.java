@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -48,7 +50,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView textViewUserName;
-    private ImageButton buttonProfile;
+    private ImageButton imageButtonProfile;
     private HomeyProgressDialog pDialog;
     private Button buttonSubmit;
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();
@@ -69,7 +71,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
         textViewUserName = (TextView) findViewById(R.id.userName);
-        buttonProfile = (ImageButton) findViewById(R.id.profileImage);
+        imageButtonProfile = (ImageButton) findViewById(R.id.profileImage);
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
     }
@@ -146,6 +148,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         fetchUserName();
         setProfileClick();
         initSubmitButton();
+        setUserImage();
     }
 
     private void sendNotification(){
@@ -176,7 +179,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     private void setProfileClick() {
-        buttonProfile.setOnClickListener(clickedButton ->
+        imageButtonProfile.setOnClickListener(clickedButton ->
         {
             Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
             Bundle bundle = new Bundle();
@@ -187,9 +190,24 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void fetchUserName() {
+    private void fetchUserName()
+    {
         String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().getName();
         textViewUserName.setText("Welcome " + userName);
+    }
+
+    private void setUserImage()
+    {
+        User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(user.GetImage(), 0, user.GetImage().length);
+        if (bitmap != null)
+        {
+            imageButtonProfile.setImageBitmap(bitmap);
+        }
+        else
+        {
+            imageButtonProfile.setImageResource(R.mipmap.ic_profile_default);
+        }
     }
 
     //*********************************************

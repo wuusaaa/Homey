@@ -55,6 +55,11 @@ public class User implements IHasText, IHasImage, Parcelable {
         }
     };
 
+    public void setImg(byte[] img)
+    {
+        this.img = img;
+    }
+
     public String getName() {
         return name;
     }
@@ -116,7 +121,7 @@ public class User implements IHasText, IHasImage, Parcelable {
 
     @Override
     public byte[] GetImage() {
-        return new byte[0];
+        return img;
     }
 
     @Override

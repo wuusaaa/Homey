@@ -87,31 +87,9 @@ public class FragmentAddGroup extends Fragment {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null)
         {
             Uri image = data.getData();
-            choosedPicture = getBytes(image);
+            choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;
             ((ImageButton)getView().findViewById(R.id.choosenGroupImage)).setImageURI(image);
-        }
-    }
-
-    private byte[] getBytes(Uri image)
-    {
-        try
-        {
-            InputStream inputStream = getView().getContext().getContentResolver().openInputStream(image);
-            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-            int bufferSize = 1024;
-            byte[] buffer = new byte[bufferSize];
-
-            int len = 0;
-            while ((len = inputStream.read(buffer)) != -1) {
-                byteBuffer.write(buffer, 0, len);
-            }
-            return byteBuffer.toByteArray();
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT).show();
-            return null;
         }
     }
 }

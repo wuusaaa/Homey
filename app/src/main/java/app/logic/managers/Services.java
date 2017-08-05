@@ -1,5 +1,12 @@
 package app.logic.managers;
 
+import android.content.Context;
+import android.net.Uri;
+import android.view.View;
+import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
@@ -29,5 +36,27 @@ public class Services {
         }
 
         return services.get(type);
+    }
+
+    public static byte[] GetBytes(Uri image, Context context)
+    {
+        try
+        {
+            InputStream inputStream = context.getContentResolver().openInputStream(image);
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+
+            int len = 0;
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+            return byteBuffer.toByteArray();
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(context, "Failed to load image", Toast.LENGTH_SHORT).show();
+            return null;
+        }
     }
 }

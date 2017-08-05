@@ -3,8 +3,11 @@ package app.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.project.homey.R;
 
@@ -19,6 +22,7 @@ public class ProfileActivity extends ActivityWithHeaderBase
     private User user;
     private Fragment currentFragment;
     private boolean isEditable;
+    private boolean isChoosingPicture = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,10 +34,29 @@ public class ProfileActivity extends ActivityWithHeaderBase
     @Override
     protected void onStart() {
         super.onStart();
-        user = getIntent().getExtras().getParcelable("user");
-        isEditable = user.GetUserId().
-                equals(((SessionManager) Services.GetService(SessionManager.class)).getUser().GetUserId());
-        setDefaultFragment();
+        if (!isChoosingPicture)
+        {
+            isChoosingPicture = false;
+            user = getIntent().getExtras().getParcelable("user");
+            isEditable = user.GetUserId().
+                    equals(((SessionManager) Services.GetService(SessionManager.class)).getUser().GetUserId());
+            setDefaultFragment();
+        }
+
+        setImage();
+    }
+
+    private void setImage()
+    {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(user.GetImage(), 0 , user.GetImage().length);
+        if (bitmap != null)
+        {
+            ((ImageView) findViewById(R.id.imageButtonUsersProfilePicture)).setImageBitmap(bitmap);
+        }
+        else
+        {
+            ((ImageView) findViewById(R.id.imageButtonUsersProfilePicture)).setImageResource(R.mipmap.ic_profile_default);
+        }
     }
 
     private void setDefaultFragment()
@@ -69,6 +92,7 @@ public class ProfileActivity extends ActivityWithHeaderBase
     {
         ((FragmentProfileEdit) currentFragment).onSaveChangesClick(user, this);
         setDetailsFragment();
+        setImage();
     }
 
     public void editButton_onClick(View view)
@@ -87,5 +111,11 @@ public class ProfileActivity extends ActivityWithHeaderBase
             transaction.commit();
             currentFragment = editFragment;
         }
+    }
+
+    public void onProfileChoosePictureClick(View view)
+    {
+        isChoosingPicture = true;
+        ((FragmentProfileEdit)currentFragment).onChoosePictureClick();
     }
 }

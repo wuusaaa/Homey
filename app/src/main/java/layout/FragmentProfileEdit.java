@@ -2,13 +2,18 @@ package layout;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.homey.R;
@@ -16,15 +21,19 @@ import com.project.homey.R;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
+import app.logic.managers.SessionManager;
 import callback.UpdateCallBack;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class FragmentProfileEdit extends Fragment
 {
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private byte[] choosedPicture;
     private boolean hasFirstNameChanged = false;
-    private boolean hasLastNameChanged = false;
+    private boolean hasPicture = false;
     private EditText editTextFirstName;
-    private EditText editTextlastName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -39,10 +48,8 @@ public class FragmentProfileEdit extends Fragment
 
         String firstName = getArguments().getString("firstName");
         String lastName = getArguments().getString("lastName");
-        editTextFirstName = (EditText)getView().findViewById(R.id.profileEditFirstName);
-        editTextlastName = (EditText)getView().findViewById(R.id.profileEditLastName);
+        editTextFirstName = (EditText) getView().findViewById(R.id.profileEditFirstName);
         editTextFirstName.setText(firstName);
-        editTextlastName.setText(lastName);
         setTextListeners();
     }
 
@@ -62,22 +69,6 @@ public class FragmentProfileEdit extends Fragment
             @Override
             public void afterTextChanged(Editable editable) {
                 hasFirstNameChanged = true;
-            }
-        });
-        editTextlastName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                hasLastNameChanged = true;
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                hasLastNameChanged = true;
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                hasLastNameChanged = true;
             }
         });
     }
@@ -102,7 +93,42 @@ public class FragmentProfileEdit extends Fragment
             user.setName(editTextFirstName.getText().toString());
         }
 
-        //TODO: Change last nam
+        if (hasPicture)
+        {
+            user.setImg(choosedPicture);
+            ((SessionManager) Services.GetService(SessionManager.class)).setUser(user);
+            dataBaseManager.UpdateUser(user.GetUserId(), "profile_pic", Base64.encodeToString(user.GetImage(),Base64.DEFAULT), new UpdateCallBack() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(c, "Successfully changed picture", Toast.LENGTH_SHORT).show();
+                }
 
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(c, "Failed to change picture", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public void onChoosePictureClick()
+    {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null)
+        {
+            Uri image = data.getData();
+            choosedPicture = Services.GetBytes(image, getContext());
+            hasPicture = true;
+            ((ImageView)getView().findViewById(R.id.imageViewEditProfile)).setImageURI(image);
+        }
     }
 }
