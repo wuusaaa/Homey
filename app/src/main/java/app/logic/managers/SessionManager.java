@@ -7,6 +7,7 @@ package app.logic.managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Base64;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -72,7 +73,7 @@ public class SessionManager extends ManagerBase {
         if (res && user == null) {
             SQLiteHandler db = new SQLiteHandler(context);
             HashMap<String, String> userDetails = db.getUserDetails();
-            user = new User(userDetails.get("name"), userDetails.get("email"), userDetails.get("created_at"), userDetails.get("uid"), Integer.parseInt(userDetails.get("score")), Integer.parseInt(userDetails.get("level")));
+            user = new User(userDetails.get("name"), userDetails.get("email"), userDetails.get("created_at"), userDetails.get("uid"), Integer.parseInt(userDetails.get("score")), Integer.parseInt(userDetails.get("level")), Base64.decode(userDetails.get("img"), Base64.DEFAULT));
         }
 
         return res;
