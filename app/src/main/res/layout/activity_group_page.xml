@@ -18,14 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="7">
+        android:weightSum="8">
 
         <LinearLayout
             android:id="@+id/groupActivitySubHeader"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
 
             <Spinner
                 android:id="@+id/spinnerTasksOwners"
@@ -51,7 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-
         <LinearLayout
             android:id="@+id/groupActivityTasksLayout"
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             android:id="@+id/submitButtonHolder"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <Button
@@ -113,7 +113,7 @@
             <Button
                 android:id="@+id/button_group_add_member"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:background="@color/accept_color"
                 android:drawableStart="@android:drawable/ic_menu_add"
@@ -124,7 +124,7 @@
             <Button
                 android:id="@+id/button_group_delete_leave"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:background="@color/decline_color"
                 android:drawableEnd="@android:drawable/ic_menu_delete"
