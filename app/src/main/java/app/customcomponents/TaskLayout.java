@@ -1,6 +1,8 @@
 package app.customcomponents;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -22,13 +24,14 @@ public class TaskLayout extends LinearLayout {
     private TextView nameTextView;
     private CheckBox checkBox;
     private Task task;
-    private CircleImageButton groupIcon;
+    private CircleImageButton taskIcon;
     private LinearLayout taskInfo;
 
     public void setTask(Task task) {
         setName(task.GetName());
         setDescription(task.GetDescription());
         this.task = task;
+        setImage(taskIcon);
     }
 
     public TaskLayout(Context context) {
@@ -40,11 +43,11 @@ public class TaskLayout extends LinearLayout {
         LayoutParams textViewLayoutParamsdesc = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
         textViewLayoutParamsdesc.setMargins(getDpSize(5), getDpSize(0), getDpSize(0), getDpSize(0));
         // Group icon
-        groupIcon = new CircleImageButton(getContext(), R.drawable.profilepicturetest);
+        taskIcon = new CircleImageButton(getContext(), R.mipmap.ic_task_default);
         LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(100), getDpSize(100));
-        groupIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        groupIcon.setLayoutParams(imageButtonLayoutParams);
-        groupIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
+        taskIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        taskIcon.setLayoutParams(imageButtonLayoutParams);
+        taskIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
         // Task info
         taskInfo = new LinearLayout(getContext());
         taskInfo.setOrientation(VERTICAL);
@@ -63,9 +66,22 @@ public class TaskLayout extends LinearLayout {
         // Checkbox
         checkBox = new CheckBox(getContext());
         // Build layout
-        this.addView(groupIcon);
+        this.addView(taskIcon);
         this.addView(taskInfo);
         this.addView(checkBox);
+    }
+
+    private void setImage(CircleImageButton groupIcon)
+    {
+        Bitmap bitMapImage = BitmapFactory.decodeByteArray(task.GetImg(), 0, task.GetImg().length);
+        if (bitMapImage != null)
+        {
+            groupIcon.setImageBitmap(bitMapImage);
+        }
+        else
+        {
+            groupIcon.setImageResource(R.mipmap.ic_task_default);
+        }
     }
 
     public String getDescription() {

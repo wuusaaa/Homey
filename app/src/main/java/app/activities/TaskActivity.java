@@ -1,10 +1,13 @@
 package app.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -98,6 +101,15 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 });
 
                 //TODO:: SET HERE GROUP IMAGE
+                Bitmap bitMapImage = BitmapFactory.decodeByteArray(taskGroup.GetImage(), 0, taskGroup.GetImage().length);
+                if (bitMapImage != null)
+                {
+                    groupImage.setImageBitmap(bitMapImage);
+                }
+                else
+                {
+                    groupImage.setImageResource(R.mipmap.ic_task_default);
+                }
             }
 
             @Override

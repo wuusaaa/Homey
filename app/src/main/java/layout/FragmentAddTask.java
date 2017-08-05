@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +43,13 @@ public class FragmentAddTask extends Fragment {
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private Spinner dropdown;
+    private int spinnerPosition = 0;
     private boolean hasPicture = false;
     private HomeyProgressDialog pDialog;
     private byte[] choosedPicture;
     private ArrayList<Group> userGroups;
-    private int selectedGroupId = 0;
+    private int selectedGroupId;
+    boolean firstTime = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -58,46 +61,51 @@ public class FragmentAddTask extends Fragment {
     public void onStart() {
         super.onStart();
 
-        pDialog = new HomeyProgressDialog(this.getContext());
-        dropdown = (Spinner) getView().findViewById(R.id.spinnerTaskGroups);
+        if (firstTime) {
+            firstTime = false;
+            pDialog = new HomeyProgressDialog(this.getContext());
+            dropdown = (Spinner) getView().findViewById(R.id.spinnerTaskGroups);
 
-        Context context = this.getContext();
-        List<String> items = new ArrayList<>();
-        pDialog.showDialog();
-        ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack()
-        {
-            @Override
-            public void onSuccess(ArrayList<Group> groups) {
-                userGroups = groups;
-                for (Group group : groups)
-                {
-                    items.add(group.GetName());
+            Context context = this.getContext();
+            List<String> items = new ArrayList<>();
+            pDialog.showDialog();
+            ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
+                @Override
+                public void onSuccess(ArrayList<Group> groups) {
+                    userGroups = groups;
+                    for (Group group : groups) {
+                        items.add(group.GetName());
+                        if (spinnerPosition != 0) {
+                            dropdown.setSelection(spinnerPosition);
+                        }
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, items);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dropdown.setAdapter(adapter);
+                    dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            getSelectedGroupId((String) parent.getItemAtPosition(position));
+                            spinnerPosition = dropdown.getSelectedItemPosition();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // TODO Auto-generated method stub
+                            spinnerPosition = 0;
+                        }
+                    });
+                    pDialog.hideDialog();
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                dropdown.setAdapter(adapter);
-                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-                    {
-                        getSelectedGroupId((String) parent.getItemAtPosition(position));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        // TODO Auto-generated method stub
-                    }
-                });
-                pDialog.hideDialog();
-            }
-
-            @Override
-            public void onFailure(String error) {
-                pDialog.hideDialog();
-                //TODO handle connection error
-            }
-        });
+                @Override
+                public void onFailure(String error) {
+                    pDialog.hideDialog();
+                    //TODO handle connection error
+                }
+            });
+        }
     }
 
     private void getSelectedGroupId(String GroupName)
