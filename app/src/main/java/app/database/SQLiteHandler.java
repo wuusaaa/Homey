@@ -104,7 +104,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("created_at", cursor.getString(6));
             user.put("score", cursor.getString(4));
             user.put("level", cursor.getString(5));
-            user.put("img", cursor.getString(6));
+            user.put("img", cursor.getString(7));
         }
         cursor.close();
         db.close();
