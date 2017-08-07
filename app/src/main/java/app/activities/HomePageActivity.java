@@ -32,6 +32,7 @@ import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
@@ -54,6 +55,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private HomeyProgressDialog pDialog;
     private Button buttonSubmit;
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();
+    ActivityChangeManager activityChangeManager;
     //*****************************
 
     @Override
@@ -65,6 +67,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         pDialog = new HomeyProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
+
+        activityChangeManager = (ActivityChangeManager) Services.GetService(ActivityChangeManager.class);
 
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
 
@@ -85,11 +89,15 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //******* Init functions: ********************
     private void loadTasks() {
         pDialog.showDialog();
+        Context context = this;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(List<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, t -> goToTask(t), c -> onCheckBoxClicked(c));
+                scrollVerticalWithItems.SetTasks(tasks, t ->
+                        activityChangeManager.SetTaskActivity(context, t),
+                        c -> onCheckBoxClicked(c));
+
                 scrollVerticalWithItems.showIncompleteTasks();
                 pDialog.hideDialog();
             }
@@ -101,14 +109,6 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void goToTask(Task task) {
-        Intent intent = new Intent(this, TaskActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("task", task);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
     private void loadGroups() {
         pDialog.showDialog();
         Context context = this;
@@ -118,12 +118,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
                 scrollHorizontalWithItems.SetScrollerItems(groups, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
                     @Override
                     public <T extends IHasImage & IHasText> void onSuccess(T item) {
-                        Intent i = new Intent(context, GroupPageActivity.class);
-                        Bundle b = new Bundle();
                         ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName(item.GetName());
-                        b.putParcelable("group", (Group) item);
-                        i.putExtras(b);
-                        startActivity(i);
+                        activityChangeManager.SetGroupActivity(context, (Group) item);
                     }
 
                     @Override
@@ -181,12 +177,9 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private void setProfileClick() {
         imageButtonProfile.setOnClickListener(clickedButton ->
         {
-            Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
-            Bundle bundle = new Bundle();
             User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-            bundle.putParcelable("user", self);
-            intent.putExtras(bundle);
-            startActivity(intent);
+
+            activityChangeManager.SetProfileActivity(this, self);
         });
     }
 
@@ -213,8 +206,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //*********************************************
 
     public void onLogoutClick(View view) {
-        Intent intent = new Intent(this, LogoutActivity.class);
-        startActivity(intent);
+        activityChangeManager.SetLogOutActivity(this);
     }
 
     public void onSubmitClicked(View view) {

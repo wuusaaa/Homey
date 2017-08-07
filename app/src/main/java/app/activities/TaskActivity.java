@@ -1,5 +1,6 @@
 package app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.homey.R;
 
@@ -24,6 +26,7 @@ import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
@@ -45,6 +48,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
     private User taskCreator;
     private ScrollHorizontalWithItems taskAssignees;
     private List<User> taskAssigneesList;
+    private DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,15 +56,18 @@ public class TaskActivity extends ActivityWithHeaderBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         pDialog = new HomeyProgressDialog(this);
+        dbManager = (DBManager) Services.GetService(DBManager.class);
         setActivityComponents();
         setTaskInfo();
     }
 
-    private void setActivityComponents() {
+    private void setActivityComponents()
+    {
         myTask = getIntent().getExtras().getParcelable("task");
+        Context context = this;
 
         //Get task's creator user.
-        ((DBManager) Services.GetService(DBManager.class)).GetUser(myTask.GetCreatorId(), new UserCallBack() {
+        dbManager.GetUser(myTask.GetCreatorId(), new UserCallBack() {
             @Override
             public void onSuccess(User user) {
                 taskCreator = user;
@@ -68,23 +75,22 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 ImageButton creatorImage = (ImageButton) findViewById(R.id.taskActivityCreatorImage);
                 creatorImage.setOnClickListener(view->
                 {
-                    Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("user", taskCreator);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, taskCreator);
                 });
-                //TODO::SET HERE CREATOR IMAGE
+
+                //CREATOR IMAGE
+                setButtonImage(creatorImage, taskCreator.GetImage(), R.mipmap.ic_profile_default);
             }
 
             @Override
-            public void onFailure(String error) {
-
+            public void onFailure(String error)
+            {
+                Toast.makeText(TaskActivity.this, "Creator id " + error, Toast.LENGTH_SHORT).show();
             }
         });
 
         //Get task's Group.
-        ((DBManager) Services.GetService(DBManager.class)).GetGroup(myTask.GetGroupId(), new GroupCallBack() {
+        dbManager.GetGroup(myTask.GetGroupId(), new GroupCallBack() {
             @Override
             public void onSuccess(Group group) {
                 taskGroup = group;
@@ -93,31 +99,33 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
                 groupImage.setOnClickListener(view ->
                 {
-                    Intent intent = new Intent(getBaseContext(), GroupPageActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("group", taskGroup);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(context, taskGroup);
                 });
 
-                //TODO:: SET HERE GROUP IMAGE
-                Bitmap bitMapImage = BitmapFactory.decodeByteArray(taskGroup.GetImage(), 0, taskGroup.GetImage().length);
-                if (bitMapImage != null)
-                {
-                    groupImage.setImageBitmap(bitMapImage);
-                }
-                else
-                {
-                    groupImage.setImageResource(R.mipmap.ic_task_default);
-                }
+                //GROUP IMAGE
+                setButtonImage(groupImage, taskGroup.GetImage(), R.mipmap.ic_task_default);
             }
 
             @Override
             public void onFailure(String error)
             {
-                ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText("failed");
+                ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText("error");
+                Toast.makeText(TaskActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setButtonImage(ImageButton buttonImage, byte[] image, int defaultImgId)
+    {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        if (bitmap != null)
+        {
+            buttonImage.setImageBitmap(bitmap);
+        }
+        else
+        {
+            buttonImage.setImageResource(defaultImgId);
+        }
     }
 
     private void setTaskInfo() {
@@ -136,11 +144,13 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
         //TODO::
-        //findViewById(R.id.taskActivityTaskImage); SET HERE TASK IMAGE
+        //TASK IMAGE
+        //ImageButton taskImageButton = (ImageButton) findViewById(R.id.taskActivityTaskImage);
+        //setButtonImage(taskImageButton, myTask.GetImg(), R.mipmap.ic_task_default);
 
 
         //TODO:: Next code takes user's group, need to change to task's assignee, and group call back here is null..
-        ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
+        dbManager.GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
             @Override
             public void onSuccess(ArrayList<User> users)
             {
@@ -170,7 +180,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
         UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), 1);
 
         myTask.setStatus(TaskStatus.COMPLETED);
-        ((DBManager) Services.GetService(DBManager.class)).UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
+        dbManager.UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
 
     }
 
@@ -179,7 +189,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
         Stream<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId));
 
         if (taskAssigneesStream.count() > 0) {
-            ((DBManager) Services.GetService(DBManager.class)).UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack() {
+            dbManager.UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack() {
                 @Override
                 public void onSuccess() {
 
@@ -195,7 +205,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     public void buttonDeleteTaskOnClicked(View view) {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        ((DBManager) (Services.GetService(DBManager.class))).LeaveTask(myTask.GetTaskId().toString(), userId, new UpdateCallBack() {
+        dbManager.LeaveTask(myTask.GetTaskId().toString(), userId, new UpdateCallBack() {
 
             @Override
             public void onSuccess() {

@@ -5,6 +5,9 @@ import android.widget.ImageButton;
 
 import com.project.homey.R;
 
+import app.logic.managers.ActivityChangeManager;
+import app.logic.managers.Services;
+
 /**
  * Created by barakm on 24/07/2017
  */
@@ -23,14 +26,12 @@ public class ActivityWithHeaderBase extends ActivityBase {
 
         buttonPlus.setOnClickListener(buttonPlus ->
         {
-            Intent intent = new Intent(this, PlusActivity.class);
-            startActivity(intent);
+            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetPlusActivity(this);
         });
 
         buttonSettings.setOnClickListener(buttonSettings ->
         {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetLogOutActivity(this);
         });
     }
 }

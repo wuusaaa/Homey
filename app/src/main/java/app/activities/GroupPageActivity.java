@@ -1,5 +1,6 @@
 package app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +26,7 @@ import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
@@ -92,11 +94,15 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
     private void loadTasks() {
         pDialog.showDialog();
+        Context context = this;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(List<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, t -> goToTask(t), c -> onCheckBoxClicked(c));
+                scrollVerticalWithItems.SetTasks(tasks, t ->
+                                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t),
+                        c -> onCheckBoxClicked(c));
+
                 pDialog.hideDialog();
             }
 
@@ -105,14 +111,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                 pDialog.hideDialog();
             }
         }, Integer.parseInt(group.GetId()));
-    }
-
-    private void goToTask(Task task) {
-        Intent intent = new Intent(this, TaskActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("task", task);
-        intent.putExtras(bundle);
-        startActivity(intent);
     }
 
     //******************************************************
