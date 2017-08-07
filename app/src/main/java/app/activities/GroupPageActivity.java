@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.UserManager;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,13 +14,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.activities.interfaces.IHasImage;
+import app.activities.interfaces.IHasText;
 import app.customcomponents.HomeyProgressDialog;
+import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.customcomponents.TaskLayout;
 import app.enums.TaskProperty;
@@ -29,9 +35,11 @@ import app.logic.appcomponents.User;
 import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
+import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
+import callback.GotoGroupPageCallBack;
 import callback.TasksCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
@@ -50,6 +58,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private Group group;
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
+    private ScrollHorizontalWithItems participantsHolder;
     private boolean isAdmin; // Ugly but necessary. The other option is to implement empty methods around the project.
     private Button buttonSubmit; // TODO: need to avoid duplicate code in home page activity
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();// TODO: need to avoid duplicate code in home page activity
@@ -59,7 +68,8 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
-        scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
+        scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.groupPageActivityTasksHolder);
+        participantsHolder = (ScrollHorizontalWithItems)findViewById (R.id.groupPageActivityParticipantsHolder);
 
         Bundle b = this.getIntent().getExtras();
         if (b != null)
@@ -67,6 +77,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
+        loadUsers();
         ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
         if (bitMapImage != null) {
@@ -111,6 +122,37 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                 pDialog.hideDialog();
             }
         }, Integer.parseInt(group.GetId()));
+    }
+
+    private void loadUsers()
+    {
+        Context context = this;
+        //TODO : Ruz : JSON ERROR
+        ((DBManager) Services.GetService(DBManager.class)).GetGroupUsersByGroupId(Integer.parseInt(group.GetId()), new UsersCallBack()
+        {
+            @Override
+            public void onSuccess(ArrayList<User> users)
+            {
+                participantsHolder.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
+                    @Override
+                    public <T extends IHasImage & IHasText> void onSuccess(T user) {
+                        ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, (User) user);
+                    }
+
+                    @Override
+                    public void onFailure(String error)
+                    {
+                        //TODO handle error
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String error)
+            {
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     //******************************************************
@@ -274,7 +316,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
             buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         }
     }
-
 
     public void onSubmitClicked(View view) {
         UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);

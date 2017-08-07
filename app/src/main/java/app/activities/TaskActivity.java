@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import app.activities.interfaces.IHasImage;
+import app.activities.interfaces.IHasText;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -30,6 +32,7 @@ import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import callback.GotoGroupPageCallBack;
 import callback.GroupCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
@@ -117,7 +120,16 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     private void setButtonImage(ImageButton buttonImage, byte[] image, int defaultImgId)
     {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        Bitmap bitmap;
+
+        //TODO: Remove this check when we reset DB.
+        if (image == null)
+        {
+            image = new byte[0];
+        }
+
+        bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+
         if (bitmap != null)
         {
             buttonImage.setImageBitmap(bitmap);
@@ -130,6 +142,8 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     private void setTaskInfo() {
         setScreenName(myTask.GetName());
+        Context context = this;
+
         if (myTask.GetStartTime() != null) {
             ((TextView) findViewById(R.id.taskActivityStartDate)).setText(myTask.GetStartTime().toString());
         } else {
@@ -143,20 +157,30 @@ public class TaskActivity extends ActivityWithHeaderBase {
         }
 
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
+
         //TODO::
         //TASK IMAGE
-        //ImageButton taskImageButton = (ImageButton) findViewById(R.id.taskActivityTaskImage);
-        //setButtonImage(taskImageButton, myTask.GetImg(), R.mipmap.ic_task_default);
-
+        ImageButton taskImageButton = (ImageButton) findViewById(R.id.taskActivityTaskImage);
+        setButtonImage(taskImageButton, myTask.GetImg(), R.mipmap.ic_task_default);
 
         //TODO:: Next code takes user's group, need to change to task's assignee, and group call back here is null..
         dbManager.GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
             @Override
             public void onSuccess(ArrayList<User> users)
             {
-                taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
-                taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, null);
                 taskAssigneesList = users;
+                taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
+                taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
+                    @Override
+                    public <T extends IHasImage & IHasText> void onSuccess(T user) {
+                        ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, (User) user);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
             }
 
             @Override

@@ -47,6 +47,7 @@ public class Task implements IHasText, Parcelable {
         status = in.readString();
         location = in.readString();
         creatorId = in.readInt();
+        score = in.readInt();
         img = in.createByteArray();
     }
 
@@ -132,7 +133,7 @@ public class Task implements IHasText, Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int i) {
         dest.writeString(taskId);
         dest.writeString(name);
         dest.writeInt(groupId);
