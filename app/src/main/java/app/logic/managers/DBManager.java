@@ -921,14 +921,13 @@ public class DBManager extends ManagerBase {
                     for (int i = 0; i < resArr.length(); i++) {
                         JSONObject obj = resArr.getJSONObject(i);
                         // User successfully pulled from MySQL
-                        String id = obj.getString("uid");
-                        JSONObject userObj = obj.getJSONObject("user");
-                        String name = userObj.getString("name");
-                        String email = userObj.getString("email");
-                        String created_at = userObj.getString("created_at");
-                        String score = userObj.getString("score");
-                        String lvl = userObj.getString("level");
-                        byte[] imgByteArr = Base64.decode(userObj.getString("profile_pic"), Base64.DEFAULT);
+                        String id = obj.getString("id");
+                        String name = obj.getString("name");
+                        String email = obj.getString("email");
+                        String created_at = obj.getString("created_at");
+                        String score = obj.getString("score");
+                        String lvl = obj.getString("level");
+                        byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
 
                         // Inserting row in users table
                         User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr);
@@ -1037,18 +1036,18 @@ public class DBManager extends ManagerBase {
                 if (!error) {
                     ArrayList<User> users = new ArrayList<>();
                     JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    Log.d("debug", resArr.toString());
+
                     for (int i = 0; i < resArr.length(); i++) {
                         JSONObject obj = resArr.getJSONObject(i);
+                        Log.d("debug-OBJ", obj.toString());
                         // User successfully pulled from MySQL
-                        String userId = obj.getString("uid");
-                        JSONObject userObj = obj.getJSONObject("user");
-                        String name = userObj.getString("name");
-                        String email = userObj.getString("email");
-                        String created_at = userObj.getString("created_at");
-                        String score = userObj.getString("score");
-                        String lvl = userObj.getString("level");
-                        byte[] imgByteArr = Base64.decode(userObj.getString("profile_pic"), Base64.DEFAULT);
+                        String userId = obj.getString("id");
+                        String name = obj.getString("name");
+                        String email = obj.getString("email");
+                        String created_at = obj.getString("created_at");
+                        String score = obj.getString("score");
+                        String lvl = obj.getString("level");
+                        byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
 
                         // Inserting row in users table
                         User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr);
