@@ -65,7 +65,8 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private List<TaskLayout> taskLayoutsUnchecked = new ArrayList<>();// TODO: need to avoid duplicate code in home page activity
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.groupPageActivityTasksHolder);

@@ -67,7 +67,7 @@ public class FragmentAddTask extends Fragment {
             Context context = this.getContext();
             List<String> items = new ArrayList<>();
             pDialog.showDialog();
-            ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
+            ((GroupManager) Services.GetService(GroupManager.class)).GetUserGroups(new GroupsCallBack() {
                 @Override
                 public void onSuccess(ArrayList<Group> groups) {
                     userGroups = groups;
