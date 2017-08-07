@@ -17,13 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="8">
+        android:weightSum="8"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
 
         <LinearLayout
             android:id="@+id/taskActivityDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -109,9 +111,6 @@
                     android:id="@+id/taskActivityCreatorImage"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/taskActivityCreatorLabel"
                     android:background="@color/Transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/profilepicturetest" />

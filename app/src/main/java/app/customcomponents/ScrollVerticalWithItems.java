@@ -50,7 +50,8 @@ public class ScrollVerticalWithItems extends ScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
+    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack)
+    {
         linearLayout.removeAllViews();
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -66,8 +67,6 @@ public class ScrollVerticalWithItems extends ScrollView {
             if (((Task) task).getStatus().equals(TaskStatus.COMPLETED.value()))
                 taskLayout.setCheckBox(true);
 
-
-
             taskLayouts.add(taskLayout);
             spinnerOwner.add(taskLayout);
             spinnerStatus.add(taskLayout);
@@ -77,7 +76,6 @@ public class ScrollVerticalWithItems extends ScrollView {
             }
         });
     }
-
 
     //--------Filter function by owner--------//
     public void showAllTasksOwners() {
@@ -179,26 +177,26 @@ public class ScrollVerticalWithItems extends ScrollView {
     }
 
     private void setFilteredTasks() {
-        AtomicInteger i = new AtomicInteger(0);
-        List<TaskLayout> intersectTasks = intersection();
-
-        linearLayout.removeAllViews();
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        intersectTasks.forEach(taskLayout -> {
-            linearLayout.addView(taskLayout);
-
-            if (i.getAndIncrement() != spinnerOwner.size() - 1) {
-                linearLayout.addView(new Spacer(getContext()));
-            }
-        });
+        //TODO: BARAK FIX THIS FACAKTA !
+//        AtomicInteger i = new AtomicInteger(0);
+//        List<TaskLayout> intersectTasks = intersection();
+//
+//        linearLayout.removeAllViews();
+//        linearLayout.setOrientation(LinearLayout.VERTICAL);
+//
+//        intersectTasks.forEach(taskLayout -> {
+//            linearLayout.addView(taskLayout);
+//
+//            if (i.getAndIncrement() != spinnerOwner.size() - 1) {
+//                linearLayout.addView(new Spacer(getContext()));
+//            }
+//        });
     }
 
     private List<TaskLayout> intersection() {
 
         return spinnerOwner.stream().filter(spinnerStatus::contains).collect(Collectors.toList());
     }
-
 
 }
 

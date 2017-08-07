@@ -58,15 +58,17 @@ public class TaskActivity extends ActivityWithHeaderBase {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-        pDialog = new HomeyProgressDialog(this);
+
+        myTask = getIntent().getExtras().getParcelable("task");
         dbManager = (DBManager) Services.GetService(DBManager.class);
+        pDialog = new HomeyProgressDialog(this);
+
         setActivityComponents();
         setTaskInfo();
     }
 
     private void setActivityComponents()
     {
-        myTask = getIntent().getExtras().getParcelable("task");
         Context context = this;
 
         //Get task's creator user.
@@ -158,12 +160,11 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
 
-        //TODO::
-        //TASK IMAGE
+        //TASK IMAGE:
         ImageButton taskImageButton = (ImageButton) findViewById(R.id.taskActivityTaskImage);
         setButtonImage(taskImageButton, myTask.GetImg(), R.mipmap.ic_task_default);
 
-        //TODO:: Next code takes user's group, need to change to task's assignee, and group call back here is null..
+        //Task Participants:
         dbManager.GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
             @Override
             public void onSuccess(ArrayList<User> users)
@@ -188,16 +189,6 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadTaskInformation();
-    }
-
-    private void loadTaskInformation() {
-        //pDialog.showDialog();
     }
 
     public void buttonCompleteOnClicked(View view) {

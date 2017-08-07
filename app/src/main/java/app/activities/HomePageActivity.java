@@ -87,15 +87,17 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     //******* Init functions: ********************
-    private void loadTasks() {
+    private void loadTasks()
+    {
         pDialog.showDialog();
         Context context = this;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
             @Override
             public void onSuccess(List<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, t ->
-                        activityChangeManager.SetTaskActivity(context, t),
+                scrollVerticalWithItems.SetTasks(
+                        tasks,
+                        t -> activityChangeManager.SetTaskActivity(context, t),
                         c -> onCheckBoxClicked(c));
 
                 scrollVerticalWithItems.showIncompleteTasks();

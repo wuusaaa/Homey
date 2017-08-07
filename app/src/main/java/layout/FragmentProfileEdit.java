@@ -90,13 +90,11 @@ public class FragmentProfileEdit extends Fragment
                     Toast.makeText(c, "Failed to change name", Toast.LENGTH_SHORT).show();
                 }
             });
-            user.setName(editTextFirstName.getText().toString());
         }
 
         if (hasPicture)
         {
             user.setImg(choosedPicture);
-            ((SessionManager) Services.GetService(SessionManager.class)).setUser(user);
             dataBaseManager.UpdateUser(user.GetUserId(), "profile_pic", Base64.encodeToString(user.GetImage(),Base64.DEFAULT), new UpdateCallBack() {
                 @Override
                 public void onSuccess() {
@@ -109,6 +107,8 @@ public class FragmentProfileEdit extends Fragment
                 }
             });
         }
+
+        ((SessionManager) Services.GetService(SessionManager.class)).setUser(user);
     }
 
     public void onChoosePictureClick()
