@@ -11,6 +11,7 @@ import com.project.homey.R;
 
 import layout.EmptyFragment;
 import layout.FragmentAddGroup;
+import layout.FragmentAddMember;
 import layout.FragmentAddTask;
 
 public class PlusActivity extends ActivityBase {
@@ -71,7 +72,7 @@ public class PlusActivity extends ActivityBase {
         currentFragment = addGroupFragment;
     }
 
-    public  void setAddTaskFragment(View view)
+    public void setAddTaskFragment(View view)
     {
         Fragment addTaskFragment = new FragmentAddTask();
         FragmentManager fragmentManager = getFragmentManager();
@@ -79,6 +80,16 @@ public class PlusActivity extends ActivityBase {
         transaction.replace(R.id.PlusActivityFragmentHolder, addTaskFragment);
         transaction.commit();
         currentFragment = addTaskFragment;
+    }
+
+    public void setAddMemberFragment(View view)
+    {
+        Fragment addMemberFragment = new FragmentAddMember();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.PlusActivityFragmentHolder, addMemberFragment);
+        transaction.commit();
+        currentFragment = addMemberFragment;
     }
 
     //************* Set Fragments end. ************
@@ -112,6 +123,11 @@ public class PlusActivity extends ActivityBase {
         {
             ((FragmentAddTask)currentFragment).onAddTaskClick();
         }
+    }
+
+    public void onAddMemberClicked(View view)
+    {
+        ((FragmentAddMember)currentFragment).onAddMemberClicked();
     }
 
     //********** On Click methods end. ************

@@ -9,12 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.project.homey.R;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 
 import app.activities.GroupPageActivity;
 import app.logic.appcomponents.Group;
@@ -89,7 +85,7 @@ public class FragmentAddGroup extends Fragment {
             Uri image = data.getData();
             choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;
-            ((ImageButton)getView().findViewById(R.id.choosenGroupImage)).setImageURI(image);
+            ((ImageButton)getView().findViewById(R.id.chosenGroupImage)).setImageURI(image);
         }
     }
 }
