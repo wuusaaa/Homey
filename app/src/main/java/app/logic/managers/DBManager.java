@@ -905,6 +905,66 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public void GetGroupsThatUserIsAdmin(final String userId, final GroupsCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_get_groups_that_user_is_admin";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupsThatUserIsAdminURL(), response -> {
+
+            try {
+                JSONObject jObj = new JSONObject(response);
+                boolean error = jObj.getBoolean("error");
+                if (!error) {
+                    ArrayList<Group> groups = new ArrayList<>();
+                    JSONArray resArr = new JSONArray(jObj.getString("result"));
+                    Log.d("debug", resArr.toString());
+                    for (int i = 0; i < resArr.length(); i++) {
+                        JSONObject obj = resArr.getJSONObject(i);
+                        String id = obj.getString("id");
+                        String name = obj.getString("name");
+                        String createdStr = obj.getString("created");
+                        byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date created = dateFormat.parse(createdStr);
+
+                        Group group = new Group(id, name, img);
+
+                        groups.add(group);
+                    }
+                    callBack.onSuccess(groups);
+
+                } else {
+
+                    // Error occurred in getting groups. Get the error
+                    // message
+                    String errorMsg = jObj.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> callBack.onFailure("Volley ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to groups url
+                Map<String, String> params = new HashMap<>();
+                params.put("id", userId + "");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     public void GetGroupAdmins(final int groupId, final UsersCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "req_get_groups_admins";
