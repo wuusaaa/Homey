@@ -27,6 +27,7 @@ import app.customcomponents.HomeyProgressDialog;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
@@ -136,8 +137,9 @@ public class FragmentAddTask extends Fragment {
                 new TaskCallBack()
                 {
                     @Override
-                    public void onSuccess(Task result) {
+                    public void onSuccess(Task task) {
                         Toast.makeText(getContext(), "Task added!", Toast.LENGTH_SHORT).show();
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(getContext(), task);
                     }
 
                     @Override

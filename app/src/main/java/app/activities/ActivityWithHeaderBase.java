@@ -31,7 +31,7 @@ public class ActivityWithHeaderBase extends ActivityBase {
 
         buttonSettings.setOnClickListener(buttonSettings ->
         {
-            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetLogOutActivity(this);
+            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetSettingsActivity(this);
         });
     }
 }
