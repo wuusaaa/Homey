@@ -50,7 +50,8 @@ public class Task implements IHasText, Parcelable {
         startTime = new Date(in.readLong());
         endTime = new Date(in.readLong());
         score = in.readInt();
-        img = in.createByteArray();
+        img = new byte[in.readInt()];
+        in.readByteArray(img);
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {
@@ -146,6 +147,7 @@ public class Task implements IHasText, Parcelable {
         dest.writeLong(startTime.getTime());
         dest.writeLong(endTime.getTime());
         dest.writeInt(score);
+        dest.writeInt(img.length);
         dest.writeByteArray(img);
     }
 
