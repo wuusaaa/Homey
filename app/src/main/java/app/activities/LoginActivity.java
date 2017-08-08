@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -110,6 +109,7 @@ public class LoginActivity extends ActivityBase {
         // Progress dialog
         pDialog = new HomeyProgressDialog(this);
         pDialog.setCancelable(false);
+
 
         ((SessionManager) (Services.GetService(SessionManager.class))).setContext(getApplicationContext());
 

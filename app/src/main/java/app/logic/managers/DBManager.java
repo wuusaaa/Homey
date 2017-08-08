@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +86,48 @@ public class DBManager extends ManagerBase {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("password", password);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public void AddUserToTask(final String email, final String taskId, final UpdateCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "add-user-to-task";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddUserToTask(), response -> {
+            try {
+                JSONObject jObj = new JSONObject(response);
+                boolean error = jObj.getBoolean("error");
+
+                // Check for error node in json
+                if (!error) {
+                    callBack.onSuccess();
+                } else {
+                    // Error in adding the user to task. Get the error message
+                    String errorMsg = jObj.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                // JSON error
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            }
+
+        }, error -> callBack.onFailure("Volley ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("task_id", taskId);
 
                 return params;
             }
