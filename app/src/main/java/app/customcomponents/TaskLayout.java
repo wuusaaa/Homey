@@ -78,11 +78,11 @@ public class TaskLayout extends LinearLayout {
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(task.GetImg(), 0, task.GetImg().length);
         if (bitMapImage != null)
         {
-            taskIcon.setImageBitmap(bitMapImage);
+            taskIcon.setImage(bitMapImage);
         }
         else
         {
-            taskIcon.setImageResource(R.mipmap.ic_task_default);
+            taskIcon.setImage(R.mipmap.ic_task_default);
         }
     }
 

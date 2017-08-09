@@ -42,6 +42,12 @@ public class CircleImageButton extends android.support.v7.widget.AppCompatImageB
         this.setImageDrawable(roundedBitmapDrawable);
     }
 
+    public void setImage(Bitmap bitmap) {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        this.setImageDrawable(roundedBitmapDrawable);
+    }
+
     private void setImageBytes(byte[] image, int defaultImageId)
     {
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
