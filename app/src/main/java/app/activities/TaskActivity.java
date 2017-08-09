@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
+import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -77,7 +78,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
             public void onSuccess(User user) {
                 taskCreator = user;
                 ((TextView) findViewById(R.id.taskActivityCreatorLabel)).setText(taskCreator.getName());
-                ImageButton creatorImage = (ImageButton) findViewById(R.id.taskActivityCreatorImage);
+                CircleImageButton creatorImage = (CircleImageButton) findViewById(R.id.taskActivityCreatorImage);
                 creatorImage.setOnClickListener(view->
                 {
                     ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, taskCreator);
@@ -100,7 +101,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
             public void onSuccess(Group group) {
                 taskGroup = group;
                 ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText(taskGroup.GetName());
-                ImageButton groupImage = (ImageButton) findViewById(R.id.taskActivityGroupImage);
+                CircleImageButton groupImage = (CircleImageButton) findViewById(R.id.taskActivityGroupImage);
 
                 groupImage.setOnClickListener(view ->
                 {
@@ -120,26 +121,9 @@ public class TaskActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void setButtonImage(ImageButton buttonImage, byte[] image, int defaultImgId)
+    private void setButtonImage(CircleImageButton buttonImage, byte[] image, int defaultImgId)
     {
-        Bitmap bitmap;
-
-        //TODO: Remove this check when we reset DB.
-        if (image == null)
-        {
-            image = new byte[0];
-        }
-
-        bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-
-        if (bitmap != null)
-        {
-            buttonImage.setImageBitmap(bitmap);
-        }
-        else
-        {
-            buttonImage.setImageResource(defaultImgId);
-        }
+        buttonImage.setImageBytes(image, defaultImgId);
     }
 
     private void setTaskInfo() {
@@ -161,7 +145,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
 
         //TASK IMAGE:
-        ImageButton taskImageButton = (ImageButton) findViewById(R.id.taskActivityTaskImage);
+        CircleImageButton taskImageButton = (CircleImageButton) findViewById(R.id.taskActivityTaskImage);
         setButtonImage(taskImageButton, myTask.GetImg(), R.mipmap.ic_task_default);
 
         //Task Participants:

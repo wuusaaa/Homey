@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
@@ -48,6 +49,7 @@ public class FragmentAddTask extends Fragment {
     private ArrayList<Group> userGroups;
     private int selectedGroupId;
     boolean firstTime = true;
+    private CircleImageButton taskImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -63,6 +65,9 @@ public class FragmentAddTask extends Fragment {
             firstTime = false;
             pDialog = new HomeyProgressDialog(this.getContext());
             dropdown = (Spinner) getView().findViewById(R.id.spinnerTaskGroups);
+            taskImage = (CircleImageButton) getView().findViewById(R.id.imageViewAddTask);
+            taskImage.setImage(R.mipmap.ic_task_default);
+            taskImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             Context context = this.getContext();
             List<String> items = new ArrayList<>();
@@ -166,7 +171,7 @@ public class FragmentAddTask extends Fragment {
             Uri image = data.getData();
             choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;
-            ((ImageView)getView().findViewById(R.id.imageViewAddTask)).setImageURI(image);
+            taskImage.setImageBytes(choosedPicture, R.mipmap.ic_task_default);
         }
     }
 }

@@ -36,13 +36,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageButton
+                <app.customcomponents.CircleImageButton
                     android:id="@+id/taskActivityGroupImage"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@color/Transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/profilepicturetest" />
+                    android:scaleType="fitCenter" />
 
                 <TextView
                     android:id="@+id/taskActivityGroupLabel"
@@ -107,13 +106,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageButton
+                <app.customcomponents.CircleImageButton
                     android:id="@+id/taskActivityCreatorImage"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@color/Transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/profilepicturetest" />
+                    android:scaleType="fitCenter" />
 
                 <TextView
                     android:id="@+id/taskActivityCreatorLabel"
@@ -158,13 +156,12 @@
 
             </LinearLayout>
 
-            <ImageButton
+            <app.customcomponents.CircleImageButton
                 android:id="@+id/taskActivityTaskImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@color/Transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/profilepicturetest" />
+                android:scaleType="fitCenter" />
 
         </LinearLayout>
 

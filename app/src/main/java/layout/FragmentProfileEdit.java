@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.project.homey.R;
 
+import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
@@ -33,7 +34,10 @@ public class FragmentProfileEdit extends Fragment
     private byte[] choosedPicture;
     private boolean hasFirstNameChanged = false;
     private boolean hasPicture = false;
+    private boolean isFirstRun = true;
     private EditText editTextFirstName;
+    private CircleImageButton circleImage;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -42,15 +46,23 @@ public class FragmentProfileEdit extends Fragment
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
 
-        String firstName = getArguments().getString("firstName");
-        String lastName = getArguments().getString("lastName");
-        editTextFirstName = (EditText) getView().findViewById(R.id.profileEditFirstName);
-        editTextFirstName.setText(firstName);
-        setTextListeners();
+        if (isFirstRun)
+        {
+            isFirstRun = false;
+
+            editTextFirstName = (EditText) getView().findViewById(R.id.profileEditFirstName);
+            circleImage = (CircleImageButton) getView().findViewById(R.id.imageViewEditProfile);
+
+            String firstName = getArguments().getString("firstName");
+
+            editTextFirstName.setText(firstName);
+            circleImage.setImage(R.mipmap.ic_profile_default);
+            circleImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            setTextListeners();
+        }
     }
 
     private void setTextListeners()
@@ -128,7 +140,8 @@ public class FragmentProfileEdit extends Fragment
             Uri image = data.getData();
             choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;
-            ((ImageView)getView().findViewById(R.id.imageViewEditProfile)).setImageURI(image);
+            circleImage.setImageBytes(choosedPicture, R.mipmap.ic_profile_default);
+            circleImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
     }
 }

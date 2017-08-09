@@ -48,11 +48,11 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
+            <app.customcomponents.CircleImageButton
                 android:id="@+id/imageViewAddMember"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:src="@mipmap/ic_group_default" />
+                android:background="@color/Transparent"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -3,14 +3,13 @@ package app.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.project.homey.R;
 
+import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.User;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
@@ -23,12 +22,15 @@ public class ProfileActivity extends ActivityWithHeaderBase
     private Fragment currentFragment;
     private boolean isEditable;
     private boolean isChoosingPicture = false;
+    private CircleImageButton circleImageProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        circleImageProfile = (CircleImageButton) findViewById(R.id.imageButtonUsersProfilePicture);
+        circleImageProfile.setScaleType(ImageView.ScaleType.FIT_CENTER);
     }
 
     @Override
@@ -48,15 +50,7 @@ public class ProfileActivity extends ActivityWithHeaderBase
 
     private void setImage()
     {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(user.GetImage(), 0 , user.GetImage().length);
-        if (bitmap != null)
-        {
-            ((ImageView) findViewById(R.id.imageButtonUsersProfilePicture)).setImageBitmap(bitmap);
-        }
-        else
-        {
-            ((ImageView) findViewById(R.id.imageButtonUsersProfilePicture)).setImageResource(R.mipmap.ic_profile_default);
-        }
+        circleImageProfile.setImageBytes(user.GetImage(), R.mipmap.ic_profile_default);
     }
 
     private void setDefaultFragment()
@@ -86,6 +80,7 @@ public class ProfileActivity extends ActivityWithHeaderBase
         transaction.replace(R.id.proifleActivityFragment, detailsFragment);
         transaction.commit();
         currentFragment = detailsFragment;
+        circleImageProfile.setVisibility(View.VISIBLE);
     }
 
     public void onSaveChangesClick(View view)
@@ -99,6 +94,7 @@ public class ProfileActivity extends ActivityWithHeaderBase
     {
         if (isEditable)
         {
+            circleImageProfile.setVisibility(View.INVISIBLE);
             Bundle bundle = new Bundle();
             bundle.putString("firstName", user.getName());
             bundle.putString("lastName", user.getName()); //TODO: change to last name.

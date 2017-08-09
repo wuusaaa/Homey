@@ -13,54 +13,53 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
                 android:hint="@string/description" />
 
             <EditText
                 android:id="@+id/editTextGroupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="10dp"
-                android:hint="@string/group_name"/>
+                android:layout_marginTop="16dp"
+                android:hint="@string/group_name" />
 
             <Button
                 android:id="@+id/ButtonCreateGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Create Group"
-                android:onClick="onCreateGroupClicked"/>
+                android:onClick="onCreateGroupClicked"
+                android:text="Create Group" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:orientation="vertical">
 
-            <ImageButton
+            <app.customcomponents.CircleImageButton
                 android:id="@+id/chosenGroupImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@color/Transparent"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/ic_upload_image_group" />
+                android:scaleType="fitCenter" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose Picture"
-                android:onClick="onGroupChooseImageClicked" />
+                android:onClick="onGroupChooseImageClicked"
+                android:text="Choose Picture" />
 
         </LinearLayout>
 

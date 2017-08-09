@@ -10,11 +10,12 @@
         android:orientation="vertical">
 
 
-        <ImageView
+        <app.customcomponents.CircleImageButton
             android:id="@+id/imageViewEditProfile"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:src="@mipmap/ic_profile_default"/>
+            android:background="@color/Transparent"
+            android:scaleType="fitCenter"/>
 
         <Button
             android:layout_width="200dp"

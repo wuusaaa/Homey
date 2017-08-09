@@ -23,6 +23,7 @@ import java.util.List;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
+import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -51,7 +52,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView textViewUserName;
-    private ImageButton imageButtonProfile;
+    private CircleImageButton imageButtonProfile;
     private HomeyProgressDialog pDialog;
     private Button buttonSubmit;
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();
@@ -75,7 +76,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         scrollHorizontalWithItems = (ScrollHorizontalWithItems) findViewById(R.id.GroupsHolder);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.homePageActivityTasksHolder);
         textViewUserName = (TextView) findViewById(R.id.userName);
-        imageButtonProfile = (ImageButton) findViewById(R.id.profileImage);
+        imageButtonProfile = (CircleImageButton) findViewById(R.id.profileImage);
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
     }
@@ -194,15 +195,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private void setUserImage()
     {
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(user.GetImage(), 0, user.GetImage().length);
-        if (bitmap != null)
-        {
-            imageButtonProfile.setImageBitmap(bitmap);
-        }
-        else
-        {
-            imageButtonProfile.setImageResource(R.mipmap.ic_profile_default);
-        }
+        imageButtonProfile.setImageBytes(user.GetImage(),R.mipmap.ic_profile_default);
     }
 
     //*********************************************

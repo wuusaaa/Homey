@@ -77,11 +77,11 @@
             android:orientation="vertical"
             android:layout_weight="3">
 
-            <ImageView
+            <app.customcomponents.CircleImageButton
                 android:id="@+id/imageViewAddTask"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:src="@mipmap/ic_task_default"/>
+                android:background="@color/Transparent"/>
 
             <Button
                 android:id="@+id/buttonTaskChosePicture"

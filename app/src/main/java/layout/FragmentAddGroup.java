@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.project.homey.R;
 
 import app.activities.GroupPageActivity;
+import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.Group;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
@@ -27,10 +29,10 @@ public class FragmentAddGroup extends Fragment {
     private static final int RESULT_LOAD_IMAGE = 1;
     private boolean hasPicture = false;
     private byte[] choosedPicture;
+    private CircleImageButton groupImage;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         return inflater.inflate(R.layout.fragment_add_group, container, false);
     }
@@ -38,6 +40,14 @@ public class FragmentAddGroup extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        groupImage = (CircleImageButton)getView().findViewById(R.id.chosenGroupImage);
+
+        if (!hasPicture)
+        {
+            groupImage.setImage(R.mipmap.ic_group_default);
+            groupImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        }
     }
 
     public void onCreateGroup()
@@ -85,7 +95,7 @@ public class FragmentAddGroup extends Fragment {
             Uri image = data.getData();
             choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;
-            ((ImageButton)getView().findViewById(R.id.chosenGroupImage)).setImageURI(image);
+            groupImage.setImageBytes(choosedPicture, R.mipmap.ic_group_default);
         }
     }
 }

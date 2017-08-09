@@ -20,6 +20,7 @@ import com.project.homey.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.User;
@@ -33,7 +34,7 @@ public class FragmentAddMember extends Fragment
 {
     private EditText editTextEmail;
     private Spinner groupSpinner;
-    private ImageView selectedGroupImage;
+    private CircleImageButton selectedGroupImage;
     private Button buttonAddMember;
     private ArrayList<Group> myGroups;
     private Group selectedGroup = null;
@@ -55,8 +56,11 @@ public class FragmentAddMember extends Fragment
 
         editTextEmail = (EditText) getView().findViewById(R.id.editTextEmail);
         groupSpinner = (Spinner) getView().findViewById(R.id.spinnerAddMemberGroups);
-        selectedGroupImage = (ImageView) getView().findViewById(R.id.imageViewAddMember);
+        selectedGroupImage = (CircleImageButton) getView().findViewById(R.id.imageViewAddMember);
         buttonAddMember = (Button) getView().findViewById(R.id.buttonAddMemberFragment);
+
+        selectedGroupImage.setImage(R.mipmap.ic_group_default);
+        selectedGroupImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         setSpinnerItems();
 
         groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -80,19 +84,11 @@ public class FragmentAddMember extends Fragment
     {
         if (selectedGroup != null)
         {
-            Bitmap bitMap = BitmapFactory.decodeByteArray(selectedGroup.GetImage(), 0 , selectedGroup.GetImage().length);
-            if (bitMap != null)
-            {
-                selectedGroupImage.setImageBitmap(bitMap);
-            }
-            else
-            {
-                selectedGroupImage.setImageResource(R.mipmap.ic_group_default);
-            }
+            selectedGroupImage.setImageBytes(selectedGroup.GetImage(), R.mipmap.ic_group_default);
         }
         else
         {
-            selectedGroupImage.setImageResource(R.mipmap.ic_group_default);
+            selectedGroupImage.setImage(R.mipmap.ic_group_default);
         }
     }
 

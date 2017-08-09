@@ -23,6 +23,7 @@ import java.util.List;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
+import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
@@ -79,14 +80,17 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
         loadUsers();
-        ImageView image = (ImageView) findViewById(R.id.groupActivityImage);
+        CircleImageButton image = (CircleImageButton) findViewById(R.id.groupActivityImage);
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
-        if (bitMapImage != null) {
-            ((ImageView) findViewById(R.id.groupActivityImage)).setImageBitmap(bitMapImage);
-        } else {
-            ((ImageView) findViewById(R.id.groupActivityImage)).setImageResource(R.mipmap.ic_group_default);
+        if (bitMapImage != null)
+        {
+            image.setImage(bitMapImage);
+        } else
+        {
+            image.setImage(R.mipmap.ic_group_default);
         }
 
+        image.setScaleType(ImageView.ScaleType.FIT_CENTER);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
 
         // Arrange group buttons
