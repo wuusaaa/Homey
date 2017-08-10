@@ -28,6 +28,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APIAddUserToTask = "https://www.crossword-clues.com/homey/add-user-to-task.php";
 
+    private final String APIAddUserToGroup = "https://www.crossword-clues.com/homey/add-user-to-group.php";
+
     private final String APIGetTaskUsersURL = "https://www.crossword-clues.com/homey/get-task-users.php";
 
     private final String APIGetGroupUsersURL = "https://www.crossword-clues.com/homey/get-group-users-by-group-id.php";
@@ -286,5 +288,14 @@ public class EnvironmentManager extends ManagerBase {
      */
     public String GetAPIAddUserToTask() {
         return APIAddUserToTask;
+    }
+
+    /**
+     * getter for the APIAddUserToGroup
+     *
+     * @return
+     */
+    public String GetAPIAddUserToGroup() {
+        return APIAddUserToGroup;
     }
 }

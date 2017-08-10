@@ -96,7 +96,7 @@ public class DBManager extends ManagerBase {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public void AddUserToTask(final String email, final String taskId, final UpdateCallBack callBack) {
+    public void AddUserToTask(final String id, final String taskId, final UpdateCallBack callBack) {
         // Tag used to cancel the request
         String tag_string_req = "add-user-to-task";
 
@@ -126,8 +126,50 @@ public class DBManager extends ManagerBase {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<>();
-                params.put("email", email);
+                params.put("id", id);
                 params.put("task_id", taskId);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public void AddUserToGroup(final String email, final String groupId, final UpdateCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "add-user-to-task";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddUserToGroup(), response -> {
+            try {
+                JSONObject jObj = new JSONObject(response);
+                boolean error = jObj.getBoolean("error");
+
+                // Check for error node in json
+                if (!error) {
+                    callBack.onSuccess();
+                } else {
+                    // Error in adding the user to task. Get the error message
+                    String errorMsg = jObj.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                // JSON error
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            }
+
+        }, error -> callBack.onFailure("Volley ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                params.put("id", email);
+                params.put("group_id", groupId);
 
                 return params;
             }
