@@ -25,10 +25,10 @@ import app.customcomponents.HomeyProgressDialog;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
-import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.GroupsCallBack;
+import callback.UpdateCallBack;
 
 public class FragmentAddMember extends Fragment
 {
@@ -39,6 +39,7 @@ public class FragmentAddMember extends Fragment
     private ArrayList<Group> myGroups;
     private Group selectedGroup = null;
     private HomeyProgressDialog pDialog;
+    private DBManager dbManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -52,7 +53,7 @@ public class FragmentAddMember extends Fragment
         super.onStart();
 
         pDialog = new HomeyProgressDialog(this.getContext());
-
+        dbManager = (DBManager) Services.GetService(DBManager.class);
 
         editTextEmail = (EditText) getView().findViewById(R.id.editTextEmail);
         groupSpinner = (Spinner) getView().findViewById(R.id.spinnerAddMemberGroups);
@@ -109,7 +110,7 @@ public class FragmentAddMember extends Fragment
     {
         User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         pDialog.showDialog();
-        ((DBManager) Services.GetService(DBManager.class)).GetGroupsThatUserIsAdmin(self.GetUserId(),
+        dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
                 new GroupsCallBack() {
             @Override
             public void onSuccess(ArrayList<Group> groups)
@@ -133,10 +134,22 @@ public class FragmentAddMember extends Fragment
 
     public void onAddMemberClicked()
     {
-        String str = editTextEmail.getText().toString();
+        String email = editTextEmail.getText().toString();
         String groupName = selectedGroup.GetName();
 
-        Toast.makeText(getContext(), "Added group: " + groupName, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "Added email: " + str, Toast.LENGTH_SHORT).show();
+        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack() {
+            @Override
+            public void onSuccess()
+            {
+                Toast.makeText(getContext(), "Added group: " + groupName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Added email: " + email, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String errorMessage)
+            {
+                Toast.makeText(getContext(), "Could not add " + email + " to group.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

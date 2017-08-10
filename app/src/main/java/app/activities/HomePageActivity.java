@@ -82,7 +82,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
         initPage();
     }
