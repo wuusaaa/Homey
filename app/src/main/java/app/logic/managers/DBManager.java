@@ -168,7 +168,7 @@ public class DBManager extends ManagerBase {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<>();
-                params.put("id", email);
+                params.put("mail", email);
                 params.put("group_id", groupId);
 
                 return params;
