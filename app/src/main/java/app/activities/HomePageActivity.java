@@ -5,14 +5,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,7 +57,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //*****************************
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
@@ -189,7 +187,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
 
     private void fetchUserName()
     {
-        String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().getName();
+        String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().GetName();
         textViewUserName.setText("Welcome " + userName);
     }
 

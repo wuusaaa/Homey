@@ -1,13 +1,9 @@
 package app.activities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,7 +73,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
             @Override
             public void onSuccess(User user) {
                 taskCreator = user;
-                ((TextView) findViewById(R.id.taskActivityCreatorLabel)).setText(taskCreator.getName());
+                ((TextView) findViewById(R.id.taskActivityCreatorLabel)).setText(taskCreator.GetName());
                 CircleImageButton creatorImage = (CircleImageButton) findViewById(R.id.taskActivityCreatorImage);
                 creatorImage.setOnClickListener(view->
                 {

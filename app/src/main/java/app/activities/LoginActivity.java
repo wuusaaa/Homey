@@ -174,7 +174,7 @@ public class LoginActivity extends ActivityBase {
 
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
 
-                db.addUser(user.getName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(), user.GetScore(), user.GetLevel(), user.GetImage());
+                db.addUser(user.GetName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(), user.GetScore(), user.GetLevel(), user.GetImage());
 
                 pDialog.hideDialog();
 

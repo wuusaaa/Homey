@@ -50,7 +50,8 @@ public class ScrollVerticalWithItems extends ScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
+    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack)
+    {
         linearLayout.removeAllViews();
         taskLayouts.clear();
         spinnerStatus.clear();
@@ -59,7 +60,8 @@ public class ScrollVerticalWithItems extends ScrollView {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         AtomicInteger i = new AtomicInteger(0);
 
-        tasks.forEach(task -> {
+        tasks.forEach(task ->
+        {
             TaskLayout taskLayout = new TaskLayout(this.getContext());
             taskLayout.setTask((Task) task);
             taskLayout.SetTaskLayoutOnClick(callBack);
@@ -94,7 +96,8 @@ public class ScrollVerticalWithItems extends ScrollView {
 
         taskLayouts.forEach(taskLayout -> ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
             @Override
-            public void onSuccess(ArrayList<User> users) {
+            public void onSuccess(ArrayList<User> users)
+            {
                 if (isUserAssignee(userId, users)) {
                     spinnerOwner.add(taskLayout);
                 }
@@ -109,7 +112,6 @@ public class ScrollVerticalWithItems extends ScrollView {
 
             }
         }));
-
     }
 
     public void filterOthers() {

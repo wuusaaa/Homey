@@ -30,12 +30,10 @@
         <activity android:name="app.activities.HomePageActivity" />
         <activity android:name="app.activities.PlusActivity" />
         <activity android:name="app.activities.ProfileActivity" />
-        <activity android:name="app.activities.AddTaskActivity" />
         <activity android:name="app.activities.GroupPageActivity" />
         <activity android:name="app.activities.LoginActivity" />
         <activity android:name="app.activities.LogoutActivity" />
         <activity android:name="app.activities.ForgotPasswordActivity" />
-        <activity android:name="app.activities.AddGroupActivity" />
         <activity android:name="app.activities.ActivityBase" />
         <activity android:name="app.activities.ActivityWithHeaderBase" />
         <activity android:name="app.activities.TaskActivity" />
@@ -48,7 +46,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.activities.ActivityBase" />
         </activity>
-        <activity android:name="app.activities.AddMemberActivity"></activity>
     </application>
 
 </manifest>

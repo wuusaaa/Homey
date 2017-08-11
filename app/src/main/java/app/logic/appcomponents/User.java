@@ -60,10 +60,6 @@ public class User implements IHasText, IHasImage, Parcelable {
         this.img = img;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
