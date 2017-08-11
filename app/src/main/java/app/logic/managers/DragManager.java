@@ -45,13 +45,15 @@ public class DragManager extends ManagerBase
                 @Override
                 public void onSuccess()
                 {
-                    Toast.makeText(context, "Assigning: " + droppedUser.GetName() + " To task: "+ movingTask.GetName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, movingTask.GetName() + "Assigned to task: "+ droppedUser.GetName(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(String errorMessage)
                 {
-                    Toast.makeText(context, "Failed to assign task."+ movingTask.GetName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "User is allready on this task", Toast.LENGTH_SHORT).show();
+                    //TODO: set this message from the server:
+                    //Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -57,7 +57,7 @@
             android:id="@+id/groupActivityTasksLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4">
+            android:layout_weight="5">
 
             <app.customcomponents.ScrollVerticalWithItems
                 android:id="@+id/groupPageActivityTasksHolder"
@@ -68,22 +68,12 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/submitButtonHolder"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
             <Button
                 android:id="@+id/buttonSubmit"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:onClick="onSubmitClicked"
                 android:text="@string/submit" />
-
-        </LinearLayout>
-
 
         <include
             layout="@layout/separator"
