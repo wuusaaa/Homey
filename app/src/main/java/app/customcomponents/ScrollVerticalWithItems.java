@@ -50,9 +50,11 @@ public class ScrollVerticalWithItems extends ScrollView {
         this.addView(linearLayout);
     }
 
-    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack)
-    {
+    public <T extends IHasText> void SetTasks(List<T> tasks, Consumer<Task> callBack, Consumer<TaskLayout> checkBoxCallBack) {
         linearLayout.removeAllViews();
+        taskLayouts.clear();
+        spinnerStatus.clear();
+        spinnerOwner.clear();
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         AtomicInteger i = new AtomicInteger(0);
@@ -178,19 +180,19 @@ public class ScrollVerticalWithItems extends ScrollView {
 
     private void setFilteredTasks() {
         //TODO: BARAK FIX THIS FACAKTA !
-//        AtomicInteger i = new AtomicInteger(0);
-//        List<TaskLayout> intersectTasks = intersection();
-//
-//        linearLayout.removeAllViews();
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
-//
-//        intersectTasks.forEach(taskLayout -> {
-//            linearLayout.addView(taskLayout);
-//
-//            if (i.getAndIncrement() != spinnerOwner.size() - 1) {
-//                linearLayout.addView(new Spacer(getContext()));
-//            }
-//        });
+        AtomicInteger i = new AtomicInteger(0);
+        List<TaskLayout> intersectTasks = intersection();
+
+        linearLayout.removeAllViews();
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        intersectTasks.forEach(taskLayout -> {
+            linearLayout.addView(taskLayout);
+
+            if (i.getAndIncrement() != spinnerOwner.size() - 1) {
+                linearLayout.addView(new Spacer(getContext()));
+            }
+        });
     }
 
     private List<TaskLayout> intersection() {
