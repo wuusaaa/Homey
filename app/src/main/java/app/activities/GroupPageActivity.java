@@ -77,6 +77,9 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         if (b != null)
             group = b.getParcelable("group");
 
+        //User Admin init:
+        isAdmin = b.getBoolean("isAdmin");
+
         pDialog = new HomeyProgressDialog(this);
         loadTasks();
         loadUsers();
@@ -120,6 +123,10 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                         c -> onCheckBoxClicked(c));
 
                 pDialog.hideDialog();
+                if (isAdmin)
+                {
+                    scrollVerticalWithItems.AllotDragAndDrop();
+                }
             }
 
             @Override
@@ -167,36 +174,12 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         Button addMember = (Button) findViewById(R.id.button_group_add_member);
         Button deleteLeave = (Button) findViewById(R.id.button_group_delete_leave);
 
-        if (!isGroupAdmin()) {
+        if (!isAdmin) {
             addMember.setEnabled(false);
             deleteLeave.setText(R.string.leave_group);
         } else {
             deleteLeave.setText(R.string.delete_group);
         }
-    }
-
-    //******************************************************
-    // Checks if the user is one of the group admins
-    //******************************************************
-    private boolean isGroupAdmin() {
-        ((DBManager) Services.GetService(DBManager.class)).GetGroupAdmins(Integer.parseInt(group.GetId()), new UsersCallBack() {
-            @Override
-            public void onSuccess(ArrayList<User> users) {
-                isAdmin = false;
-                User theUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-                for (User user : users) {
-                    if (user.GetUserId().equals(theUser.GetUserId())) {
-                        isAdmin = true;
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(String error) {
-            }
-        });
-        return isAdmin;
     }
 
     //******************************************************

@@ -202,5 +202,11 @@ public class ScrollVerticalWithItems extends ScrollView {
         return spinnerOwner.stream().filter(spinnerStatus::contains).collect(Collectors.toList());
     }
 
+    //Allow assign task to user by drag and drop:
+    public void AllotDragAndDrop()
+    {
+        taskLayouts.forEach(taskLayout -> taskLayout.setDragAndDrop());
+    }
+
 }
 

@@ -4,23 +4,19 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.homey.R;
 
 import java.util.function.Consumer;
 
 import app.logic.appcomponents.Task;
-import app.logic.managers.DBManager;
 import app.logic.managers.DragManager;
 import app.logic.managers.Services;
 
@@ -42,7 +38,6 @@ public class TaskLayout extends LinearLayout {
         setDescription(task.GetDescription());
         this.task = task;
         setImage();
-        setDragAndDropTest();
     }
 
     public TaskLayout(Context context)
@@ -140,7 +135,7 @@ public class TaskLayout extends LinearLayout {
         return (int) (size * scale + 0.5f);
     }
 
-    private void setDragAndDropTest()
+    public void setDragAndDrop()
     {
         DragManager dragManager = (DragManager) Services.GetService(DragManager.class);
 
