@@ -41,7 +41,7 @@ public class DragManager extends ManagerBase
     {
         if (movingTask != null && droppedUser != null)
         {
-            ((DBManager) Services.GetService(DragManager.class)).AddUserToTask(droppedUser.GetUserId(), movingTask.GetTaskId(), new UpdateCallBack() {
+            ((DBManager) Services.GetService(DBManager.class)).AddUserToTask(droppedUser.GetUserId(), movingTask.GetTaskId(), new UpdateCallBack() {
                 @Override
                 public void onSuccess()
                 {
