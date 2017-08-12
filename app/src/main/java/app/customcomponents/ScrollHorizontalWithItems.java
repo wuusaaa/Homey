@@ -103,8 +103,6 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView
 
             //drag and drop set:
             setGroupIconDrop(itemIcon, item);
-
-
             itemsMap.put(item.GetId(), itemIcon);
         }
     }

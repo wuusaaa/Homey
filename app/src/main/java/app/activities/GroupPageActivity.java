@@ -207,7 +207,29 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     // Adds new member to the group
     //******************************************************
     public void buttonGroupDeleteLeaveOnClick(View view) {
-        // TODO
+        if (isAdmin)
+        {
+
+        }
+        else
+        { //Not admin just leaves group.
+            User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+            ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack()
+            {
+                @Override
+                public void onSuccess()
+                {
+                    Toast.makeText(GroupPageActivity.this, "Successfully left group "+ group.GetName(), Toast.LENGTH_SHORT).show();
+                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(GroupPageActivity.this);
+                }
+
+                @Override
+                public void onFailure(String errorMessage)
+                {
+                    Toast.makeText(GroupPageActivity.this, "Could not leave group ", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     public void tasksOwnerFilter() {

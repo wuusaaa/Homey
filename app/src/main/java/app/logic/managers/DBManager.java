@@ -1372,7 +1372,8 @@ public class DBManager extends ManagerBase {
         });
     }
 
-    public void UpdateTaskUsersByTaskId(String taskId, UpdateTaskUsersByTaskIdCallBack callBack) {
+    public void UpdateTaskUsersByTaskId(String taskId, UpdateTaskUsersByTaskIdCallBack callBack)
+    {
 
     }
 }

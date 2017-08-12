@@ -179,7 +179,8 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     }
 
-    public void buttonTakeOnClicked(View view) {
+    public void buttonTakeOnClicked(View view)
+    {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         Stream<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId));
 
@@ -207,7 +208,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
         if (selfUser.GetId().equals(taskCreator.GetId()))
         {
-            dbManager.LeaveTask(myTask.GetTaskId().toString(), userId, new UpdateCallBack()
+            dbManager.RemoveTask(myTask.GetTaskId(), new UpdateCallBack()
             {
                 @Override
                 public void onSuccess()
