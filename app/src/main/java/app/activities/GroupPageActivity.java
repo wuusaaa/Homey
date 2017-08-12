@@ -157,6 +157,11 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                         //TODO handle error
                     }
                 });
+
+                if (isAdmin)
+                {
+                    participantsHolder.SetOnLongClick(group);
+                }
             }
 
             @Override

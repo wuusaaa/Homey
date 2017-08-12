@@ -6,4 +6,6 @@ package app.activities.interfaces;
 
 public interface IHasImage {
     byte[] GetImage();
+
+    String GetId();
 }

@@ -4,32 +4,43 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.DragEvent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.homey.R;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
+import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
 import app.logic.managers.DragManager;
 import app.logic.managers.Services;
 import callback.GotoGroupPageCallBack;
 
-public class ScrollHorizontalWithItems extends HorizontalScrollView {
-
+public class ScrollHorizontalWithItems extends HorizontalScrollView
+{
     private final LinearLayout linearLayout;
+    private HashMap itemsMap = new HashMap();
 
     public ScrollHorizontalWithItems(Context context) {
         super(context);
@@ -45,7 +56,8 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         this.addView(linearLayout);
     }
 
-    public ScrollHorizontalWithItems(Context context, AttributeSet attrs, int defStyle) {
+    public ScrollHorizontalWithItems(Context context, AttributeSet attrs, int defStyle)
+    {
         super(context, attrs, defStyle);
 
         linearLayout = new LinearLayout(context);
@@ -54,6 +66,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
     public <T extends IHasText & IHasImage> void SetScrollerItems(ArrayList<T> items, @LinearLayoutCompat.OrientationMode int orientation, GotoGroupPageCallBack callBack) {
         linearLayout.removeAllViews();
+        itemsMap.clear();
 
         linearLayout.setOrientation(orientation);
         LayoutParams layoutParamsTextView = new LayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -63,7 +76,8 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         setLayoutParamsMargin(layoutParamsImageButton);
         setLayoutParamsMargin(layoutParamsTextView);
 
-        for (T item : items) {
+        for (T item : items)
+        {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
             CircleImageButton itemIcon = new CircleImageButton(this.getContext(), item.GetImage(), R.mipmap.ic_group_default);
             TextView textView = new TextView(this.getContext());
@@ -87,6 +101,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
             //drag and drop set:
             setGroupIconDrop(itemIcon, item);
+            itemsMap.put(item.GetName(), itemIcon);
         }
     }
 
@@ -141,10 +156,54 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         return (int) (size * scale + 0.5f);
     }
 
-    private void setLayoutParamsMargin(LayoutParams layoutParams) {
+    private void setLayoutParamsMargin(LayoutParams layoutParams)
+    {
         layoutParams.leftMargin = 15;
         layoutParams.rightMargin = 15;
         layoutParams.topMargin = 15;
         layoutParams.bottomMargin = 15;
+    }
+
+    public void SetOnLongClick(Group group)
+    {
+        for (Object object : itemsMap.entrySet())
+        {
+            Map.Entry<String, CircleImageButton> entry = (Map.Entry<String, CircleImageButton>) object;
+            CircleImageButton image = entry.getValue();
+
+            image.setOnLongClickListener( view ->
+            {
+                PopupMenu popupMenu = new PopupMenu(getContext(), image);
+                popupMenu.getMenuInflater().inflate(R.menu.group_page_user_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
+                            case R.id.promoteAdmin:
+                                // TODO: DBMANAGER. promote user (entry.getKey(), group.getId).
+                                Toast.makeText(getContext(), "Promoting id: " + entry.getKey(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.removeFromGroup:
+                                Toast.makeText(getContext(), "Remove user id: " + entry.getKey() + "from group id: "+ group.GetId(), Toast.LENGTH_SHORT).show();
+                                // TODO: DBMANAGEr. remove user (entry.getKey(), group.getId).
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "default", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
+
+                //TODO: set long click.
+                return true;
+            });
+        }
     }
 }

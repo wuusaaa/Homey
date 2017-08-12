@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/promoteAdmin"
+        android:title="Promote to Admin" />
+
+    <item
+        android:id="@+id/removeFromGroup"
+        android:title="Remove from group" />
+
+</menu>

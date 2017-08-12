@@ -121,6 +121,11 @@ public class User implements IHasText, IHasImage, Parcelable {
     }
 
     @Override
+    public String GetId() {
+        return userId;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
