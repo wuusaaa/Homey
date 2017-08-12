@@ -329,8 +329,49 @@ public class DBManager extends ManagerBase {
         updateTableValue("group", groupId, property, value, callBack);
     }
 
+    public void MakeUserAdmin(final String groupId, final String userId, final UpdateCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "update_value";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIMakeUserAdminURL(), response -> {
+
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                boolean error = jsonObject.getBoolean("error");
+                if (!error) {// Task successfully stored in MySQL
+                    //all OK, no need to do anything just go back to the called function
+                    callBack.onSuccess();
+                } else {
+
+                    // Error occurred while adding a task. Get the error
+                    // message
+                    String errorMsg = jsonObject.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            }
+
+        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("groupId", groupId);
+                params.put("userId", userId);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     private void updateTableValue(final String table, final String id, final String property, final Object value, final UpdateCallBack callBack) {
-        //TODO add this to the API server
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -375,7 +416,6 @@ public class DBManager extends ManagerBase {
     }
 
     public void LeaveTask(final String id, final String user_id, final UpdateCallBack callBack) {
-        //TODO add this to the API server
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -406,6 +446,46 @@ public class DBManager extends ManagerBase {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", user_id);
+                params.put("id", id);
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public void RemoveTask(final String id, final UpdateCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "update_value";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIRemoveTaskURL(), response -> {
+
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                boolean error = jsonObject.getBoolean("error");
+                if (!error) {// Task successfully stored in MySQL
+                    //all OK, no need to do anything just go back to the called function
+                    callBack.onSuccess();
+                } else {
+
+                    // Error occurred while adding a task. Get the error
+                    // message
+                    String errorMsg = jsonObject.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            }
+
+        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 return params;
             }
