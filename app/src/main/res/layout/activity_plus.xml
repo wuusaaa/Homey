@@ -28,18 +28,18 @@
         android:onClick="setAddTaskFragment"/>
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonPlusAddMember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_member"
         android:onClick="setAddMemberFragment"/>
 
-    <android.support.v7.widget.FitWindowsLinearLayout
+    <LinearLayout
         android:id="@+id/PlusActivityFragmentHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    </android.support.v7.widget.FitWindowsLinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

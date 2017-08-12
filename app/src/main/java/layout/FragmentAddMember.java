@@ -1,5 +1,6 @@
 package layout;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class FragmentAddMember extends Fragment
     private Group selectedGroup = null;
     private HomeyProgressDialog pDialog;
     private DBManager dbManager;
+    private String defaultGroupName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -109,6 +111,7 @@ public class FragmentAddMember extends Fragment
     private void setSpinnerItems()
     {
         User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+        Context context = getContext();
         pDialog.showDialog();
         dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
                 new GroupsCallBack() {
@@ -118,9 +121,14 @@ public class FragmentAddMember extends Fragment
                 myGroups = groups;
                 List<String> items = new ArrayList<>();
                 groups.forEach( group -> items.add(group.GetName()));
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
                 groupSpinner.setAdapter(adapter);
                 pDialog.hideDialog();
+
+                if (defaultGroupName != null)
+                {
+                    setSpinnerSelection(defaultGroupName);
+                }
             }
 
             @Override
@@ -151,5 +159,28 @@ public class FragmentAddMember extends Fragment
                 Toast.makeText(getContext(), "Could not add " + email + " to group.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void SetDefaultGroupName(String defaultGroupName)
+    {
+        this.defaultGroupName = defaultGroupName;
+    }
+
+    private void setSpinnerSelection(String groupName)
+    {
+        int position = 0;
+        for (int i=0; i<groupSpinner.getCount(); i++)
+        {
+            if (groupSpinner.getItemAtPosition(i).toString().equals(groupName))
+            {
+                position = i;
+                break;
+            }
+        }
+
+        if (position != 0)
+        {
+            groupSpinner.setSelection(position);
+        }
     }
 }

@@ -14,10 +14,17 @@ import layout.FragmentAddGroup;
 import layout.FragmentAddMember;
 import layout.FragmentAddTask;
 
-public class PlusActivity extends ActivityBase {
+public class PlusActivity extends ActivityBase
+{
+    public static final int NONE = 0;
+    public static final int ADD_GROUP = 1;
+    public static final int ADD_TASK = 2;
+    public static final int ADD_MEMBER = 3;
 
     private Fragment currentFragment;
     private boolean isChoosePicture = false;
+    private boolean isFirst = true;
+    private String defaultGroupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,7 +32,7 @@ public class PlusActivity extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus);
 
-        startFragment();
+        setDefaultFragment();
     }
 
     @Override
@@ -44,22 +51,39 @@ public class PlusActivity extends ActivityBase {
 
     private void setDefaultFragment()
     {
-        Fragment emptyFragment = new EmptyFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.PlusActivityFragmentHolder, emptyFragment);
-        transaction.commit();
-        currentFragment = emptyFragment;
-    }
+        Fragment fragment;
+        Bundle bundle = getIntent().getExtras();
+        int fragmentToDisplay = bundle.getInt("fragmentNumber");
 
-    private void startFragment()
-    {
-        Fragment emptyFragment = new EmptyFragment();
+        switch (fragmentToDisplay)
+        {
+            case NONE:
+                fragment = new EmptyFragment();
+                //nothing to do, default fragment already placed.
+                break;
+            case ADD_GROUP:
+                fragment = new FragmentAddGroup();
+                break;
+            case ADD_TASK:
+                fragment = new FragmentAddTask();
+                //Get here when you press "plus" when you are in a group page.
+                //TODO: insert group name inside.
+                break;
+            case ADD_MEMBER:
+                fragment = new FragmentAddMember();
+                ((FragmentAddMember) fragment).SetDefaultGroupName(bundle.getString("groupName"));
+                break;
+            default:
+                fragment = new EmptyFragment();
+                //nothing to do, default fragment already placed.
+                break;
+        }
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.PlusActivityFragmentHolder, emptyFragment);
+        transaction.replace(R.id.PlusActivityFragmentHolder, fragment);
         transaction.commit();
-        currentFragment = emptyFragment;
+        currentFragment = fragment;
     }
 
     public void setAddGroupFragment(View view)
@@ -85,6 +109,7 @@ public class PlusActivity extends ActivityBase {
     public void setAddMemberFragment(View view)
     {
         Fragment addMemberFragment = new FragmentAddMember();
+        ((FragmentAddMember) addMemberFragment).SetDefaultGroupName(defaultGroupName);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.PlusActivityFragmentHolder, addMemberFragment);

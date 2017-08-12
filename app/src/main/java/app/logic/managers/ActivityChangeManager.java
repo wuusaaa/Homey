@@ -78,6 +78,9 @@ public class ActivityChangeManager extends ManagerBase
     public void SetPlusActivity(Context context)
     {
         Intent intent = new Intent(context, PlusActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("fragmentNumber", PlusActivity.NONE);
+        intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
@@ -99,6 +102,21 @@ public class ActivityChangeManager extends ManagerBase
     public void SetLogOutActivity(Context context)
     {
         Intent intent = new Intent(context, LogoutActivity.class);
+        context.startActivity(intent);
+    }
+
+    public void SetAddTaskActivity(Context context, Group group)
+    {
+
+    }
+
+    public void SetAddMemberActivity(Context context, String groupName)
+    {
+        Intent intent = new Intent(context, PlusActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("fragmentNumber", PlusActivity.ADD_MEMBER);
+        bundle.putString("groupName", groupName);
+        intent.putExtras(bundle);
         context.startActivity(intent);
     }
 }

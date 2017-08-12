@@ -185,13 +185,16 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void buttonGroupAddMemberOnClick(View view) {
-        // IMPORTANT! This method is only for testing don't look for logic here !!!
-        Button addMember = (Button) findViewById(R.id.button_group_add_member);
-        if (addMember.getText().equals(R.string.add_member)) {
-            addMember.setText(R.string.added);
-        } else {
-            addMember.setText(R.string.add_member);
+    public void buttonGroupAddMemberOnClick(View view)
+    {
+        //Backup check. (button suppose not to work unless you are admin
+        if (isAdmin)
+        {
+            ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetAddMemberActivity(this, group.GetName());
+        }
+        else
+        {   //TODO: delete this
+            Toast.makeText(this, "Bug: None admin succeed to press add member !", Toast.LENGTH_SHORT).show();
         }
     }
 
