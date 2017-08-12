@@ -465,12 +465,52 @@ public class DBManager extends ManagerBase {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully stored in MySQL
+                if (!error) {// Task successfully removed from MySQL
                     //all OK, no need to do anything just go back to the called function
                     callBack.onSuccess();
                 } else {
 
-                    // Error occurred while adding a task. Get the error
+                    // Error occurred while removing a task. Get the error
+                    // message
+                    String errorMsg = jsonObject.getString("error_msg");
+                    callBack.onFailure(errorMsg);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                callBack.onFailure("JSON ERROR");
+            }
+
+        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id);
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public void RemoveGroup(final String id, final UpdateCallBack callBack) {
+        // Tag used to cancel the request
+        String tag_string_req = "update_value";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIRemoveGroupURL(), response -> {
+
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                boolean error = jsonObject.getBoolean("error");
+                if (!error) {// group successfully removed from MySQL
+                    //all OK, no need to do anything just go back to the called function
+                    callBack.onSuccess();
+                } else {
+
+                    // Error occurred while removing a group. Get the error
                     // message
                     String errorMsg = jsonObject.getString("error_msg");
                     callBack.onFailure(errorMsg);
