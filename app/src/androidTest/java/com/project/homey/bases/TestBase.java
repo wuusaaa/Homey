@@ -42,9 +42,8 @@ public abstract class TestBase {
             }
         });
 
-        TimeUtils.Wait();
+        TimeUtils.Wait(3000);
     }
-
 
     @After
     public void AfterTest() {

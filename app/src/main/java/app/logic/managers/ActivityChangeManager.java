@@ -21,7 +21,7 @@ import app.logic.appcomponents.User;
 import callback.UsersCallBack;
 
 /**
- * Created by benro on 8/7/2017.
+ * Created by benro on 8/7/2017
  */
 
 public class ActivityChangeManager extends ManagerBase
