@@ -33,9 +33,11 @@ import app.activities.interfaces.IHasText;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
+import app.logic.managers.DBManager;
 import app.logic.managers.DragManager;
 import app.logic.managers.Services;
 import callback.GotoGroupPageCallBack;
+import callback.UpdateCallBack;
 
 public class ScrollHorizontalWithItems extends HorizontalScrollView
 {
@@ -184,11 +186,24 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView
                         {
                             case R.id.promoteAdmin:
                                 // TODO: DBMANAGER. promote user (entry.getKey(), group.getId).
-                                Toast.makeText(getContext(), "Promoting id: " + entry.getKey(), Toast.LENGTH_SHORT).show();
+                                ((DBManager) Services.GetService(DBManager.class)).MakeUserAdmin(group.GetId(), entry.getKey(), new UpdateCallBack() {
+                                    @Override
+                                    public void onSuccess()
+                                    {
+                                        Toast.makeText(getContext(), "Promotion success", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMessage)
+                                    {
+                                        Toast.makeText(getContext(), "Promotion failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
                                 break;
                             case R.id.removeFromGroup:
                                 Toast.makeText(getContext(), "Remove user id: " + entry.getKey() + "from group id: "+ group.GetId(), Toast.LENGTH_SHORT).show();
-                                // TODO: DBMANAGEr. remove user (entry.getKey(), group.getId).
+                                // TODO: DBMANAGER. remove user (entry.getKey(), group.getId).
                                 break;
                             default:
                                 Toast.makeText(getContext(), "default", Toast.LENGTH_SHORT).show();

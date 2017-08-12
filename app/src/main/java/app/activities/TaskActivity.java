@@ -183,8 +183,10 @@ public class TaskActivity extends ActivityWithHeaderBase {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         Stream<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId));
 
-        if (taskAssigneesStream.count() > 0) {
-            dbManager.UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack() {
+        if (taskAssigneesStream.count() > 0)
+        { //TODO: how can manager know which users??
+            dbManager.UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack()
+            {
                 @Override
                 public void onSuccess() {
 
@@ -198,19 +200,28 @@ public class TaskActivity extends ActivityWithHeaderBase {
         }
     }
 
-    public void buttonDeleteTaskOnClicked(View view) {
+    public void buttonDeleteTaskOnClicked(View view)
+    {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        dbManager.LeaveTask(myTask.GetTaskId().toString(), userId, new UpdateCallBack() {
+        User selfUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
-            @Override
-            public void onSuccess() {
+        if (selfUser.GetId().equals(taskCreator.GetId()))
+        {
+            dbManager.LeaveTask(myTask.GetTaskId().toString(), userId, new UpdateCallBack()
+            {
+                @Override
+                public void onSuccess()
+                {
+                    Toast.makeText(TaskActivity.this, "Task Deleted!", Toast.LENGTH_SHORT).show();
+                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(getBaseContext());
+                }
 
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-
-            }
-        });
+                @Override
+                public void onFailure(String errorMessage)
+                {
+                    Toast.makeText(TaskActivity.this, "Couldn't delete Task", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
