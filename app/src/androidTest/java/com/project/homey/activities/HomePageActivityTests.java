@@ -3,6 +3,7 @@ package com.project.homey.activities;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.project.homey.R;
@@ -30,9 +31,14 @@ import app.logic.managers.TaskManager;
 import callback.GroupsCallBack;
 import callback.TasksCallBack;
 
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-
 /**
  * Created by barakm on 19/07/2017
  */
@@ -138,5 +144,14 @@ public class HomePageActivityTests extends ActivityTestBase {
         getViewById(R.id.activity_profile).isDisplayed();
     }
 
-    //TODO: Barak - test for submit button
+    @Test
+    public void submitButtonWorksForCompleteTask() {
+        onData(instanceOf(CheckBox.class)).atPosition(0).perform(click());
+        onView(instanceOf(CheckBox.class)).perform(click());
+        onView(withText("incmpleteTask")).perform();
+        onView(withId(R.id.homePageActivityTasksHolder)).perform(click());
+        getViewById(R.id.buttonSubmit);
+    }
+
+
 }
