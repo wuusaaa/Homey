@@ -1,11 +1,9 @@
 package app.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,7 +34,6 @@ import app.logic.appcomponents.User;
 import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
-import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import app.logic.managers.TaskManager;
@@ -115,8 +112,8 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(List<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, t ->
-                                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t),
+                scrollVerticalWithItems.SetTasks(tasks,
+                        t -> ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t, () -> refreshTasks()),
                         c -> onCheckBoxClicked(c));
 
                 pDialog.hideDialog();
@@ -191,27 +188,21 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void buttonGroupDeleteLeaveOnClick(View view)
-    {
+    public void buttonGroupDeleteLeaveOnClick(View view) {
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-        ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack()
-        {
+        ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack() {
             @Override
-            public void onSuccess()
-            {
-                Toast.makeText(GroupPageActivity.this, "Successfully left group "+ group.GetName(), Toast.LENGTH_SHORT).show();
+            public void onSuccess() {
+                Toast.makeText(GroupPageActivity.this, "Successfully left group " + group.GetName(), Toast.LENGTH_SHORT).show();
                 ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(GroupPageActivity.this);
             }
 
             @Override
-            public void onFailure(String errorMessage)
-            {
+            public void onFailure(String errorMessage) {
                 Toast.makeText(GroupPageActivity.this, "Could not leave group ", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
 
     public void tasksOwnerFilter() {
         Spinner spinner = (Spinner) findViewById(R.id.spinnerTasksOwners);
@@ -261,34 +252,25 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void showCompletedTasks() {
-        scrollVerticalWithItems.showCompletedTasks();
-    }
+    public void onSubmitClicked(View view) {
+        UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
+        UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
 
-    private void showIncompleteTasks() {
-        scrollVerticalWithItems.showIncompleteTasks();
-    }
+        taskLayoutsChecked.forEach(taskLayout -> {
+            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
+            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateCheckedTasks);
+        });
 
-    private void showOthers() {
-        scrollVerticalWithItems.filterOthers();
-    }
-
-    private void showMyTasks() {
-        scrollVerticalWithItems.filterMyTasks();
-    }
-
-    private void showAllOwners() {
-        scrollVerticalWithItems.showAllTasksOwners();
-    }
-
-    private void showAll() {
-        scrollVerticalWithItems.showAllTasks();
-    }
-
-    private void initSubmitButton() {
-        buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        taskLayoutsChecked.clear();
-        taskLayoutsUnchecked.clear();
+        taskLayoutsUnchecked.forEach(taskLayout -> {
+            taskLayout.getTask().setStatus(TaskStatus.INCOMPLETE);
+            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateUncheckedTasks);
+        });
     }
 
     public void onCheckBoxClicked(View view) {
@@ -316,25 +298,34 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         }
     }
 
-    public void onSubmitClicked(View view) {
-        UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
-        UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
+    private void showAll() {
+        scrollVerticalWithItems.showAllTasks();
+    }
 
-        taskLayoutsChecked.forEach(taskLayout -> {
-            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
-            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateCheckedTasks);
-        });
+    private void showCompletedTasks() {
+        scrollVerticalWithItems.showCompletedTasks();
+    }
 
-        taskLayoutsUnchecked.forEach(taskLayout -> {
-            taskLayout.getTask().setStatus(TaskStatus.INCOMPLETE);
-            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateUncheckedTasks);
-        });
+    private void showIncompleteTasks() {
+        scrollVerticalWithItems.showIncompleteTasks();
+    }
+
+    private void showOthers() {
+        scrollVerticalWithItems.filterOthers();
+    }
+
+    private void showMyTasks() {
+        scrollVerticalWithItems.filterMyTasks();
+    }
+
+    private void showAllOwners() {
+        scrollVerticalWithItems.showAllTasksOwners();
+    }
+
+    private void initSubmitButton() {
+        buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        taskLayoutsChecked.clear();
+        taskLayoutsUnchecked.clear();
     }
 
     private void refreshTasks() {

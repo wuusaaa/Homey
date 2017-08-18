@@ -51,8 +51,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
     private DBManager dbManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
@@ -64,8 +63,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
         setTaskInfo();
     }
 
-    private void setActivityComponents()
-    {
+    private void setActivityComponents() {
         Context context = this;
 
         //Get task's creator user.
@@ -75,18 +73,15 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 taskCreator = user;
                 ((TextView) findViewById(R.id.taskActivityCreatorLabel)).setText(taskCreator.GetName());
                 CircleImageButton creatorImage = (CircleImageButton) findViewById(R.id.taskActivityCreatorImage);
-                creatorImage.setOnClickListener(view->
-                {
-                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, taskCreator);
-                });
+                creatorImage.setOnClickListener(view ->
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, taskCreator));
 
                 //CREATOR IMAGE
                 setButtonImage(creatorImage, taskCreator.GetImage(), R.mipmap.ic_profile_default);
             }
 
             @Override
-            public void onFailure(String error)
-            {
+            public void onFailure(String error) {
                 Toast.makeText(TaskActivity.this, "Creator id " + error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -100,25 +95,21 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 CircleImageButton groupImage = (CircleImageButton) findViewById(R.id.taskActivityGroupImage);
 
                 groupImage.setOnClickListener(view ->
-                {
-                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(context, taskGroup);
-                });
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(context, taskGroup));
 
                 //GROUP IMAGE
                 setButtonImage(groupImage, taskGroup.GetImage(), R.mipmap.ic_task_default);
             }
 
             @Override
-            public void onFailure(String error)
-            {
+            public void onFailure(String error) {
                 ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText("error");
                 Toast.makeText(TaskActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setButtonImage(CircleImageButton buttonImage, byte[] image, int defaultImgId)
-    {
+    private void setButtonImage(CircleImageButton buttonImage, byte[] image, int defaultImgId) {
         buttonImage.setImageBytes(image, defaultImgId);
     }
 
@@ -147,14 +138,13 @@ public class TaskActivity extends ActivityWithHeaderBase {
         //Task Participants:
         dbManager.GetTaskUsersByTaskId(Integer.parseInt(myTask.GetTaskId()), new UsersCallBack() {
             @Override
-            public void onSuccess(ArrayList<User> users)
-            {
+            public void onSuccess(ArrayList<User> users) {
                 taskAssigneesList = users;
                 taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
                 taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
                     @Override
                     public <T extends IHasImage & IHasText> void onSuccess(T user) {
-                        ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, (User) user);
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, (User) user);
                     }
 
                     @Override
@@ -179,47 +169,44 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     }
 
-    public void buttonTakeOnClicked(View view)
-    {
+    //TODO: Not working.
+    public void buttonTakeOnClicked(View view) {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         Stream<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId));
 
-        if (taskAssigneesStream.count() > 0)
-        { //TODO: how can manager know which users??
-            dbManager.UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack()
-            {
+        if (taskAssigneesStream.count() > 0) { //TODO: how can manager know which users??
+            dbManager.UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack() {
                 @Override
                 public void onSuccess() {
+                    Toast.makeText(getBaseContext(), "You get the task!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(getBaseContext(), "There was a problem, try again.", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        } else {
+
+            Toast.makeText(getBaseContext(), "You got this task already", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void buttonDeleteTaskOnClicked(View view) {
+        User selfUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+
+        if (selfUser.GetId().equals(taskCreator.GetId())) {
+            dbManager.RemoveTask(myTask.GetTaskId(), new UpdateCallBack() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(TaskActivity.this, "Task Deleted!", Toast.LENGTH_SHORT).show();
+                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).back(() -> getAppCompatActivity());
 
                 }
 
                 @Override
                 public void onFailure(String errorMessage) {
-
-                }
-            });
-        }
-    }
-
-    public void buttonDeleteTaskOnClicked(View view)
-    {
-        String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        User selfUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-
-        if (selfUser.GetId().equals(taskCreator.GetId()))
-        {
-            dbManager.RemoveTask(myTask.GetTaskId(), new UpdateCallBack()
-            {
-                @Override
-                public void onSuccess()
-                {
-                    Toast.makeText(TaskActivity.this, "Task Deleted!", Toast.LENGTH_SHORT).show();
-                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(getBaseContext());
-                }
-
-                @Override
-                public void onFailure(String errorMessage)
-                {
                     Toast.makeText(TaskActivity.this, "Couldn't delete Task", Toast.LENGTH_SHORT).show();
                 }
             });

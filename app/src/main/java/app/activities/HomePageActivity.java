@@ -1,12 +1,7 @@
 package app.activities;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +22,6 @@ import app.customcomponents.ScrollVerticalWithItems;
 import app.customcomponents.TaskLayout;
 import app.enums.TaskProperty;
 import app.enums.TaskStatus;
-import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
@@ -58,8 +52,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //*****************************
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
@@ -81,15 +74,13 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
         initPage();
     }
 
     //******* Init functions: ********************
-    private void loadTasks()
-    {
+    private void loadTasks() {
         pDialog.showDialog();
         Context context = this;
 
@@ -98,7 +89,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
             public void onSuccess(List<Task> tasks) {
                 scrollVerticalWithItems.SetTasks(
                         tasks,
-                        t -> activityChangeManager.SetTaskActivity(context, t),
+                        t -> activityChangeManager.SetTaskActivity(context, t, () -> initPage()),
                         c -> onCheckBoxClicked(c));
 
                 scrollVerticalWithItems.showIncompleteTasks();
@@ -140,8 +131,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    public void initPage()
-    {
+    public void initPage() {
         loadGroups();
         loadTasks();
         fetchUserName();
@@ -164,22 +154,19 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void fetchUserName()
-    {
+    private void fetchUserName() {
         String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().GetName();
         textViewUserName.setText("Welcome " + userName);
     }
 
-    private void setUserImage()
-    {
+    private void setUserImage() {
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-        imageButtonProfile.setImageBytes(user.GetImage(),R.mipmap.ic_profile_default);
+        imageButtonProfile.setImageBytes(user.GetImage(), R.mipmap.ic_profile_default);
     }
 
     //*********************************************
 
-    public void onLogoutClick(View view)
-    {
+    public void onLogoutClick(View view) {
         activityChangeManager.SetLogOutActivity(this);
     }
 

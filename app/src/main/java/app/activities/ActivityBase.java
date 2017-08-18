@@ -43,4 +43,8 @@ public class ActivityBase extends AppCompatActivity {
     protected void setScreenName(String screenName) {
         ((TextView) findViewById(R.id.textViewScreenName)).setText(screenName);
     }
+
+    protected AppCompatActivity getAppCompatActivity() {
+        return this;
+    }
 }
