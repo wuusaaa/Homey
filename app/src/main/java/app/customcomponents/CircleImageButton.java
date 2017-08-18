@@ -3,9 +3,12 @@ package app.customcomponents;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
+
+import com.project.homey.R;
 
 /**
  * Created by talza on 03-Aug-17.
@@ -14,16 +17,19 @@ import android.util.AttributeSet;
 public class CircleImageButton extends android.support.v7.widget.AppCompatImageButton {
     public CircleImageButton(Context context) {
         super(context);
+        this.setBackgroundColor(Color.TRANSPARENT);
     }
 
     public CircleImageButton(Context context, int image) {
         super(context);
         setImage(image);
+        this.setBackgroundColor(Color.TRANSPARENT);
     }
 
     public CircleImageButton(Context context, byte[] image, int defaultImageId) {
         super(context);
         setImageBytes(image, defaultImageId);
+        this.setBackgroundColor(Color.TRANSPARENT);
     }
 
     public CircleImageButton(Context context, AttributeSet attrs) {
@@ -32,6 +38,7 @@ public class CircleImageButton extends android.support.v7.widget.AppCompatImageB
 
     public CircleImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setBackgroundColor(Color.TRANSPARENT);
     }
 
     public void setImage(int image)
