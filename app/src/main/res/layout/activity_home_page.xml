@@ -9,7 +9,6 @@
     android:weightSum="12"
     tools:context="app.activities.HomePageActivity">
 
-
     <include
         layout="@layout/header_items"
         android:layout_width="match_parent"

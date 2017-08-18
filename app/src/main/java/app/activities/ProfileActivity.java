@@ -11,6 +11,7 @@ import com.project.homey.R;
 
 import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.User;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import layout.FragmentProfileEdit;
@@ -113,5 +114,10 @@ public class ProfileActivity extends ActivityWithHeaderBase
     {
         isChoosingPicture = true;
         ((FragmentProfileEdit)currentFragment).onChoosePictureClick();
+    }
+
+    public void onLogoutClick(View view)
+    {
+        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetLogOutActivity(this);
     }
 }

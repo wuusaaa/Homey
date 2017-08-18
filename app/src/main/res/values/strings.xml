@@ -6,7 +6,7 @@
     <string name="user_name">User Name:</string>
     <string name="email">Email:</string>
     <string name="completedTasks">Completed tasks:</string>
-    <string name="activeTasks">Active tasks:</string>
+    <string name="activeTasks">Active tasks</string>
     <string name="profile_picture">ProfilePicture</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>

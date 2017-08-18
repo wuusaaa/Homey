@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.homey.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +43,10 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView textViewUserName;
+    private TextView textViewActiveTaskMsg;
+    private TextView textViewActiveTasksNumber;
+    private TextView textViewPointsMsg;
+    private TextView textViewPointsNumber;
     private CircleImageButton imageButtonProfile;
     private HomeyProgressDialog pDialog;
     private Button buttonSubmit;
@@ -52,7 +55,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //*****************************
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
@@ -71,10 +75,16 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         imageButtonProfile = (CircleImageButton) findViewById(R.id.profileImage);
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
+
+//        textViewActiveTaskMsg = (TextView) findViewById(R.id.textViewActiveTasksMsg);
+//        textViewActiveTasksNumber = (TextView) findViewById(R.id.textViewActiveTasksNumber);
+//        textViewPointsMsg = (TextView) findViewById(R.id.textViewPointsMsg);
+//        textViewPointsNumber = (TextView) findViewById(R.id.textViewPointsNumber);
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
         initPage();
     }
@@ -134,10 +144,9 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     public void initPage() {
         loadGroups();
         loadTasks();
-        fetchUserName();
         setProfileClick();
         initSubmitButton();
-        setUserImage();
+        initHeader();
     }
 
     private void initSubmitButton() {
@@ -154,14 +163,34 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void fetchUserName() {
-        String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().GetName();
-        textViewUserName.setText("Welcome " + userName);
-    }
-
-    private void setUserImage() {
+    private void initHeader()
+    {
+        // User Image:
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         imageButtonProfile.setImageBytes(user.GetImage(), R.mipmap.ic_profile_default);
+
+        // User Welcome msg.
+        String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().GetName();
+        textViewUserName.setText("Welcome " + userName);
+
+        // User Points:
+        //textViewPointsNumber.setText(user.GetScore());
+
+        // Active Tasks Number:
+//        ((DBManager) Services.GetService(DBManager.class)).GetUserTasks(user.GetUserId(), new TasksCallBack()
+//        {
+//            @Override
+//            public void onSuccess(List<Task> tasks)
+//            {
+//                textViewActiveTasksNumber.setText(tasks.size());
+//            }
+//
+//            @Override
+//            public void onFailure(String error)
+//            {
+//
+//            }
+//        });
     }
 
     //*********************************************

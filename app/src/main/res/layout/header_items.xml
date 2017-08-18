@@ -10,14 +10,14 @@
     android:elevation="5dp">
 
     <ImageButton
-        android:id="@+id/imageViewSettings"
+        android:id="@+id/imageViewHomePage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/Transparent"
         android:elevation="0dp"
         android:paddingLeft="-30dp"
-        app:srcCompat="@mipmap/ic_settings" />
+        app:srcCompat="@mipmap/ic_header_logo" />
 
     <TextView
         android:id="@+id/textViewScreenName"

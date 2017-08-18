@@ -19,7 +19,6 @@ public class ActivityBase extends AppCompatActivity {
         getSupportActionBar().hide();
     }
 
-
     /**
      * Returns the screen width and height divided by desired values
      */

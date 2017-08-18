@@ -1,6 +1,5 @@
 package app.activities;
 
-import android.content.Intent;
 import android.widget.ImageButton;
 
 import com.project.homey.R;
@@ -12,26 +11,26 @@ import app.logic.managers.Services;
  * Created by barakm on 24/07/2017
  */
 
-public class ActivityWithHeaderBase extends ActivityBase {
-
+public class ActivityWithHeaderBase extends ActivityBase
+{
     protected ImageButton buttonPlus;
-    protected ImageButton buttonSettings;
+    protected ImageButton buttonHomePage;
 
     @Override
     protected void onStart() {
         super.onStart();
 
         buttonPlus = (ImageButton) findViewById(R.id.imageButtonPlus);
-        buttonSettings = (ImageButton) findViewById(R.id.imageViewSettings);
+        buttonHomePage = (ImageButton) findViewById(R.id.imageViewHomePage);
 
         buttonPlus.setOnClickListener(buttonPlus ->
         {
             ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetPlusActivity(this);
         });
 
-        buttonSettings.setOnClickListener(buttonSettings ->
+        buttonHomePage.setOnClickListener(buttonSettings ->
         {
-            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetSettingsActivity(this);
+            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetHomeActivity(this);
         });
     }
 }
