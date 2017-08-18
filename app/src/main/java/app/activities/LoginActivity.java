@@ -42,15 +42,15 @@ public class LoginActivity extends ActivityBase {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
-                mFusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(this, location -> {
+//                mFusedLocationClient.getLastLocation()
+//                        .addOnSuccessListener(this, location -> {
                             // Got last known location. In some rare situations this can be null.
 //                                if (location != null) {
 //                                    Toast.makeText(getApplicationContext(),
 //                                            location.toString(), Toast.LENGTH_LONG)
 //                                            .show();
 //                                }
-                        });
+//                        });
 
             } else {
 

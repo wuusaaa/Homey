@@ -140,36 +140,14 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    public void initPage() {
-        sendNotification();
+    public void initPage()
+    {
         loadGroups();
         loadTasks();
         fetchUserName();
         setProfileClick();
         initSubmitButton();
         setUserImage();
-    }
-
-    private void sendNotification(){
-        Intent intent = new Intent(this, HomePageActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder b = new NotificationCompat.Builder(this);
-
-        b.setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.ic_header_logo)
-                .setTicker("Raz")
-                .setContentTitle("Logged In!")
-                .setContentText("Welcome to Homey!.")
-                .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
-                .setContentIntent(contentIntent)
-                .setContentInfo("Info");
-
-
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, b.build());
     }
 
     private void initSubmitButton() {

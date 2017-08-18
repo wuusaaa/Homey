@@ -66,12 +66,11 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private List<TaskLayout> taskLayoutsUnchecked = new ArrayList<>();// TODO: need to avoid duplicate code in home page activity
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.groupPageActivityTasksHolder);
-        participantsHolder = (ScrollHorizontalWithItems)findViewById (R.id.groupPageActivityParticipantsHolder);
+        participantsHolder = (ScrollHorizontalWithItems) findViewById(R.id.groupPageActivityParticipantsHolder);
 
         Bundle b = this.getIntent().getExtras();
         if (b != null)
@@ -85,11 +84,9 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         loadUsers();
         CircleImageButton image = (CircleImageButton) findViewById(R.id.groupActivityImage);
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
-        if (bitMapImage != null)
-        {
+        if (bitMapImage != null) {
             image.setImage(bitMapImage);
-        } else
-        {
+        } else {
             image.setImage(R.mipmap.ic_group_default);
         }
 
@@ -123,8 +120,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                         c -> onCheckBoxClicked(c));
 
                 pDialog.hideDialog();
-                if (isAdmin)
-                {
+                if (isAdmin) {
                     scrollVerticalWithItems.AllotDragAndDrop();
                 }
             }
@@ -136,37 +132,31 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         }, Integer.parseInt(group.GetId()));
     }
 
-    private void loadUsers()
-    {
+    private void loadUsers() {
         Context context = this;
         //TODO : Ruz : JSON ERROR
-        ((DBManager) Services.GetService(DBManager.class)).GetGroupUsersByGroupId(Integer.parseInt(group.GetId()), new UsersCallBack()
-        {
+        ((DBManager) Services.GetService(DBManager.class)).GetGroupUsersByGroupId(Integer.parseInt(group.GetId()), new UsersCallBack() {
             @Override
-            public void onSuccess(ArrayList<User> users)
-            {
+            public void onSuccess(ArrayList<User> users) {
                 participantsHolder.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
                     @Override
                     public <T extends IHasImage & IHasText> void onSuccess(T user) {
-                        ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, (User) user);
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, (User) user);
                     }
 
                     @Override
-                    public void onFailure(String error)
-                    {
+                    public void onFailure(String error) {
                         //TODO handle error
                     }
                 });
 
-                if (isAdmin)
-                {
+                if (isAdmin) {
                     participantsHolder.SetOnLongClick(group);
                 }
             }
 
             @Override
-            public void onFailure(String error)
-            {
+            public void onFailure(String error) {
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -181,24 +171,19 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
         if (!isAdmin) {
             addMember.setEnabled(false);
-            deleteLeave.setText(R.string.leave_group);
-        } else {
-            deleteLeave.setText(R.string.delete_group);
         }
+
+        deleteLeave.setText(R.string.leave_group);
     }
 
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void buttonGroupAddMemberOnClick(View view)
-    {
+    public void buttonGroupAddMemberOnClick(View view) {
         //Backup check. (button suppose not to work unless you are admin
-        if (isAdmin)
-        {
+        if (isAdmin) {
             ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetAddMemberActivity(this, group.GetName());
-        }
-        else
-        {   //TODO: delete this
+        } else {   //TODO: delete this
             Toast.makeText(this, "Bug: None admin succeed to press add member !", Toast.LENGTH_SHORT).show();
         }
     }
@@ -206,31 +191,27 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void buttonGroupDeleteLeaveOnClick(View view) {
-        if (isAdmin)
+    public void buttonGroupDeleteLeaveOnClick(View view)
+    {
+        User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+        ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack()
         {
-
-        }
-        else
-        { //Not admin just leaves group.
-            User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-            ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack()
+            @Override
+            public void onSuccess()
             {
-                @Override
-                public void onSuccess()
-                {
-                    Toast.makeText(GroupPageActivity.this, "Successfully left group "+ group.GetName(), Toast.LENGTH_SHORT).show();
-                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(GroupPageActivity.this);
-                }
+                Toast.makeText(GroupPageActivity.this, "Successfully left group "+ group.GetName(), Toast.LENGTH_SHORT).show();
+                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(GroupPageActivity.this);
+            }
 
-                @Override
-                public void onFailure(String errorMessage)
-                {
-                    Toast.makeText(GroupPageActivity.this, "Could not leave group ", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onFailure(String errorMessage)
+            {
+                Toast.makeText(GroupPageActivity.this, "Could not leave group ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 
     public void tasksOwnerFilter() {
         Spinner spinner = (Spinner) findViewById(R.id.spinnerTasksOwners);
