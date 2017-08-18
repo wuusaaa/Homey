@@ -124,8 +124,8 @@ public class FragmentAddTask extends Fragment {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         int taskScore = 50;
         String location = ((EditText) getView().findViewById(R.id.editTextTaskLocation)).getText().toString();
-        Date startDate = new Date(((EditText) getView().findViewById(R.id.editTextTaskStartDate)).getText().toString());
-        Date endDate = new Date(((EditText) getView().findViewById(R.id.editTextTaskEndDate)).getText().toString());
+        Date startDate = new Date();
+        Date endDate = new Date();
         String status = TaskStatus.INCOMPLETE.value();
 
         if (!hasPicture)

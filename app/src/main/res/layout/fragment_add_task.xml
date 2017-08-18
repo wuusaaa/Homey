@@ -40,21 +40,21 @@
                 android:hint="Location"
                 android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/editTextTaskStartDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="10/10/2011"
-                android:inputType="date" />
+            <!--<EditText-->
+            <!--android:id="@+id/editTextTaskStartDate"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:ems="10"-->
+            <!--android:text="10/10/2011"-->
+            <!--android:inputType="date" />-->
 
-            <EditText
-                android:id="@+id/editTextTaskEndDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="11/11/2010"
-                android:inputType="date" />
+            <!--<EditText-->
+            <!--android:id="@+id/editTextTaskEndDate"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:ems="10"-->
+            <!--android:text="11/11/2010"-->
+            <!--android:inputType="date" />-->
 
             <Spinner
                 android:id="@+id/spinnerTaskGroups"

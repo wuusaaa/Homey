@@ -58,22 +58,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/taskActivityStartDateLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/start_date"
-                    android:textAlignment="center" />
+                <!--<TextView-->
+                <!--android:id="@+id/taskActivityStartDateLabel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:text="@string/start_date"-->
+                <!--android:textAlignment="center" />-->
 
-                <TextView
-                    android:id="@+id/taskActivityStartDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:textAlignment="center" />
+                <!--<TextView-->
+                <!--android:id="@+id/taskActivityStartDate"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginEnd="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:textAlignment="center" />-->
 
                 <Button
                     android:id="@+id/taskActivityTakeButton"
@@ -83,21 +83,21 @@
                     android:text="@string/take"
                     android:enabled="false" />
 
-                <TextView
-                    android:id="@+id/taskActivityEndDateLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/end_date"
-                    android:textAlignment="center" />
+                <!--<TextView-->
+                <!--android:id="@+id/taskActivityEndDateLabel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="@string/end_date"-->
+                <!--android:textAlignment="center" />-->
 
-                <TextView
-                    android:id="@+id/taskActivityEndDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center" />
+                <!--<TextView-->
+                <!--android:id="@+id/taskActivityEndDate"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAlignment="center" />-->
             </LinearLayout>
 
 
