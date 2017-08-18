@@ -50,7 +50,7 @@ public class TaskLayout extends LinearLayout {
         textViewLayoutParamsdesc.setMargins(getDpSize(10), getDpSize(0), getDpSize(0), getDpSize(0));
 
         // Task icon
-        taskIcon = new CircleImageButton(getContext(), R.mipmap.ic_task_default);
+        taskIcon = new CircleImageButton(getContext(), R.drawable.icon_task_def);
         LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(80), getDpSize(80));
         taskIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         taskIcon.setLayoutParams(imageButtonLayoutParams);
@@ -89,7 +89,7 @@ public class TaskLayout extends LinearLayout {
         }
         else
         {
-            taskIcon.setImage(R.mipmap.ic_task_default);
+            taskIcon.setImage(R.drawable.icon_task_def);
         }
     }
 

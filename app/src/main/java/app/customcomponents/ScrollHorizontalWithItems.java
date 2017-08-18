@@ -70,7 +70,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
         for (T item : items) {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
-            CircleImageButton itemIcon = new CircleImageButton(this.getContext(), item.GetImage(), R.mipmap.ic_group_default);
+            CircleImageButton itemIcon = new CircleImageButton(this.getContext(), item.GetImage(), R.drawable.icon_group_def);
 
             TextView textView = new TextView(this.getContext());
 
