@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +13,7 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
@@ -33,7 +34,6 @@ import callback.GotoGroupPageCallBack;
 import callback.GroupCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
-import callback.UpdateTaskUsersByTaskIdCallBack;
 import callback.UserCallBack;
 import callback.UsersCallBack;
 
@@ -141,6 +141,9 @@ public class TaskActivity extends ActivityWithHeaderBase {
             public void onSuccess(ArrayList<User> users) {
                 taskAssigneesList = users;
                 taskAssignees = (ScrollHorizontalWithItems) findViewById(R.id.taskActivityTaskAssignee);
+                Button takeButton = (Button) findViewById(R.id.taskActivityTakeButton);
+                takeButton.setEnabled(true);
+
                 taskAssignees.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
                     @Override
                     public <T extends IHasImage & IHasText> void onSuccess(T user) {
@@ -156,7 +159,6 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
             @Override
             public void onFailure(String error) {
-
             }
         });
     }
@@ -172,10 +174,10 @@ public class TaskActivity extends ActivityWithHeaderBase {
     //TODO: Not working.
     public void buttonTakeOnClicked(View view) {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        Stream<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId));
+        List<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId)).collect(Collectors.toList());
 
-        if (taskAssigneesStream.count() > 0) { //TODO: how can manager know which users??
-            dbManager.UpdateTaskUsersByTaskId(myTask.GetTaskId(), new UpdateTaskUsersByTaskIdCallBack() {
+        if (taskAssigneesStream.size() == 0) {
+            dbManager.AddUserToTask(userId, myTask.GetTaskId(), new UpdateCallBack() {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(getBaseContext(), "You get the task!", Toast.LENGTH_SHORT).show();

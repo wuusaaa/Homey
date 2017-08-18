@@ -80,7 +80,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="buttonTakeOnClicked"
-                    android:text="@string/take" />
+                    android:text="@string/take"
+                    android:enabled="false" />
 
                 <TextView
                     android:id="@+id/taskActivityEndDateLabel"

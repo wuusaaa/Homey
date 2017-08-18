@@ -181,7 +181,6 @@ public class ScrollVerticalWithItems extends ScrollView {
     }
 
     private void setFilteredTasks() {
-        //TODO: BARAK FIX THIS FACAKTA !
         AtomicInteger i = new AtomicInteger(0);
         List<TaskLayout> intersectTasks = intersection();
 
@@ -205,7 +204,7 @@ public class ScrollVerticalWithItems extends ScrollView {
     //Allow assign task to user by drag and drop:
     public void AllotDragAndDrop()
     {
-        taskLayouts.forEach(taskLayout -> taskLayout.setDragAndDrop());
+        taskLayouts.forEach(TaskLayout::setDragAndDrop);
     }
 
 }

@@ -1,7 +1,6 @@
 package app.logic.managers;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.Toast;
 
 import app.logic.appcomponents.Task;
@@ -9,7 +8,7 @@ import app.logic.appcomponents.User;
 import callback.UpdateCallBack;
 
 /**
- * Created by benro on 8/11/2017.
+ * Created by benro on 8/11/2017
  */
 
 public class DragManager extends ManagerBase

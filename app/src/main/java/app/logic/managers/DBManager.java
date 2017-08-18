@@ -29,7 +29,6 @@ import callback.ServerCallBack;
 import callback.TaskCallBack;
 import callback.TasksCallBack;
 import callback.UpdateCallBack;
-import callback.UpdateTaskUsersByTaskIdCallBack;
 import callback.UserCallBack;
 import callback.UsersCallBack;
 
@@ -1370,10 +1369,5 @@ public class DBManager extends ManagerBase {
                 callBack.onFailure(result);
             }
         });
-    }
-
-    public void UpdateTaskUsersByTaskId(String taskId, UpdateTaskUsersByTaskIdCallBack callBack)
-    {
-
     }
 }
