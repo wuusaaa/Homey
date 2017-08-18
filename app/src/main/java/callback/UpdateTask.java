@@ -32,7 +32,11 @@ public class UpdateTask implements UpdateCallBack {
     public void onSuccess() {
         if (++shouldPrintMassage == numOfTasks) {
             Toast.makeText(context, R.string.tasksUpdatedSuccessfully, Toast.LENGTH_SHORT).show();
-            initPage.run();
+
+            if (initPage != null) {
+                initPage.run();
+            }
+
         }
     }
 

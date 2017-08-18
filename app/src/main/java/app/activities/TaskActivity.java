@@ -168,7 +168,6 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
         myTask.setStatus(TaskStatus.COMPLETED);
         dbManager.UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
-
     }
 
     //TODO: Not working.
