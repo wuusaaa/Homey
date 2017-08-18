@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -28,8 +27,7 @@ import callback.UpdateCallBack;
 import static android.app.Activity.RESULT_OK;
 
 
-public class FragmentProfileEdit extends Fragment
-{
+public class FragmentProfileEdit extends Fragment {
     private static final int RESULT_LOAD_IMAGE = 1;
     private byte[] choosedPicture;
     private boolean hasFirstNameChanged = false;
@@ -40,8 +38,7 @@ public class FragmentProfileEdit extends Fragment
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile_edit, container, false);
     }
 
@@ -49,8 +46,7 @@ public class FragmentProfileEdit extends Fragment
     public void onStart() {
         super.onStart();
 
-        if (isFirstRun)
-        {
+        if (isFirstRun) {
             isFirstRun = false;
 
             editTextFirstName = (EditText) getView().findViewById(R.id.profileEditFirstName);
@@ -65,8 +61,7 @@ public class FragmentProfileEdit extends Fragment
         }
     }
 
-    private void setTextListeners()
-    {
+    private void setTextListeners() {
         editTextFirstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -85,11 +80,9 @@ public class FragmentProfileEdit extends Fragment
         });
     }
 
-    public void onSaveChangesClick(User user, Context c)
-    {
+    public void onSaveChangesClick(User user, Context c) {
         DBManager dataBaseManager = (DBManager) Services.GetService(DBManager.class);
-        if (hasFirstNameChanged)
-        {
+        if (hasFirstNameChanged) {
             user.setName(editTextFirstName.getText().toString());
             dataBaseManager.UpdateUser(user.GetUserId(), "name", editTextFirstName.getText().toString(), new UpdateCallBack() {
                 @Override
@@ -104,10 +97,9 @@ public class FragmentProfileEdit extends Fragment
             });
         }
 
-        if (hasPicture)
-        {
+        if (hasPicture) {
             user.setImg(choosedPicture);
-            dataBaseManager.UpdateUser(user.GetUserId(), "profile_pic", Base64.encodeToString(user.GetImage(),Base64.DEFAULT), new UpdateCallBack() {
+            dataBaseManager.UpdateUser(user.GetUserId(), "profile_pic", Base64.encodeToString(user.GetImage(), Base64.DEFAULT), new UpdateCallBack() {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(c, "Successfully changed picture", Toast.LENGTH_SHORT).show();
@@ -123,8 +115,7 @@ public class FragmentProfileEdit extends Fragment
         ((SessionManager) Services.GetService(SessionManager.class)).setUser(user);
     }
 
-    public void onChoosePictureClick()
-    {
+    public void onChoosePictureClick() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
@@ -135,8 +126,7 @@ public class FragmentProfileEdit extends Fragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null)
-        {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri image = data.getData();
             choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;

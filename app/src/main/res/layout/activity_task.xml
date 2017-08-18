@@ -79,25 +79,27 @@
                     android:id="@+id/taskActivityTakeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:enabled="false"
                     android:onClick="buttonTakeOnClicked"
-                    android:text="@string/take"
-                    android:enabled="false" />
+                    android:text="@string/take" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/taskActivityEndDateLabel"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginEnd="10dp"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:text="@string/end_date"-->
-                <!--android:textAlignment="center" />-->
+                <TextView
+                    android:id="@+id/taskActivityScoreLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/score"
+                    android:textSize="20sp"
+                    android:textAlignment="center" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/taskActivityEndDate"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textAlignment="center" />-->
+                <TextView
+                    android:id="@+id/taskActivityScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
             </LinearLayout>
 
 
@@ -140,7 +142,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -153,7 +155,7 @@
                 <TextView
                     android:id="@+id/taskActivityDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1" />
 

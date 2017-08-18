@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.homey.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +56,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     //*****************************
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
@@ -83,8 +83,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
         initPage();
     }
@@ -163,8 +162,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void initHeader()
-    {
+    private void initHeader() {
         // User Image:
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         imageButtonProfile.setImageBytes(user.GetImage(), R.mipmap.ic_profile_default);

@@ -197,7 +197,6 @@ public class ScrollVerticalWithItems extends ScrollView {
     }
 
     private List<TaskLayout> intersection() {
-
         return spinnerOwner.stream().filter(spinnerStatus::contains).collect(Collectors.toList());
     }
 

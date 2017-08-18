@@ -122,9 +122,10 @@ public class FragmentAddTask extends Fragment {
         String name = ((EditText) getView().findViewById(R.id.editTextTaskName)).getText().toString();
         String description = ((EditText) getView().findViewById(R.id.editTextTaskDesc)).getText().toString();
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        int taskScore = 50;
-        String location = ((EditText) getView().findViewById(R.id.editTextTaskLocation)).getText().toString();
+        int taskScore = Integer.valueOf(((EditText) getView().findViewById(R.id.editTextTaskScore)).getText().toString());
         Date startDate = new Date();
+        ;
+        String location = "";
         Date endDate = new Date();
         String status = TaskStatus.INCOMPLETE.value();
 

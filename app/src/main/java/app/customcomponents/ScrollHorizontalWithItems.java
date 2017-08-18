@@ -85,7 +85,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             LinearLayout.LayoutParams imageButtonLayoutParams = new LinearLayout.LayoutParams(getDpSize(95), getDpSize(95));
             itemIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
             itemIcon.setLayoutParams(imageButtonLayoutParams);
-            itemIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
+//            itemIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
 
             verticalLinearLayout.addView(itemIcon);
             verticalLinearLayout.addView(textView);

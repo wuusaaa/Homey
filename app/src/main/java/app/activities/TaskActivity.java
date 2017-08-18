@@ -122,6 +122,8 @@ public class TaskActivity extends ActivityWithHeaderBase {
 //            ((TextView) findViewById(R.id.taskActivityEndDate)).setText("-");
 //        }
 
+        ((TextView) findViewById(R.id.taskActivityScore)).setText(String.valueOf(myTask.getScore()));
+
         ((TextView) findViewById(R.id.taskActivityDescription)).setText(myTask.GetDescription());
 
         //TASK IMAGE:

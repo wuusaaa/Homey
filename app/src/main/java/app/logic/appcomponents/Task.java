@@ -22,8 +22,12 @@ public class Task implements IHasText, Parcelable {
     private int creatorId;
     private Date startTime;
     private Date endTime;
-    private int score = 0;
+    private int score;
     private byte[] img;
+
+    public int getScore() {
+        return score;
+    }
 
     public Task(String taskId, String name, int groupId, String description, String status, String location, int creatorId, Date startTime, Date endTime, int score, byte[] img) {
         this.taskId = taskId;
