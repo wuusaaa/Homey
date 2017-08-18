@@ -71,6 +71,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
         for (T item : items) {
             LinearLayout verticalLinearLayout = new LinearLayout(this.getContext());
             CircleImageButton itemIcon = new CircleImageButton(this.getContext(), item.GetImage(), R.mipmap.ic_group_default);
+
             TextView textView = new TextView(this.getContext());
 
             verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -81,7 +82,7 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             textView.setTextColor(Color.BLACK);
 
             itemIcon.setOnClickListener(v -> callBack.onSuccess(item));
-            LinearLayout.LayoutParams imageButtonLayoutParams = new LinearLayout.LayoutParams(getDpSize(100), getDpSize(100));
+            LinearLayout.LayoutParams imageButtonLayoutParams = new LinearLayout.LayoutParams(getDpSize(95), getDpSize(95));
             itemIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
             itemIcon.setLayoutParams(imageButtonLayoutParams);
             itemIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));

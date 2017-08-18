@@ -44,14 +44,14 @@ public class TaskLayout extends LinearLayout {
         super(context);
 
         setOrientation(HORIZONTAL);
-        LayoutParams textViewLayoutParams = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
-        textViewLayoutParams.setMargins(getDpSize(5), getDpSize(20), getDpSize(0), getDpSize(0));
+        LayoutParams textViewLayoutParams = new LayoutParams(getDpSize(280), LayoutParams.WRAP_CONTENT);
+        textViewLayoutParams.setMargins(getDpSize(10), getDpSize(20), getDpSize(0), getDpSize(0));
         LayoutParams textViewLayoutParamsdesc = new LayoutParams(getDpSize(260), LayoutParams.WRAP_CONTENT);
-        textViewLayoutParamsdesc.setMargins(getDpSize(5), getDpSize(0), getDpSize(0), getDpSize(0));
+        textViewLayoutParamsdesc.setMargins(getDpSize(10), getDpSize(0), getDpSize(0), getDpSize(0));
 
         // Task icon
         taskIcon = new CircleImageButton(getContext(), R.mipmap.ic_task_default);
-        LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(100), getDpSize(100));
+        LayoutParams imageButtonLayoutParams = new LayoutParams(getDpSize(80), getDpSize(80));
         taskIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         taskIcon.setLayoutParams(imageButtonLayoutParams);
         taskIcon.setBackgroundColor(getResources().getColor(R.color.gentle_gray, null));
@@ -73,6 +73,7 @@ public class TaskLayout extends LinearLayout {
         taskInfo.addView(descriptionTextView);
         // Checkbox
         checkBox = new CheckBox(getContext());
+        checkBox.setPadding(0, getDpSize(25), 0, 0);
         // Build layout
         this.addView(taskIcon);
         this.addView(taskInfo);
