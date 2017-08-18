@@ -73,7 +73,7 @@ public class TaskLayout extends LinearLayout {
         taskInfo.addView(descriptionTextView);
         // Checkbox
         checkBox = new CheckBox(getContext());
-        checkBox.setPadding(0, getDpSize(25), 0, 0);
+        checkBox.setPadding(getDpSize(0), getDpSize(25), getDpSize(0), getDpSize(0));
         // Build layout
         this.addView(taskIcon);
         this.addView(taskInfo);
