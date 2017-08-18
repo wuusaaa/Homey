@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +17,7 @@ import java.util.stream.Collectors;
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
 import app.customcomponents.CircleImageButton;
-import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
-import app.customcomponents.ScrollVerticalWithItems;
 import app.enums.TaskProperty;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
@@ -40,9 +37,6 @@ import callback.UsersCallBack;
 
 public class TaskActivity extends ActivityWithHeaderBase {
 
-    private HomeyProgressDialog pDialog;
-    private LinearLayout tasksHolderLayout;
-    private ScrollVerticalWithItems scrollVerticalWithItems;
     private Task myTask;
     private Group taskGroup;
     private User taskCreator;
@@ -57,7 +51,6 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
         myTask = getIntent().getExtras().getParcelable("task");
         dbManager = (DBManager) Services.GetService(DBManager.class);
-        pDialog = new HomeyProgressDialog(this);
 
         setActivityComponents();
         setTaskInfo();
@@ -170,7 +163,6 @@ public class TaskActivity extends ActivityWithHeaderBase {
         dbManager.UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
     }
 
-    //TODO: Not working.
     public void buttonTakeOnClicked(View view) {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
         List<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId)).collect(Collectors.toList());
