@@ -34,6 +34,18 @@ public class SessionManager extends ManagerBase {
      * @return EnvironmentManager
      */
 
+    private static String token;
+
+    public static void setToken(String token)
+    {
+        SessionManager.token = token;
+    }
+
+    public static String getToken()
+    {
+        return token;
+    }
+
     private User user;
 
     // LogCat tag

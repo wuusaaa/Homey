@@ -27,6 +27,7 @@ import app.customcomponents.ScrollVerticalWithItems;
 import app.customcomponents.TaskLayout;
 import app.enums.TaskProperty;
 import app.enums.TaskStatus;
+import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
@@ -199,7 +200,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
 
     //*********************************************
 
-    public void onLogoutClick(View view) {
+    public void onLogoutClick(View view)
+    {
         activityChangeManager.SetLogOutActivity(this);
     }
 
