@@ -20,7 +20,6 @@ import app.logic.appcomponents.Task;
 import app.logic.managers.DragManager;
 import app.logic.managers.Services;
 
-
 /**
  * TODO: document your custom view class.
  */

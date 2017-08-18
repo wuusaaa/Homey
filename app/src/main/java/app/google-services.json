@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "98253436784",
+    "firebase_url": "https://homeyproject-87658.firebaseio.com",
+    "project_id": "homeyproject-87658",
+    "storage_bucket": "homeyproject-87658.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98253436784:android:c69072f00c25fbdc",
+        "android_client_info": {
+          "package_name": "com.project.homey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98253436784-2r5pnrfupa611sqof134qlh1oficod56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHjH0rvTNnYptt9NzpXgBy6Ki4b9_2OVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

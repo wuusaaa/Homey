@@ -213,5 +213,9 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 }
             });
         }
+        else
+        {
+            Toast.makeText(TaskActivity.this, "Only task creator can delete it!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

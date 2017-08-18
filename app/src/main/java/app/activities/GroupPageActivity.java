@@ -57,6 +57,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private HomeyProgressDialog pDialog;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private ScrollHorizontalWithItems participantsHolder;
+    DBManager dbManager;
     private boolean isAdmin; // Ugly but necessary. The other option is to implement empty methods around the project.
     private Button buttonSubmit; // TODO: need to avoid duplicate code in home page activity
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();// TODO: need to avoid duplicate code in home page activity
@@ -66,6 +67,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_page);
+        dbManager = (DBManager) Services.GetService(DBManager.class);
         scrollVerticalWithItems = (ScrollVerticalWithItems) findViewById(R.id.groupPageActivityTasksHolder);
         participantsHolder = (ScrollHorizontalWithItems) findViewById(R.id.groupPageActivityParticipantsHolder);
 
@@ -112,8 +114,8 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(List<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks,
-                        t -> ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t, () -> refreshTasks()),
+                scrollVerticalWithItems.SetTasks(tasks, t ->
+                                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t, () -> refreshTasks()),
                         c -> onCheckBoxClicked(c));
 
                 pDialog.hideDialog();
@@ -132,7 +134,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     private void loadUsers() {
         Context context = this;
         //TODO : Ruz : JSON ERROR
-        ((DBManager) Services.GetService(DBManager.class)).GetGroupUsersByGroupId(Integer.parseInt(group.GetId()), new UsersCallBack() {
+        dbManager.GetGroupUsersByGroupId(Integer.parseInt(group.GetId()), new UsersCallBack() {
             @Override
             public void onSuccess(ArrayList<User> users) {
                 participantsHolder.SetScrollerItems(users, LinearLayoutCompat.HORIZONTAL, new GotoGroupPageCallBack() {
@@ -188,17 +190,21 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     //******************************************************
     // Adds new member to the group
     //******************************************************
-    public void buttonGroupDeleteLeaveOnClick(View view) {
+    public void buttonGroupDeleteLeaveOnClick(View view)
+    {
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
-        ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack() {
+        dbManager.LeaveGroup(group.GetId(), user.GetId(), new UpdateCallBack()
+        {
             @Override
-            public void onSuccess() {
-                Toast.makeText(GroupPageActivity.this, "Successfully left group " + group.GetName(), Toast.LENGTH_SHORT).show();
+            public void onSuccess()
+            {
+                Toast.makeText(GroupPageActivity.this, "Successfully left group "+ group.GetName(), Toast.LENGTH_SHORT).show();
                 ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(GroupPageActivity.this);
             }
 
             @Override
-            public void onFailure(String errorMessage) {
+            public void onFailure(String errorMessage)
+            {
                 Toast.makeText(GroupPageActivity.this, "Could not leave group ", Toast.LENGTH_SHORT).show();
             }
         });
@@ -252,25 +258,34 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    public void onSubmitClicked(View view) {
-        UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
-        UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
+    private void showCompletedTasks() {
+        scrollVerticalWithItems.showCompletedTasks();
+    }
 
-        taskLayoutsChecked.forEach(taskLayout -> {
-            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
-            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateCheckedTasks);
-        });
+    private void showIncompleteTasks() {
+        scrollVerticalWithItems.showIncompleteTasks();
+    }
 
-        taskLayoutsUnchecked.forEach(taskLayout -> {
-            taskLayout.getTask().setStatus(TaskStatus.INCOMPLETE);
-            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateUncheckedTasks);
-        });
+    private void showOthers() {
+        scrollVerticalWithItems.filterOthers();
+    }
+
+    private void showMyTasks() {
+        scrollVerticalWithItems.filterMyTasks();
+    }
+
+    private void showAllOwners() {
+        scrollVerticalWithItems.showAllTasksOwners();
+    }
+
+    private void showAll() {
+        scrollVerticalWithItems.showAllTasks();
+    }
+
+    private void initSubmitButton() {
+        buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        taskLayoutsChecked.clear();
+        taskLayoutsUnchecked.clear();
     }
 
     public void onCheckBoxClicked(View view) {
@@ -298,34 +313,115 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         }
     }
 
-    private void showAll() {
-        scrollVerticalWithItems.showAllTasks();
+    public void onSubmitClicked(View view)
+    {
+        User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+        dbManager.GetUserTasks(self.GetUserId(), new TasksCallBack()
+        {
+            @Override
+            public void onSuccess(List<Task> tasks)
+            {
+                if (allowSubmit(tasks))
+                {
+                    doSubmit();
+                }
+                else
+                {
+                    Toast.makeText(GroupPageActivity.this, "Cant submit unassigned tasks.", Toast.LENGTH_SHORT).show();
+                    cancelChecks();
+                }
+            }
+
+            @Override
+            public void onFailure(String error)
+            {
+                Toast.makeText(GroupPageActivity.this, "Submit tasks failed.", Toast.LENGTH_SHORT).show();
+                cancelChecks();
+            }
+        });
     }
 
-    private void showCompletedTasks() {
-        scrollVerticalWithItems.showCompletedTasks();
-    }
+    private void cancelChecks()
+    {
+        taskLayoutsChecked.forEach( taskLayout ->
+        {
+            taskLayout.setCheckBox(false);
+        });
 
-    private void showIncompleteTasks() {
-        scrollVerticalWithItems.showIncompleteTasks();
-    }
-
-    private void showOthers() {
-        scrollVerticalWithItems.filterOthers();
-    }
-
-    private void showMyTasks() {
-        scrollVerticalWithItems.filterMyTasks();
-    }
-
-    private void showAllOwners() {
-        scrollVerticalWithItems.showAllTasksOwners();
-    }
-
-    private void initSubmitButton() {
-        buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         taskLayoutsChecked.clear();
+
+        taskLayoutsUnchecked.forEach( taskLayout ->
+        {
+            taskLayout.setCheckBox(true);
+        });
+
         taskLayoutsUnchecked.clear();
+        initSubmitButton();
+    }
+
+    private boolean allowSubmit(List<Task> tasks)
+    {
+        boolean result = true;
+        if (!isAdmin)
+        {
+            for (TaskLayout taskLayout : taskLayoutsChecked)
+            {
+                if (!isCheckedTaskInTasks(taskLayout.getTask(), tasks))
+                {
+                    result = false;
+                }
+            }
+
+            for (TaskLayout taskLayout : taskLayoutsUnchecked)
+            {
+                if (!isCheckedTaskInTasks(taskLayout.getTask(), tasks))
+                {
+                    result = false;
+                }
+            }
+        }
+
+        return result;
+
+    }
+
+    private boolean isCheckedTaskInTasks(Task checkedTask, List<Task> tasks)
+    {
+        boolean result = false;
+
+        for (Task task : tasks)
+        {
+            if (task.GetTaskId().equals(checkedTask.GetTaskId()))
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    private void doSubmit()
+    {
+        UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
+        UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
+
+        taskLayoutsChecked.forEach(taskLayout ->
+        {
+            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
+            dbManager.UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateCheckedTasks);
+        });
+
+        taskLayoutsUnchecked.forEach(taskLayout ->
+        {
+            taskLayout.getTask().setStatus(TaskStatus.INCOMPLETE);
+            dbManager.UpdateTask(taskLayout.getTask().GetTaskId(),
+                    TaskProperty.STATUS,
+                    taskLayout.getTask().getStatus(),
+                    updateUncheckedTasks);
+        });
     }
 
     private void refreshTasks() {
