@@ -23,4 +23,5 @@
     <color name="accept_color">#04B854</color>
     <color name="decline_color">#D83402</color>
     <color name="gentle_gray">#FAFAFA</color>
+    <color name="black">#000000</color>
 </resources>

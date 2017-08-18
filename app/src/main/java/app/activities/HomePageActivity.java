@@ -44,10 +44,10 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private ScrollHorizontalWithItems scrollHorizontalWithItems;
     private ScrollVerticalWithItems scrollVerticalWithItems;
     private TextView textViewUserName;
-    private TextView textViewActiveTaskMsg;
-    private TextView textViewActiveTasksNumber;
-    private TextView textViewPointsMsg;
-    private TextView textViewPointsNumber;
+    private TextView textViewActiveTaskMsg1;
+    private TextView textViewActiveTasksNumber1;
+    private TextView textViewPointsMsg1;
+    private TextView textViewPointsNumber1;
     private CircleImageButton imageButtonProfile;
     private HomeyProgressDialog pDialog;
     private Button buttonSubmit;
@@ -76,10 +76,10 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
 
-//        textViewActiveTaskMsg = (TextView) findViewById(R.id.textViewActiveTasksMsg);
-//        textViewActiveTasksNumber = (TextView) findViewById(R.id.textViewActiveTasksNumber);
-//        textViewPointsMsg = (TextView) findViewById(R.id.textViewPointsMsg);
-//        textViewPointsNumber = (TextView) findViewById(R.id.textViewPointsNumber);
+        textViewActiveTaskMsg1 = (TextView) findViewById(R.id.textViewActiveTasksMsg);
+        textViewActiveTasksNumber1 = (TextView) findViewById(R.id.textViewActiveTasksNumber);
+        textViewPointsMsg1 = (TextView) findViewById(R.id.textViewPointsMsg);
+        textViewPointsNumber1 = (TextView) findViewById(R.id.textViewPointsNumber);
     }
 
     @Override
@@ -102,6 +102,9 @@ public class HomePageActivity extends ActivityWithHeaderBase {
                         c -> onCheckBoxClicked(c));
 
                 scrollVerticalWithItems.showIncompleteTasks();
+
+                // Active tasks number:
+                textViewActiveTasksNumber1.setText(Integer.toString(tasks.size()));
                 pDialog.hideDialog();
             }
 
@@ -140,7 +143,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    public void initPage() {
+    public void initPage()
+    {
         loadGroups();
         loadTasks();
         setProfileClick();
@@ -168,27 +172,12 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         imageButtonProfile.setImageBytes(user.GetImage(), R.mipmap.ic_profile_default);
 
         // User Welcome msg.
-        String userName = ((SessionManager) Services.GetService(SessionManager.class)).getUser().GetName();
-        textViewUserName.setText("Welcome " + userName);
+        textViewUserName.setText("Welcome " + user.GetName());
 
         // User Points:
-        //textViewPointsNumber.setText(user.GetScore());
+        textViewPointsNumber1.setText(Integer.toString(user.GetScore()));
 
-        // Active Tasks Number:
-//        ((DBManager) Services.GetService(DBManager.class)).GetUserTasks(user.GetUserId(), new TasksCallBack()
-//        {
-//            @Override
-//            public void onSuccess(List<Task> tasks)
-//            {
-//                textViewActiveTasksNumber.setText(tasks.size());
-//            }
-//
-//            @Override
-//            public void onFailure(String error)
-//            {
-//
-//            }
-//        });
+        // Active Tasks Number is set from loadTasks.
     }
 
     //*********************************************
