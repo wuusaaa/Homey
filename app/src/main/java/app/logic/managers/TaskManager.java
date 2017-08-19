@@ -1,6 +1,7 @@
 package app.logic.managers;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +98,9 @@ public class TaskManager extends ManagerBase {
                     public void onSuccess() {}
 
                     @Override
-                    public void onFailure(String errorMessage){}
+                    public void onFailure(String errorMessage) {}
                 });
         user.SetScore(user.GetScore() + points);
-
+        ((SessionManager) Services.GetService(SessionManager.class)).ResetUser(user);
     }
-
 }

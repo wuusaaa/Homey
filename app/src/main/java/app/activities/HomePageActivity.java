@@ -37,6 +37,7 @@ import callback.GroupsCallBack;
 import callback.TasksCallBack;
 import callback.UpdateCallBack;
 import callback.UpdateTask;
+import callback.UserCallBack;
 
 public class HomePageActivity extends ActivityWithHeaderBase {
 
