@@ -13,6 +13,7 @@ import app.enums.TaskStatus;
  */
 
 public class Task implements IHasText, Parcelable {
+    public static final String COMPLETED = "completed";
     private String taskId;
     private String name;
     private int groupId;
@@ -132,6 +133,11 @@ public class Task implements IHasText, Parcelable {
 
     public void SetEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean isCompleted()
+    {
+        return status.equals(TaskStatus.COMPLETED.value());
     }
 
     @Override

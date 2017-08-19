@@ -48,7 +48,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:layout_weight="8"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -66,6 +67,11 @@
                     android:layout_gravity="center"/>
 
             </LinearLayout>
+
+            <include
+                layout="@layout/separator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/proifleActivityFragment"

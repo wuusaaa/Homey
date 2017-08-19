@@ -104,7 +104,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
                 scrollVerticalWithItems.showIncompleteTasks();
 
                 // Active tasks number:
-                textViewActiveTasksNumber1.setText(Integer.toString(tasks.size()));
+                long activeTasksNumber = tasks.stream().filter(task -> !task.isCompleted()).count();
+                textViewActiveTasksNumber1.setText(Long.toString(activeTasksNumber));
                 pDialog.hideDialog();
             }
 

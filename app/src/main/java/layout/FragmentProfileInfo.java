@@ -9,7 +9,13 @@ import android.widget.TextView;
 
 import com.project.homey.R;
 
+import java.util.List;
+
+import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
+import app.logic.managers.DBManager;
+import app.logic.managers.Services;
+import callback.TasksCallBack;
 
 
 public class FragmentProfileInfo extends Fragment {
@@ -29,18 +35,50 @@ public class FragmentProfileInfo extends Fragment {
     {
         super.onStart();
 
+        // Set name:
         ((TextView) getView().findViewById(R.id.textViewFirstNameLabel)).setText(user.GetName());
-        //TODO: change to last name.
-        ((TextView) getView().findViewById(R.id.textViewLastNameLabel)).setText(user.GetName());
+
+        // Set Email:
         ((TextView) getView().findViewById(R.id.textViewEmailLabel)).setText(user.getEmail());
 
-        //TODO: set #Completed tasks and #Active tasks
-        //((TextView) getView().findViewById(R.id.textViewCompletedTasks)).setText(#COMPLETED);
-        //((TextView) getView().findViewById(R.id.textViewLastNameLabel)).setText(#textViewActiveTasks);
+        // Set number of points
+        ((TextView) getView().findViewById(R.id.textViewEmailLabel)).setText("Points: " + user.GetScore());
+
+        // Set here active tasks number and completed task number:
+        ((DBManager) Services.GetService(DBManager.class)).GetUserTasks(user.GetUserId(), new TasksCallBack()
+        {
+            @Override
+            public void onSuccess(List<Task> tasks)
+            {
+                int completedTasksNumber = countCompletedTasks(tasks);
+                //Set number of completed tasks:
+                ((TextView) getView().findViewById(R.id.textViewCompletedTasks)).setText(
+                        "Completed tasks: " + Integer.toString(completedTasksNumber));
+
+                // Set active Tasks:
+                ((TextView) getView().findViewById(R.id.textViewActiveTasks)).setText(
+                        "Active tasks: " + Integer.toString(tasks.size() - completedTasksNumber));
+            }
+
+            @Override
+            public void onFailure(String error)
+            {
+
+            }
+        });
     }
 
-    public void onSavedChangesClick()
+    private int countCompletedTasks(List<Task> tasks)
     {
+        int count = 0;
+        for (Task task : tasks)
+        {
+            if (task.isCompleted())
+            {
+                count++;
+            }
+        }
 
+        return count;
     }
 }
