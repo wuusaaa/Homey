@@ -14,8 +14,7 @@ import layout.FragmentAddGroup;
 import layout.FragmentAddMember;
 import layout.FragmentAddTask;
 
-public class PlusActivity extends ActivityBase
-{
+public class PlusActivity extends ActivityBase {
     public static final int NONE = 0;
     public static final int ADD_GROUP = 1;
     public static final int ADD_TASK = 2;
@@ -27,8 +26,7 @@ public class PlusActivity extends ActivityBase
     private String defaultGroupName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus);
 
@@ -39,8 +37,7 @@ public class PlusActivity extends ActivityBase
     protected void onResume() {
         super.onResume();
 
-        if (!isChoosePicture)
-        {
+        if (!isChoosePicture) {
             setDefaultFragment();
         }
 
@@ -49,14 +46,12 @@ public class PlusActivity extends ActivityBase
 
     //************* Set Fragments: ****************
 
-    private void setDefaultFragment()
-    {
+    private void setDefaultFragment() {
         Fragment fragment;
         Bundle bundle = getIntent().getExtras();
         int fragmentToDisplay = bundle.getInt("fragmentNumber");
 
-        switch (fragmentToDisplay)
-        {
+        switch (fragmentToDisplay) {
             case NONE:
                 fragment = new EmptyFragment();
                 //nothing to do, default fragment already placed.
@@ -86,8 +81,7 @@ public class PlusActivity extends ActivityBase
         currentFragment = fragment;
     }
 
-    public void setAddGroupFragment(View view)
-    {
+    public void setAddGroupFragment(View view) {
         Fragment addGroupFragment = new FragmentAddGroup();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -96,8 +90,7 @@ public class PlusActivity extends ActivityBase
         currentFragment = addGroupFragment;
     }
 
-    public void setAddTaskFragment(View view)
-    {
+    public void setAddTaskFragment(View view) {
         Fragment addTaskFragment = new FragmentAddTask();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -106,8 +99,7 @@ public class PlusActivity extends ActivityBase
         currentFragment = addTaskFragment;
     }
 
-    public void setAddMemberFragment(View view)
-    {
+    public void setAddMemberFragment(View view) {
         Fragment addMemberFragment = new FragmentAddMember();
         ((FragmentAddMember) addMemberFragment).SetDefaultGroupName(defaultGroupName);
         FragmentManager fragmentManager = getFragmentManager();
@@ -121,38 +113,29 @@ public class PlusActivity extends ActivityBase
 
     //************* On Click methods: *************
 
-    public void onCreateGroupClicked(View view)
-    {
-        if (!((EditText) findViewById(R.id.editTextGroupName)).getText().toString().isEmpty())
-        {
-            ((FragmentAddGroup)currentFragment).onCreateGroup();
+    public void onCreateGroupClicked(View view) {
+        if (!((EditText) findViewById(R.id.editTextGroupName)).getText().toString().isEmpty()) {
+            ((FragmentAddGroup) currentFragment).onCreateGroup();
         }
     }
 
-    public void onGroupChooseImageClicked(View view)
-    {
+    public void onGroupChooseImageClicked(View view) {
         isChoosePicture = true;
-        ((FragmentAddGroup)currentFragment).onChooseImageClicked();
+        ((FragmentAddGroup) currentFragment).onChooseImageClicked();
     }
 
-    public void onTaskChooseImageClicked(View view)
-    {
+    public void onTaskChooseImageClicked(View view) {
         isChoosePicture = true;
-        ((FragmentAddTask)currentFragment).onChooseImageClicked();
+        ((FragmentAddTask) currentFragment).onChooseImageClicked();
     }
 
-    public void onAddTaskClicked(View view)
-    {
+    public void onAddTaskClicked(View view) {
 
-        if (!((EditText) findViewById(R.id.editTextTaskName)).getText().toString().isEmpty())
-        {
-            ((FragmentAddTask)currentFragment).onAddTaskClick();
-        }
+        ((FragmentAddTask) currentFragment).onAddTaskClick();
     }
 
-    public void onAddMemberClicked(View view)
-    {
-        ((FragmentAddMember)currentFragment).onAddMemberClicked();
+    public void onAddMemberClicked(View view) {
+        ((FragmentAddMember) currentFragment).onAddMemberClicked();
     }
 
     //********** On Click methods end. ************

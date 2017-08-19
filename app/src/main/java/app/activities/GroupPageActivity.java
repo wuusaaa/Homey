@@ -26,8 +26,6 @@ import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.customcomponents.TaskLayout;
-import app.enums.TaskProperty;
-import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;

@@ -30,6 +30,7 @@ import app.logic.managers.DBManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import app.logic.verifiers.InputVerifier;
 import callback.GroupsCallBack;
 import callback.TaskCallBack;
 
@@ -37,6 +38,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class FragmentAddTask extends Fragment {
 
+    InputVerifier inputVerifier = new InputVerifier();
     private static final int RESULT_LOAD_IMAGE = 1;
     private Spinner dropdown;
     private int spinnerPosition = 0;
@@ -49,8 +51,7 @@ public class FragmentAddTask extends Fragment {
     private CircleImageButton taskImage;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_task, container, false);
     }
 
@@ -108,8 +109,7 @@ public class FragmentAddTask extends Fragment {
         }
     }
 
-    private void getSelectedGroupId(String GroupName)
-    {
+    private void getSelectedGroupId(String GroupName) {
         for (Group group : userGroups) {
             if (group.GetName().equals(GroupName)) {
                 selectedGroupId = Integer.parseInt(group.GetId());
@@ -117,28 +117,34 @@ public class FragmentAddTask extends Fragment {
         }
     }
 
-    public void onAddTaskClick()
-    {
+    public void onAddTaskClick() {
         String name = ((EditText) getView().findViewById(R.id.editTextTaskName)).getText().toString();
         String description = ((EditText) getView().findViewById(R.id.editTextTaskDesc)).getText().toString();
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        int taskScore = Integer.valueOf(((EditText) getView().findViewById(R.id.editTextTaskScore)).getText().toString());
+        String taskScore = ((EditText) getView().findViewById(R.id.editTextTaskScore)).getText().toString();
         Date startDate = new Date();
-        ;
         String location = "";
         Date endDate = new Date();
         String status = TaskStatus.INCOMPLETE.value();
 
-        if (!hasPicture)
-        {
+        if (!inputVerifier.isNameFieldOk(name)) {
+            Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!hasPicture) {
             choosedPicture = new byte[]{0};
         }
 
+        if (taskScore.isEmpty()) {
+            taskScore = "0";
+        }
+
+
         ((DBManager) (Services.GetService(DBManager.class))).AddTask(
                 name, description, userId, selectedGroupId, status, location, startDate, endDate,
-                taskScore, choosedPicture,
-                new TaskCallBack()
-                {
+                Integer.parseInt(taskScore), choosedPicture,
+                new TaskCallBack() {
                     @Override
                     public void onSuccess(Task task) {
                         Toast.makeText(getContext(), "Task added!", Toast.LENGTH_SHORT).show();
@@ -151,8 +157,7 @@ public class FragmentAddTask extends Fragment {
                 });
     }
 
-    public void onChooseImageClicked()
-    {
+    public void onChooseImageClicked() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
@@ -163,8 +168,7 @@ public class FragmentAddTask extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null)
-        {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri image = data.getData();
             choosedPicture = Services.GetBytes(image, getContext());
             hasPicture = true;
