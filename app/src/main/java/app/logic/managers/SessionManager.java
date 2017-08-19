@@ -91,6 +91,13 @@ public class SessionManager extends ManagerBase {
         return res;
     }
 
+    public void ResetUser(User user){
+
+        SQLiteHandler db = new SQLiteHandler(context);
+        db.deleteUsers();
+        db.addUser(user.GetName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(), user.GetScore(), user.GetLevel(), user.GetImage());
+    }
+
     public User getUser() {
         return user;
     }
