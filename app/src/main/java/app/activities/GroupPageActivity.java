@@ -404,23 +404,18 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     {
         UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
         UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
+        User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
         taskLayoutsChecked.forEach(taskLayout ->
         {
-            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
-            dbManager.UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateCheckedTasks);
+            Task task = taskLayout.getTask();
+            ((TaskManager)Services.GetService(TaskManager.class)).CompleteTask(task, self, updateCheckedTasks);
         });
 
         taskLayoutsUnchecked.forEach(taskLayout ->
         {
-            taskLayout.getTask().setStatus(TaskStatus.INCOMPLETE);
-            dbManager.UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateUncheckedTasks);
+            Task task = taskLayout.getTask();
+            ((TaskManager)Services.GetService(TaskManager.class)).CompleteTask(task, self, updateUncheckedTasks);
         });
     }
 

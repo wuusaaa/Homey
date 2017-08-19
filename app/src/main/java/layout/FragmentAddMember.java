@@ -145,7 +145,8 @@ public class FragmentAddMember extends Fragment
         String email = editTextEmail.getText().toString();
         String groupName = selectedGroup.GetName();
 
-        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack() {
+        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack()
+        {
             @Override
             public void onSuccess()
             {
@@ -156,7 +157,7 @@ public class FragmentAddMember extends Fragment
             @Override
             public void onFailure(String errorMessage)
             {
-                Toast.makeText(getContext(), "Could not add " + email + " to group.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

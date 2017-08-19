@@ -116,7 +116,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void loadGroups() {
+    private void loadGroups()
+    {
         pDialog.showDialog();
         Context context = this;
         ((GroupManager) (Services.GetService(GroupManager.class))).GetUserGroups(new GroupsCallBack() {
@@ -144,7 +145,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    public void initPage()
+    private void initPage()
     {
         loadGroups();
         loadTasks();
@@ -187,19 +188,18 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         activityChangeManager.SetLogOutActivity(this);
     }
 
-    public void onSubmitClicked(View view) {
+    public void onSubmitClicked(View view)
+    {
         UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::initPage);
+        User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
         taskLayoutsChecked.forEach(taskLayout -> {
-            taskLayout.getTask().setStatus(TaskStatus.COMPLETED);
-            ((DBManager) (Services.GetService(DBManager.class))).UpdateTask(taskLayout.getTask().GetTaskId(),
-                    TaskProperty.STATUS,
-                    taskLayout.getTask().getStatus(),
-                    updateCallBack);
+            ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(taskLayout.getTask(), user, updateCallBack);
         });
     }
 
-    public void onCheckBoxClicked(View view) {
+    public void onCheckBoxClicked(View view)
+    {
         TaskLayout taskLayout = (TaskLayout) view;
 
         if (taskLayout.isChecked()) {

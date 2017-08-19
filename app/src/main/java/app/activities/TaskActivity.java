@@ -27,6 +27,7 @@ import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import app.logic.managers.TaskManager;
 import callback.GotoGroupPageCallBack;
 import callback.GroupCallBack;
 import callback.UpdateCallBack;
@@ -158,11 +159,12 @@ public class TaskActivity extends ActivityWithHeaderBase {
         });
     }
 
-    public void buttonCompleteOnClicked(View view) {
+    public void buttonCompleteOnClicked(View view)
+    {
         UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), 1);
+        User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
-        myTask.setStatus(TaskStatus.COMPLETED);
-        dbManager.UpdateTask(myTask.GetTaskId(), TaskProperty.STATUS, TaskStatus.COMPLETED, updateCallBack);
+        ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(myTask, user, updateCallBack);
     }
 
     public void buttonTakeOnClicked(View view) {
