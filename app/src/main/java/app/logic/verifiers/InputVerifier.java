@@ -19,8 +19,35 @@ public class InputVerifier {
     public String getMessagesToPrint() {
         StringBuilder stringBuilder = new StringBuilder();
         errorCollector.getErrors()
-                .forEach(error -> stringBuilder.append(error).append("\n"));
+                .forEach(error -> stringBuilder.append(error).append(System.lineSeparator()));
 
-        return stringBuilder.toString();
+        errorCollector.clear();
+        return stringBuilder.toString().trim();
+    }
+
+    public boolean isEmailOk(String email) {
+        String[] split;
+
+        if ((split = email.split("@")).length != 2 || (split = split[1].split("\\.")).length != 2) {
+            errorCollector.addError("Invalid Email");
+            return false;
+        }
+
+        for (char c : split[0].toCharArray()) {
+            if (Character.isDigit(c)) {
+                errorCollector.addError("Invalid Email");
+                return false;
+            }
+        }
+
+
+        for (char c : split[1].toCharArray()) {
+            if (Character.isDigit(c)) {
+                errorCollector.addError("Invalid Email");
+                return false;
+            }
+        }
+
+        return true;
     }
 }

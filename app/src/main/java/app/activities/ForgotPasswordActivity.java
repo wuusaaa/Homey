@@ -17,14 +17,15 @@ import callback.ServerCallBack;
 public class ForgotPasswordActivity extends ActivityBase {
 
     private EditText emailEditText;
-    private Button resetPassButton;
     private ProgressDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
         emailEditText = (EditText) findViewById(R.id.email);
-        resetPassButton = (Button) findViewById(R.id.resetButton);
+        Button resetPassButton = (Button) findViewById(R.id.resetButton);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -32,7 +33,14 @@ public class ForgotPasswordActivity extends ActivityBase {
         pDialog.setTitle("Please wait.");
 
         resetPassButton.setOnClickListener(v -> {
-            ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(emailEditText.getText().toString(), new ServerCallBack() {
+            String email = emailEditText.getText().toString();
+
+            if (!inputVerifier.isEmailOk(email)) {
+                Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(email, new ServerCallBack() {
                 @Override
                 public void onSuccess(JSONObject result) {
                     hideDialog();

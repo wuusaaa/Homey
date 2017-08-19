@@ -8,10 +8,14 @@ import android.widget.TextView;
 
 import com.project.homey.R;
 
+import app.logic.verifiers.InputVerifier;
+
 
 public class ActivityBase extends AppCompatActivity {
 
     protected TextView screenName;
+    protected InputVerifier inputVerifier = new InputVerifier();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,15 +10,19 @@ import java.util.List;
 class ErrorCollector {
 
 
-    List<String> errors = new ArrayList<>();
+    private List<String> errors = new ArrayList<>();
 
-    public List<String> getErrors() {
+    List<String> getErrors() {
         return errors;
     }
 
-    public void addError(String error) {
+
+    void addError(String error) {
         errors.add(error);
     }
 
 
+    void clear() {
+        errors.clear();
+    }
 }

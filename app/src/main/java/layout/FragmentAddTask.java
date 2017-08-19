@@ -38,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class FragmentAddTask extends Fragment {
 
-    InputVerifier inputVerifier = new InputVerifier();
+    private InputVerifier inputVerifier = new InputVerifier();
     private static final int RESULT_LOAD_IMAGE = 1;
     private Spinner dropdown;
     private int spinnerPosition = 0;

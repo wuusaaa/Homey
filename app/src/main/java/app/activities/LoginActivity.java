@@ -44,7 +44,7 @@ public class LoginActivity extends ActivityBase {
                 }
 //                mFusedLocationClient.getLastLocation()
 //                        .addOnSuccessListener(this, location -> {
-                            // Got last known location. In some rare situations this can be null.
+                // Got last known location. In some rare situations this can be null.
 //                                if (location != null) {
 //                                    Toast.makeText(getApplicationContext(),
 //                                            location.toString(), Toast.LENGTH_LONG)
@@ -134,6 +134,12 @@ public class LoginActivity extends ActivityBase {
         loginButton.setOnClickListener(view -> {
             String email = inputEmailEditText.getText().toString().trim();
             String password = inputPasswordEditText.getText().toString().trim();
+
+            if (!inputVerifier.isEmailOk(email)) {
+                Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
 
             // Check for empty data in the form
             if (!email.isEmpty() && !password.isEmpty()) {

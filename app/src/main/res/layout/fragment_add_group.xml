@@ -17,20 +17,20 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editTextDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/description" />
-
-            <EditText
                 android:id="@+id/editTextGroupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/group_name" />
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/description" />
 
             <Button
                 android:id="@+id/ButtonCreateGroup"

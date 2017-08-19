@@ -1,10 +1,8 @@
 package layout;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +26,12 @@ import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import app.logic.verifiers.InputVerifier;
 import callback.GroupsCallBack;
 import callback.UpdateCallBack;
 
-public class FragmentAddMember extends Fragment
-{
+public class FragmentAddMember extends Fragment {
+    private InputVerifier inputVerifier = new InputVerifier();
     private EditText editTextEmail;
     private Spinner groupSpinner;
     private CircleImageButton selectedGroupImage;
@@ -44,14 +43,12 @@ public class FragmentAddMember extends Fragment
     private String defaultGroupName;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_member, container, false);
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
 
         pDialog = new HomeyProgressDialog(this.getContext());
@@ -66,41 +63,31 @@ public class FragmentAddMember extends Fragment
         selectedGroupImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         setSpinnerItems();
 
-        groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedGroup = getSelectedGroup((String) adapterView.getItemAtPosition(groupSpinner.getSelectedItemPosition()));
                 setGroupImage();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
+            public void onNothingSelected(AdapterView<?> adapterView) {
                 selectedGroup = null;
             }
         });
     }
 
-    private void setGroupImage()
-    {
-        if (selectedGroup != null)
-        {
+    private void setGroupImage() {
+        if (selectedGroup != null) {
             selectedGroupImage.setImageBytes(selectedGroup.GetImage(), R.mipmap.ic_group_default);
-        }
-        else
-        {
+        } else {
             selectedGroupImage.setImage(R.mipmap.ic_group_default);
         }
     }
 
-    private Group getSelectedGroup(String groupName)
-    {
-        for (int i=0; i< myGroups.size(); i++)
-        {
-            if (myGroups.get(i).GetName().equals(groupName))
-            {
+    private Group getSelectedGroup(String groupName) {
+        for (int i = 0; i < myGroups.size(); i++) {
+            if (myGroups.get(i).GetName().equals(groupName)) {
                 return myGroups.get(i);
             }
         }
@@ -108,79 +95,71 @@ public class FragmentAddMember extends Fragment
         return null;
     }
 
-    private void setSpinnerItems()
-    {
+    private void setSpinnerItems() {
         User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         Context context = getContext();
         pDialog.showDialog();
         dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
                 new GroupsCallBack() {
-            @Override
-            public void onSuccess(ArrayList<Group> groups)
-            {
-                myGroups = groups;
-                List<String> items = new ArrayList<>();
-                groups.forEach( group -> items.add(group.GetName()));
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
-                groupSpinner.setAdapter(adapter);
-                pDialog.hideDialog();
+                    @Override
+                    public void onSuccess(ArrayList<Group> groups) {
+                        myGroups = groups;
+                        List<String> items = new ArrayList<>();
+                        groups.forEach(group -> items.add(group.GetName()));
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+                        groupSpinner.setAdapter(adapter);
+                        pDialog.hideDialog();
 
-                if (defaultGroupName != null)
-                {
-                    setSpinnerSelection(defaultGroupName);
-                }
-            }
+                        if (defaultGroupName != null) {
+                            setSpinnerSelection(defaultGroupName);
+                        }
+                    }
 
-            @Override
-            public void onFailure(String error)
-            {
-                Toast.makeText(getContext(), "Could not find groups you control.", Toast.LENGTH_SHORT).show();
-                pDialog.hideDialog();
-            }
-        });
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(getContext(), "Could not find groups you control.", Toast.LENGTH_SHORT).show();
+                        pDialog.hideDialog();
+                    }
+                });
     }
 
-    public void onAddMemberClicked()
-    {
+    public void onAddMemberClicked() {
         String email = editTextEmail.getText().toString();
         String groupName = selectedGroup.GetName();
 
-        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack()
-        {
+        if (!inputVerifier.isEmailOk(email)) {
+            Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack() {
             @Override
-            public void onSuccess()
-            {
+            public void onSuccess() {
                 Toast.makeText(getContext(), "Added group: " + groupName, Toast.LENGTH_SHORT).show();
                 Toast.makeText(getContext(), "Added email: " + email, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(String errorMessage)
-            {
+            public void onFailure(String errorMessage) {
                 Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void SetDefaultGroupName(String defaultGroupName)
-    {
+    public void SetDefaultGroupName(String defaultGroupName) {
         this.defaultGroupName = defaultGroupName;
     }
 
-    private void setSpinnerSelection(String groupName)
-    {
+    private void setSpinnerSelection(String groupName) {
         int position = 0;
-        for (int i=0; i<groupSpinner.getCount(); i++)
-        {
-            if (groupSpinner.getItemAtPosition(i).toString().equals(groupName))
-            {
+        for (int i = 0; i < groupSpinner.getCount(); i++) {
+            if (groupSpinner.getItemAtPosition(i).toString().equals(groupName)) {
                 position = i;
                 break;
             }
         }
 
-        if (position != 0)
-        {
+        if (position != 0) {
             groupSpinner.setSelection(position);
         }
     }
