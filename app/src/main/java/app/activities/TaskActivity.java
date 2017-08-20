@@ -164,7 +164,7 @@ public class TaskActivity extends ActivityWithHeaderBase {
         UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), 1);
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
-        ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(myTask, user, updateCallBack);
+        ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(myTask, updateCallBack);
     }
 
     public void buttonTakeOnClicked(View view) {

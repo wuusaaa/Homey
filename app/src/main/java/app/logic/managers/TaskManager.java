@@ -58,8 +58,9 @@ public class TaskManager extends ManagerBase {
         });
     }
 
-    public void CompleteTask(Task taskToComplete, User user, UpdateCallBack callBack)
+    public void CompleteTask(Task taskToComplete, UpdateCallBack callBack)
     {
+        // Update DB that the task is complete:
         taskToComplete.setStatus(TaskStatus.COMPLETED);
         ((DBManager) Services.GetService(DBManager.class)).UpdateTask(
                 taskToComplete.GetTaskId(),
@@ -67,11 +68,27 @@ public class TaskManager extends ManagerBase {
                 taskToComplete.getStatus(),
                 callBack);
 
-        changePoints(user, taskToComplete.getScore());
+
+        // Make the points change to all of the task's participants:
+        ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskToComplete.GetTaskId()), new UsersCallBack()
+        {
+            @Override
+            public void onSuccess(ArrayList<User> users)
+            {
+                users.forEach(user -> changePoints(user, taskToComplete.getScore()));
+            }
+
+            @Override
+            public void onFailure(String error)
+            {
+
+            }
+        });
     }
 
-    public void UnCompleteTask(Task taskToUnComplete, User user, UpdateCallBack callBack)
+    public void UnCompleteTask(Task taskToUnComplete, UpdateCallBack callBack)
     {
+// Update DB that the task is complete:
         taskToUnComplete.setStatus(TaskStatus.INCOMPLETE);
         ((DBManager) Services.GetService(DBManager.class)).UpdateTask(
                 taskToUnComplete.GetTaskId(),
@@ -79,11 +96,25 @@ public class TaskManager extends ManagerBase {
                 taskToUnComplete.getStatus(),
                 callBack);
 
-        changePoints(user, -1 * taskToUnComplete.getScore());
+
+        // Make the points change to all of the task's participants:
+        ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskToUnComplete.GetTaskId()), new UsersCallBack()
+        {
+            @Override
+            public void onSuccess(ArrayList<User> users) {
+                users.forEach(user -> changePoints(user, -1 * taskToUnComplete.getScore()));
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
     }
 
     private void changePoints(User user, int points)
     {
+        User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         if (user == null)
         {
             return;
@@ -100,7 +131,12 @@ public class TaskManager extends ManagerBase {
                     @Override
                     public void onFailure(String errorMessage) {}
                 });
-        user.SetScore(user.GetScore() + points);
-        ((SessionManager) Services.GetService(SessionManager.class)).ResetUser(user);
+
+        // Update local DB:
+        if (self.GetId().equals(user.GetId()))
+        {
+            self.SetScore(self.GetScore() + points);
+            ((SessionManager) Services.GetService(SessionManager.class)).ResetUser(self);
+        }
     }
 }

@@ -127,16 +127,15 @@ public class FragmentAddMember extends Fragment {
         String email = editTextEmail.getText().toString();
         String groupName = selectedGroup.GetName();
 
-        if (!inputVerifier.isEmailOk(email)) {
-            Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (!inputVerifier.isEmailOk(email)) {
+//            Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack() {
             @Override
             public void onSuccess() {
-                Toast.makeText(getContext(), "Added group: " + groupName, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getContext(), "Added email: " + email, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Added user successfully.", Toast.LENGTH_SHORT).show();
             }
 
             @Override

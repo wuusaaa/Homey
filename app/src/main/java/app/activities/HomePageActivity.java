@@ -169,7 +169,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         });
     }
 
-    private void initHeader() {
+    private void initHeader()
+    {
         // User Image:
         User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         imageButtonProfile.setImageBytes(user.GetImage(), R.mipmap.ic_profile_default);
@@ -192,10 +193,9 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     public void onSubmitClicked(View view)
     {
         UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::initPage);
-        User user = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
         taskLayoutsChecked.forEach(taskLayout -> {
-            ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(taskLayout.getTask(), user, updateCallBack);
+            ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(taskLayout.getTask(), updateCallBack);
         });
     }
 

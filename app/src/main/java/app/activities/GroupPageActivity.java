@@ -77,8 +77,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         isAdmin = b.getBoolean("isAdmin");
 
         pDialog = new HomeyProgressDialog(this);
-        loadTasks();
-        loadUsers();
         CircleImageButton image = (CircleImageButton) findViewById(R.id.groupActivityImage);
         Bitmap bitMapImage = BitmapFactory.decodeByteArray(group.GetImage(), 0, group.GetImage().length);
         if (bitMapImage != null) {
@@ -97,16 +95,18 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         tasksCompleteFilter();
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
 
         screenName = (TextView) findViewById(R.id.textViewScreenName);
         screenName.setText(((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetScreenName());
+        loadTasks();
+        loadUsers();
     }
 
     private void loadTasks() {
-        pDialog.showDialog();
         Context context = this;
 
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
@@ -116,7 +116,6 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
                                 ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t, () -> refreshTasks()),
                         c -> onCheckBoxClicked(c));
 
-                pDialog.hideDialog();
                 if (isAdmin) {
                     scrollVerticalWithItems.AllotDragAndDrop();
                 }
@@ -402,18 +401,17 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
     {
         UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
         UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
-        User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
         taskLayoutsChecked.forEach(taskLayout ->
         {
             Task task = taskLayout.getTask();
-            ((TaskManager)Services.GetService(TaskManager.class)).CompleteTask(task, self, updateCheckedTasks);
+            ((TaskManager)Services.GetService(TaskManager.class)).CompleteTask(task, updateCheckedTasks);
         });
 
         taskLayoutsUnchecked.forEach(taskLayout ->
         {
             Task task = taskLayout.getTask();
-            ((TaskManager)Services.GetService(TaskManager.class)).CompleteTask(task, self, updateUncheckedTasks);
+            ((TaskManager)Services.GetService(TaskManager.class)).UnCompleteTask(task, updateUncheckedTasks);
         });
     }
 
