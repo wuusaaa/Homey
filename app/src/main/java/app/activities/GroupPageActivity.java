@@ -304,7 +304,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         }
 
         if (taskLayoutsChecked.size() > 0 || taskLayoutsUnchecked.size() > 0) {
-            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         } else {
             buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         }

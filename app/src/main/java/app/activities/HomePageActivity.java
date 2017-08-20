@@ -210,7 +210,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         }
 
         if (taskLayoutsChecked.size() > 0) {
-            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             buttonSubmit.setVisibility(View.VISIBLE);
         } else {
             buttonSubmit.setLayoutParams(new LinearLayout.LayoutParams(0, 0));

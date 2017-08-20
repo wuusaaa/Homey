@@ -73,7 +73,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:onClick="onSubmitClicked"
-                android:text="@string/submit" />
+                android:text="@string/submit"
+                android:background="@color/bg_login"
+                android:gravity="center"/>
 
         <include
             layout="@layout/separator"

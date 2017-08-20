@@ -14,7 +14,7 @@ import layout.FragmentAddGroup;
 import layout.FragmentAddMember;
 import layout.FragmentAddTask;
 
-public class PlusActivity extends ActivityBase {
+public class PlusActivity extends ActivityWithHeaderBase {
     public static final int NONE = 0;
     public static final int ADD_GROUP = 1;
     public static final int ADD_TASK = 2;

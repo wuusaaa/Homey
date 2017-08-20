@@ -5,40 +5,53 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="12"
     android:orientation="vertical"
     tools:context="app.activities.PlusActivity">
 
-    <Button
-        android:id="@+id/buttonAddGroup"
+    <include
+        layout="@layout/header_items"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_group"
-        android:onClick="setAddGroupFragment"/>
-
-    <Button
-        android:id="@+id/buttonAddTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_task"
-        android:onClick="setAddTaskFragment"/>
-
-    <Button
-        android:id="@+id/buttonPlusAddMember"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_member"
-        android:onClick="setAddMemberFragment"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/PlusActivityFragmentHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <Button
+            android:id="@+id/buttonAddGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_group"
+            android:onClick="setAddGroupFragment"/>
+
+        <Button
+            android:id="@+id/buttonAddTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_task"
+            android:onClick="setAddTaskFragment"/>
+
+        <Button
+            android:id="@+id/buttonPlusAddMember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_member"
+            android:onClick="setAddMemberFragment"/>
+
+        <LinearLayout
+            android:id="@+id/PlusActivityFragmentHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
