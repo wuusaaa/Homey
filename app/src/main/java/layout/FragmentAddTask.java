@@ -59,7 +59,8 @@ public class FragmentAddTask extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (firstTime) {
+        if (firstTime)
+        {
             firstTime = false;
             pDialog = new HomeyProgressDialog(this.getContext());
             dropdown = (Spinner) getView().findViewById(R.id.spinnerTaskGroups);
@@ -67,36 +68,13 @@ public class FragmentAddTask extends Fragment {
             taskImage.setImage(R.mipmap.ic_task_default);
             taskImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-            Context context = this.getContext();
-            List<String> items = new ArrayList<>();
             pDialog.showDialog();
             ((GroupManager) Services.GetService(GroupManager.class)).GetUserGroups(new GroupsCallBack() {
                 @Override
-                public void onSuccess(ArrayList<Group> groups) {
+                public void onSuccess(ArrayList<Group> groups)
+                {
                     userGroups = groups;
-                    for (Group group : groups) {
-                        items.add(group.GetName());
-                        if (spinnerPosition != 0) {
-                            dropdown.setSelection(spinnerPosition);
-                        }
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, items);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    dropdown.setAdapter(adapter);
-                    dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            getSelectedGroupId((String) parent.getItemAtPosition(position));
-                            spinnerPosition = dropdown.getSelectedItemPosition();
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                            // TODO Auto-generated method stub
-                            spinnerPosition = 0;
-                        }
-                    });
+                    setUserGroupsSpinner();
                     pDialog.hideDialog();
                 }
 
@@ -107,6 +85,36 @@ public class FragmentAddTask extends Fragment {
                 }
             });
         }
+    }
+
+    private void setUserGroupsSpinner()
+    {
+        List<String> items = new ArrayList<>();
+
+        for (Group group : userGroups) {
+            items.add(group.GetName());
+            if (spinnerPosition != 0) {
+                dropdown.setSelection(spinnerPosition);
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                getSelectedGroupId((String) parent.getItemAtPosition(position));
+                spinnerPosition = dropdown.getSelectedItemPosition();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+                spinnerPosition = 0;
+            }
+        });
     }
 
     private void getSelectedGroupId(String GroupName) {
