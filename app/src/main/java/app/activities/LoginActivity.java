@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.homey.R;
 
 import app.customcomponents.HomeyProgressDialog;
@@ -21,6 +22,7 @@ import app.logic.managers.DBManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import callback.UpdateCallBack;
 import callback.UserCallBack;
 
 public class LoginActivity extends ActivityBase {
@@ -115,7 +117,8 @@ public class LoginActivity extends ActivityBase {
 
 
         // Check if user is already logged in or not
-        if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn()) {
+        if (((SessionManager) (Services.GetService(SessionManager.class))).isLoggedIn())
+        {
             ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName("Home Page");
             // User is already logged in. Take him to HomePage activity
             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
@@ -170,9 +173,26 @@ public class LoginActivity extends ActivityBase {
         pDialog.showDialog();
 
         //TODO  DBManager
-        ((DBManager) (Services.GetService(DBManager.class))).Login(email, password, new UserCallBack() {
+        ((DBManager) (Services.GetService(DBManager.class))).Login(email, password, new UserCallBack()
+        {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(User user)
+            {
+                // Sending server DeviceId (token):
+                String token = FirebaseInstanceId.getInstance().getToken();
+                if (token == null)
+                {
+                    token = "0";
+                }
+
+                ((DBManager)Services.GetService(DBManager.class)).UpdateUser(user.GetUserId(), "token", token, new UpdateCallBack() {
+                    @Override
+                    public void onSuccess() {}
+
+                    @Override
+                    public void onFailure(String errorMessage) {}
+                });
+
                 // user successfully logged in
                 Toast.makeText(getApplicationContext(), R.string.successfullyLoggedIn, Toast.LENGTH_LONG).show();
                 // Create login session
@@ -180,7 +200,8 @@ public class LoginActivity extends ActivityBase {
 
                 ((SessionManager) (Services.GetService(SessionManager.class))).setUser(user);
 
-                db.addUser(user.GetName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(), user.GetScore(), user.GetLevel(), user.GetImage(), user.GetToken());
+                db.addUser(user.GetName(), user.getEmail(), user.GetUserId() + "", user.getCreatedAt(), user.GetScore(), user.GetLevel(), user.GetImage(), token);
+
 
                 pDialog.hideDialog();
 

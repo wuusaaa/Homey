@@ -12,8 +12,10 @@ import com.project.homey.R;
 import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.User;
 import app.logic.managers.ActivityChangeManager;
+import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
+import callback.UserCallBack;
 import layout.FragmentProfileEdit;
 import layout.FragmentProfileInfo;
 

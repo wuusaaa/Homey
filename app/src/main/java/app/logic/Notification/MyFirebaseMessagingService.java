@@ -42,8 +42,8 @@ import callback.UserCallBack;
 public class MyFirebaseMessagingService extends FirebaseMessagingService
 {
     private static final String TAG = "FCM Service";
-    public final String AUTH_KEY_FCM = "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI ";
-    public final String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
+    private final static String AUTH_KEY_FCM = "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI ";
+    private final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage)
     {
@@ -61,32 +61,45 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         mNotifyMgr.notify(1, mBuilder.build());
     }
 
-    public void SendPushNotification(String userId, String message) throws IOException, JSONException
+    public static void SendPushNotification(String userId, String message)
     {
-//        ((DBManager) Services.GetService(DBManager.class)).GetUser(Integer.parseInt(userId), new UserCallBack()
-//        {
-//            @Override
-//            public void onSuccess(User user)
-//            {
-//                AsyncTask sendNotificationTask = new AsyncTask()
-//                {
-//                    @Override
-//                    protected Object doInBackground(Object[] objects)
-//                    {
-//                        sendPushNotificationHelper()
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String error)
-//            {
-//
-//            }
-//        });
+        ((DBManager) Services.GetService(DBManager.class)).GetUser(Integer.parseInt(userId), new UserCallBack()
+        {
+            @Override
+            public void onSuccess(User user)
+            {
+                AsyncTask sendNotificationTask = new AsyncTask()
+                {
+                    @Override
+                    protected Object doInBackground(Object[] objects)
+                    {
+                        try
+                        {
+                            sendPushNotificationHelper(user.GetToken(), "Testing notifications");
+                            return true;
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                            return true;
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                            return true;
+                        }
+                    }
+                };
+                sendNotificationTask.execute();
+            }
+
+            @Override
+            public void onFailure(String error)
+            {
+
+            }
+        });
     }
 
-    private String sendPushNotificationHelper(String token, String message) throws IOException, JSONException
+    private static String sendPushNotificationHelper(String token, String message) throws IOException, JSONException
     {
         String result = "";
         URL url = new URL(API_URL_FCM);

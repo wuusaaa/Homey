@@ -3,6 +3,7 @@ package app.logic.managers;
 import android.content.Context;
 import android.widget.Toast;
 
+import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
 import callback.UpdateCallBack;
@@ -45,6 +46,7 @@ public class DragManager extends ManagerBase
                 public void onSuccess()
                 {
                     Toast.makeText(context, movingTask.GetName() + "Assigned to task: "+ droppedUser.GetName(), Toast.LENGTH_SHORT).show();
+                    MyFirebaseMessagingService.SendPushNotification(droppedUser.GetUserId(), "Task: "+movingTask.GetName()+ " Assigned to you.");
                 }
 
                 @Override

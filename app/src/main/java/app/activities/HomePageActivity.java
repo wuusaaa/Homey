@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.project.homey.R;
 
 import org.json.JSONException;
@@ -26,6 +28,7 @@ import app.customcomponents.ScrollVerticalWithItems;
 import app.customcomponents.TaskLayout;
 import app.enums.TaskProperty;
 import app.enums.TaskStatus;
+import app.logic.Notification.FirebaseIDService;
 import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
@@ -58,7 +61,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     private HomeyProgressDialog pDialog;
     private Button buttonSubmit;
     private List<TaskLayout> taskLayoutsChecked = new ArrayList<>();
-    ActivityChangeManager activityChangeManager;
+    private ActivityChangeManager activityChangeManager;
     //*****************************
 
     @Override
@@ -89,7 +92,8 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
         initPage();
     }
