@@ -25,9 +25,6 @@ public class FirebaseIDService extends FirebaseInstanceIdService
 
         // TODO: Implement this method to send any registration to your app's servers.
         sendRegistrationToServer(refreshedToken);
-
-        // Set token to SessionManager:
-        ((SessionManager) Services.GetService(SessionManager.class)).setToken(refreshedToken);
     }
 
     /**
@@ -41,5 +38,7 @@ public class FirebaseIDService extends FirebaseInstanceIdService
     private void sendRegistrationToServer(String token)
     {
         // Add custom implementation, as needed.
+        // Set token to SessionManager:
+        ((SessionManager) Services.GetService(SessionManager.class)).setToken(token);
     }
 }

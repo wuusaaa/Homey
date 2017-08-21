@@ -1,6 +1,9 @@
 package app.logic.Notification;
 
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,80 +12,124 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.project.homey.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.AppController;
+import app.logic.appcomponents.User;
+import app.logic.managers.DBManager;
+import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UpdateCallBack;
+import callback.UserCallBack;
 
 
 /**
  * Created by benro on 8/13/2017
  */
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MyFirebaseMessagingService extends FirebaseMessagingService
+{
     private static final String TAG = "FCM Service";
-    private static final String SERVER_KEY =
-            "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI";
-
+    public final String AUTH_KEY_FCM = "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI ";
+    public final String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(RemoteMessage remoteMessage)
+    {
         // TODO: Handle FCM messages here.
         // If the application is in the foreground handle both data and notification messages here.
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated.
 
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_header_logo)
+                        .setContentTitle("My notification")
+                        .setContentText(remoteMessage.getNotification().getBody());
+        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(1, mBuilder.build());
     }
 
-
-    //Trying to generate notification to my self.
-    public void generateNotification(String message, Context context) {
-        String token = SessionManager.getToken();
-
-        sendNotification(token, "BIMBA", SERVER_KEY, new UpdateCallBack() {
-            @Override
-            public void onSuccess() {
-                Toast.makeText(context, "NOTIFICATION SENT", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void SendPushNotification(String userId, String message) throws IOException, JSONException
+    {
+//        ((DBManager) Services.GetService(DBManager.class)).GetUser(Integer.parseInt(userId), new UserCallBack()
+//        {
+//            @Override
+//            public void onSuccess(User user)
+//            {
+//                AsyncTask sendNotificationTask = new AsyncTask()
+//                {
+//                    @Override
+//                    protected Object doInBackground(Object[] objects)
+//                    {
+//                        sendPushNotificationHelper()
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(String error)
+//            {
+//
+//            }
+//        });
     }
 
-    private void sendNotification(final String to, final String data, final String token, final UpdateCallBack callBack) {
-        String tag_string_req = "post";
-        StringRequest strReq = new StringRequest(Request.Method.POST, "https://fcm.googleapis.com/fcm/send", response -> {
+    private String sendPushNotificationHelper(String token, String message) throws IOException, JSONException
+    {
+        String result = "";
+        URL url = new URL(API_URL_FCM);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            //your response here
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+        conn.setUseCaches(false);
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                params.put("Authorization:key", token);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Authorization", "key=" + AUTH_KEY_FCM);
+        conn.setRequestProperty("Content-Type", "application/json");
 
-                return params;
+        JSONObject json = new JSONObject();
+
+        json.put("to", token.trim());
+        JSONObject info = new JSONObject();
+        info.put("title", "notification title"); // Notification title
+        info.put("body", "KARAMBA"); // Notification
+        // body
+        json.put("notification", info);
+        try {
+            OutputStreamWriter wr = new OutputStreamWriter(
+                    conn.getOutputStream());
+            wr.write(json.toString());
+            wr.flush();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+
+            String output;
+            System.out.println("Output from Server .... \n");
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
             }
+            result = "Success";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            result = "Failure";
+        }
+        System.out.println("GCM Notification is sent successfully");
 
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<>();
-                params.put("to", to);
-                params.put("data", data);
-
-                return params;
-            }
-        };
-
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        return result;
     }
 }
