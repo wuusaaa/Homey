@@ -75,7 +75,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                     {
                         try
                         {
-                            sendPushNotificationHelper(user.GetToken(), "Testing notifications");
+                            sendPushNotificationHelper(user.GetToken(), message);
                             return true;
                         }
                         catch (IOException e) {
@@ -118,7 +118,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         json.put("to", token.trim());
         JSONObject info = new JSONObject();
         info.put("title", "notification title"); // Notification title
-        info.put("body", "KARAMBA"); // Notification
+        info.put("body",message); // Notification
         // body
         json.put("notification", info);
         try {
