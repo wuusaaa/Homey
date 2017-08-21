@@ -18,11 +18,12 @@ public class User implements IHasText, IHasImage, Parcelable {
     private String email;
     private String createdAt;
     private String userId;
+    private String token;
     private int score;
     private int level;
     private byte[] img;
 
-    public User(String name, String email, String createdAt, String userId, int score, int level, byte[] img)
+    public User(String name, String email, String createdAt, String userId, int score, int level, byte[] img, String token)
     {
         this.name = name;
         this.email = email;
@@ -31,6 +32,7 @@ public class User implements IHasText, IHasImage, Parcelable {
         this.score = score;
         this.level = level;
         this.img=img;
+        this.token=token;
     }
 
     protected User(Parcel in) {
@@ -41,6 +43,7 @@ public class User implements IHasText, IHasImage, Parcelable {
         score = in.readInt();
         level = in.readInt();
         img = in.createByteArray();
+        token = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -101,6 +104,10 @@ public class User implements IHasText, IHasImage, Parcelable {
         return level;
     }
 
+    public String GetToken() {
+        return token;
+    }
+
     public void SetLevel(int level) {
         this.level = level;
     }
@@ -140,5 +147,6 @@ public class User implements IHasText, IHasImage, Parcelable {
         dest.writeInt(score);
         dest.writeInt(level);
         dest.writeByteArray(img);
+        dest.writeString(token);
     }
 }
