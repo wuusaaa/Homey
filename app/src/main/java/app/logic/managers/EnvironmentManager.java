@@ -56,6 +56,8 @@ public class EnvironmentManager extends ManagerBase {
 
     private final String APILeaveTaskURL = "https://www.crossword-clues.com/homey/leave-task.php";
 
+    private final String APIGetUserByEmailURL = "https://www.crossword-clues.com/homey/get-user-by-email.php";
+
     private final String APIRemoveTaskURL = "https://www.crossword-clues.com/homey/remove-task.php";
 
     private final String APIRemoveGroupURL = "https://www.crossword-clues.com/homey/remove-group.php";
@@ -316,5 +318,9 @@ public class EnvironmentManager extends ManagerBase {
 
     public String GetAPIRemoveGroupURL() {
         return APIRemoveGroupURL;
+    }
+
+    public String getAPIGetUserByEmailURL() {
+        return APIGetUserByEmailURL;
     }
 }
