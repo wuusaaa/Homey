@@ -55,7 +55,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_header_logo)
-                        .setContentTitle("My notification")
+                        .setContentTitle("Homey")
                         .setContentText(remoteMessage.getNotification().getBody());
         NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotifyMgr.notify(1, mBuilder.build());
@@ -102,46 +102,50 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     private static String sendPushNotificationHelper(String token, String message) throws IOException, JSONException
     {
         String result = "";
-        URL url = new URL(API_URL_FCM);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        conn.setUseCaches(false);
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
+        if (!token.equals("0"))
+        {
+            URL url = new URL(API_URL_FCM);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Authorization", "key=" + AUTH_KEY_FCM);
-        conn.setRequestProperty("Content-Type", "application/json");
+            conn.setUseCaches(false);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
 
-        JSONObject json = new JSONObject();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "key=" + AUTH_KEY_FCM);
+            conn.setRequestProperty("Content-Type", "application/json");
 
-        json.put("to", token.trim());
-        JSONObject info = new JSONObject();
-        info.put("title", "notification title"); // Notification title
-        info.put("body",message); // Notification
-        // body
-        json.put("notification", info);
-        try {
-            OutputStreamWriter wr = new OutputStreamWriter(
-                    conn.getOutputStream());
-            wr.write(json.toString());
-            wr.flush();
+            JSONObject json = new JSONObject();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
+            json.put("to", token.trim());
+            JSONObject info = new JSONObject();
+            info.put("title", "Homey"); // Notification title
+            info.put("body", message); // Notification
+            // body
+            json.put("notification", info);
+            try {
+                OutputStreamWriter wr = new OutputStreamWriter(
+                        conn.getOutputStream());
+                wr.write(json.toString());
+                wr.flush();
 
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                String output;
+                System.out.println("Output from Server .... \n");
+                while ((output = br.readLine()) != null) {
+                    System.out.println(output);
+                }
+                result = "Success";
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = "Failure";
             }
-            result = "Success";
+            System.out.println("GCM Notification is sent successfully");
+
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            result = "Failure";
-        }
-        System.out.println("GCM Notification is sent successfully");
 
         return result;
     }

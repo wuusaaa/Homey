@@ -16,6 +16,7 @@ import com.project.homey.R;
 import app.activities.GroupPageActivity;
 import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.Group;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
@@ -39,7 +40,8 @@ public class FragmentAddGroup extends Fragment {
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
 
         groupImage = (CircleImageButton) getView().findViewById(R.id.chosenGroupImage);
@@ -66,13 +68,9 @@ public class FragmentAddGroup extends Fragment {
 
         groupManager.AddNewGroup(name, chosePicture, new GroupCallBack() {
             @Override
-            public void onSuccess(Group group) {
-                Intent i = new Intent(getContext(), GroupPageActivity.class);
-                Bundle b = new Bundle();
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).SetScreenName(group.GetName());
-                b.putParcelable("group", group);
-                i.putExtras(b);
-                startActivity(i);
+            public void onSuccess(Group group)
+            {
+                ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetGroupActivity(getContext(), group);
             }
 
             @Override

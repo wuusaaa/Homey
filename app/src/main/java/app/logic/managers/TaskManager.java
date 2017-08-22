@@ -8,6 +8,7 @@ import java.util.List;
 
 import app.enums.TaskProperty;
 import app.enums.TaskStatus;
+import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
 import callback.TasksCallBack;
@@ -68,6 +69,7 @@ public class TaskManager extends ManagerBase {
                 taskToComplete.getStatus(),
                 callBack);
 
+        sendAdminsNotification(taskToComplete);
 
         // Make the points change to all of the task's participants:
         ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskToComplete.GetTaskId()), new UsersCallBack()
@@ -76,6 +78,33 @@ public class TaskManager extends ManagerBase {
             public void onSuccess(ArrayList<User> users)
             {
                 users.forEach(user -> changePoints(user, taskToComplete.getScore()));
+            }
+
+            @Override
+            public void onFailure(String error)
+            {
+
+            }
+        });
+    }
+
+    private void sendAdminsNotification(Task completedTask)
+    {
+        User submittedUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+        ((DBManager) Services.GetService(DBManager.class)).GetGroupAdmins(completedTask.GetGroupId(), new UsersCallBack()
+        {
+            @Override
+            public void onSuccess(ArrayList<User> admins)
+            {
+                admins.forEach( admin ->
+                {
+                    if (!admin.GetId().equals(submittedUser.GetId()))
+                    {
+                        MyFirebaseMessagingService.SendPushNotification(admin.GetUserId(),
+                                submittedUser.GetName() + " Submitted task: '" + completedTask.GetName() + "'.");
+                    }
+
+                });
             }
 
             @Override
@@ -102,7 +131,12 @@ public class TaskManager extends ManagerBase {
         {
             @Override
             public void onSuccess(ArrayList<User> users) {
-                users.forEach(user -> changePoints(user, -1 * taskToUnComplete.getScore()));
+                users.forEach(user ->
+                {
+                    changePoints(user, -1 * taskToUnComplete.getScore());
+                    MyFirebaseMessagingService.SendPushNotification(user.GetUserId(),
+                            "Task '" + taskToUnComplete.GetName() + "' unsubmitted and assigned back.");
+                });
             }
 
             @Override

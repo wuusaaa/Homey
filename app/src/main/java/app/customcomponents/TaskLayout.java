@@ -144,7 +144,7 @@ public class TaskLayout extends LinearLayout {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent)
             {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !task.isCompleted())
                 {
                     ClipData data = ClipData.newPlainText("", "");
                     DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(

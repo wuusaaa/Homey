@@ -21,6 +21,7 @@ import java.util.List;
 
 import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
+import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.User;
 import app.logic.managers.DBManager;
@@ -29,6 +30,7 @@ import app.logic.managers.SessionManager;
 import app.logic.verifiers.InputVerifier;
 import callback.GroupsCallBack;
 import callback.UpdateCallBack;
+import callback.UserCallBack;
 
 public class FragmentAddMember extends Fragment {
     private InputVerifier inputVerifier = new InputVerifier();
@@ -123,7 +125,8 @@ public class FragmentAddMember extends Fragment {
                 });
     }
 
-    public void onAddMemberClicked() {
+    public void onAddMemberClicked()
+    {
         String email = editTextEmail.getText().toString();
         String groupName = selectedGroup.GetName();
 
@@ -132,10 +135,27 @@ public class FragmentAddMember extends Fragment {
 //            return;
 //        }
 
-        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack() {
+        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack()
+        {
             @Override
-            public void onSuccess() {
+            public void onSuccess()
+            {
                 Toast.makeText(getContext(), "Added user successfully.", Toast.LENGTH_SHORT).show();
+                //Todo: uncomment
+//                dbManager.GetUserByEmail(email, new UserCallBack()
+//                {
+//                    @Override
+//                    public void onSuccess(User user)
+//                    {
+//                        MyFirebaseMessagingService.SendPushNotification(user.GetUserId(), "You joined group: "+selectedGroup.GetName());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String error)
+//                    {
+//
+//                    }
+//                })
             }
 
             @Override

@@ -12,7 +12,8 @@ import app.enums.TaskStatus;
  * Created by Raz on 12/20/2016
  */
 
-public class Task implements IHasText, Parcelable {
+public class Task implements IHasText, Parcelable
+{
     public static final String COMPLETED = "completed";
     private String taskId;
     private String name;
