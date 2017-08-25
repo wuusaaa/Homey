@@ -54,8 +54,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_group_default)
-                        .setColor(Color.BLACK)
+                        .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                         .setContentTitle("Homey")
                         .setContentText(remoteMessage.getNotification().getBody())
                         .setDefaults(Notification.DEFAULT_ALL)
