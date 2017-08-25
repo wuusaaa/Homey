@@ -3,6 +3,7 @@ package app.logic.Notification;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -47,15 +48,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     private final static String AUTH_KEY_FCM = "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI";
     private final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
     private int notificationId = 1;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage)
     {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_header_logo)
+                        .setSmallIcon(R.mipmap.ic_group_default)
+                        .setColor(Color.BLACK)
                         .setContentTitle("Homey")
                         .setContentText(remoteMessage.getNotification().getBody())
-                        .setPriority(Notification.PRIORITY_HIGH);
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setPriority(Notification.PRIORITY_MAX);
         NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotifyMgr.notify(notificationId++, mBuilder.build());
     }
