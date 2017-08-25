@@ -1,5 +1,6 @@
 package app.logic.Notification;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.project.homey.R;
@@ -42,23 +44,20 @@ import callback.UserCallBack;
 public class MyFirebaseMessagingService extends FirebaseMessagingService
 {
     private static final String TAG = "FCM Service";
-    private final static String AUTH_KEY_FCM = "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI ";
+    private final static String AUTH_KEY_FCM = "AAAAFuBcd3A:APA91bE2QzvvVOqKV-sX7P9v17Kylq-Rd5r_t0u1XPt5xrn4rUitJGPiKVziO5MQ6tqiiYycwFlhPYNyZbsECNRceqSundRAHzHRBoWgspKp_D-8Nfef5agnkdwNiCXkLZvZpJYM8ddI";
     private final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
+    private int notificationId = 1;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage)
     {
-        // TODO: Handle FCM messages here.
-        // If the application is in the foreground handle both data and notification messages here.
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated.
-
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_header_logo)
                         .setContentTitle("Homey")
-                        .setContentText(remoteMessage.getNotification().getBody());
+                        .setContentText(remoteMessage.getNotification().getBody())
+                        .setPriority(Notification.PRIORITY_HIGH);
         NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(1, mBuilder.build());
+        mNotifyMgr.notify(notificationId++, mBuilder.build());
     }
 
     public static void SendPushNotification(String userId, String message)
@@ -78,11 +77,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                             sendPushNotificationHelper(user.GetToken(), message);
                             return true;
                         }
-                        catch (IOException e) {
+                        catch (IOException e)
+                        {
                             e.printStackTrace();
                             return true;
                         }
-                        catch (JSONException e) {
+                        catch (JSONException e)
+                        {
                             e.printStackTrace();
                             return true;
                         }
@@ -120,7 +121,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
             json.put("to", token.trim());
             JSONObject info = new JSONObject();
-            info.put("title", "Homey"); // Notification title
+            info.put("title", "notification title"); // Notification title
             info.put("body", message); // Notification
             // body
             json.put("notification", info);
@@ -143,8 +144,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 e.printStackTrace();
                 result = "Failure";
             }
-            System.out.println("GCM Notification is sent successfully");
 
+            System.out.println("GCM Notification is sent successfully");
         }
 
         return result;

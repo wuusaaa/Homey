@@ -37,7 +37,8 @@ public class ProfileActivity extends ActivityWithHeaderBase
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
         if (!isChoosingPicture)
         {

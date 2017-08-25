@@ -23,8 +23,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
+import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.User;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.DragManager;
 import app.logic.managers.Services;
@@ -161,10 +163,11 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        String userId = entry.getKey();
                         switch (item.getItemId()) {
                             case R.id.promoteAdmin:
                                 // TODO: DBMANAGER. promote user (entry.getKey(), group.getId).
-                                ((DBManager) Services.GetService(DBManager.class)).MakeUserAdmin(group.GetId(), entry.getKey(), new UpdateCallBack() {
+                                ((DBManager) Services.GetService(DBManager.class)).MakeUserAdmin(group.GetId(), userId, new UpdateCallBack() {
                                     @Override
                                     public void onSuccess() {
                                         Toast.makeText(getContext(), "Promotion success", Toast.LENGTH_SHORT).show();
@@ -178,11 +181,13 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
 
                                 break;
                             case R.id.removeFromGroup:
-                                ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), entry.getKey(), new UpdateCallBack() {
+                                ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), userId, new UpdateCallBack() {
                                     @Override
-                                    public void onSuccess() {
+                                    public void onSuccess()
+                                    {
                                         Toast.makeText(getContext(), "Member has removed", Toast.LENGTH_SHORT).show();
-
+                                        MyFirebaseMessagingService.SendPushNotification(userId, "You have been removed from group: "+ group.GetName());
+                                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(getContext(), group);
                                     }
 
                                     @Override

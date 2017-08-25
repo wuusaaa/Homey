@@ -142,20 +142,20 @@ public class FragmentAddMember extends Fragment {
             {
                 Toast.makeText(getContext(), "Added user successfully.", Toast.LENGTH_SHORT).show();
                 //Todo: uncomment
-//                dbManager.GetUserByEmail(email, new UserCallBack()
-//                {
-//                    @Override
-//                    public void onSuccess(User user)
-//                    {
-//                        MyFirebaseMessagingService.SendPushNotification(user.GetUserId(), "You joined group: "+selectedGroup.GetName());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String error)
-//                    {
-//
-//                    }
-//                })
+                dbManager.GetUserByEmail(email, new UserCallBack()
+                {
+                    @Override
+                    public void onSuccess(User user)
+                    {
+                        MyFirebaseMessagingService.SendPushNotification(user.GetUserId(), "You joined group: "+selectedGroup.GetName());
+                    }
+
+                    @Override
+                    public void onFailure(String error)
+                    {
+
+                    }
+                });
             }
 
             @Override

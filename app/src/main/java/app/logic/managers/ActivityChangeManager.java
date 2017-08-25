@@ -27,17 +27,17 @@ import callback.UsersCallBack;
  * Created by benro on 8/7/2017
  */
 
-public class ActivityChangeManager extends ManagerBase {
-
+public class ActivityChangeManager extends ManagerBase
+{
     private Runnable refreshPage;
 
     public void SetGroupActivity(Context context, Group group) {
-        HomeyProgressDialog pDialog = new HomeyProgressDialog(context);
         final List<Boolean> isAdmin = new ArrayList<>();
 
         ((DBManager) Services.GetService(DBManager.class)).GetGroupAdmins(Integer.parseInt(group.GetId()), new UsersCallBack() {
             @Override
-            public void onSuccess(ArrayList<User> users) {
+            public void onSuccess(ArrayList<User> users)
+            {
                 isAdmin.add(false);
                 User theUser = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
                 for (User user : users) {

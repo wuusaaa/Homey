@@ -12,7 +12,8 @@ import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
 import callback.UpdateCallBack;
 
-public class LogoutActivity extends ActivityBase {
+public class LogoutActivity extends ActivityBase
+{
     private Button btnLogout;
 
     private SQLiteHandler db;
