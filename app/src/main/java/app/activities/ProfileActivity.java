@@ -40,6 +40,8 @@ public class ProfileActivity extends ActivityWithHeaderBase
     protected void onStart()
     {
         super.onStart();
+        setScreenName("Profile");
+
         if (!isChoosingPicture)
         {
             isChoosingPicture = false;
@@ -50,6 +52,7 @@ public class ProfileActivity extends ActivityWithHeaderBase
         }
 
         setImage();
+
     }
 
     private void setImage()

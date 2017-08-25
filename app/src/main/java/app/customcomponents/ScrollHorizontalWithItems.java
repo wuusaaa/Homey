@@ -197,8 +197,6 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
                                 });
                                 break;
                             default:
-                                //TODO:: remove this, mayb set a default case
-                                Toast.makeText(getContext(), "default", Toast.LENGTH_SHORT).show();
                                 break;
                         }
 

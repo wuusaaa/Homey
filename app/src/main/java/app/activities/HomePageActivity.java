@@ -95,6 +95,7 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     protected void onStart()
     {
         super.onStart();
+        setScreenName("Homey");
         initPage();
     }
 

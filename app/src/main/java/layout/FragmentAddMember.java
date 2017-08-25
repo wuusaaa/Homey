@@ -40,7 +40,6 @@ public class FragmentAddMember extends Fragment {
     private Button buttonAddMember;
     private ArrayList<Group> myGroups;
     private Group selectedGroup = null;
-    private HomeyProgressDialog pDialog;
     private DBManager dbManager;
     private String defaultGroupName;
 
@@ -53,7 +52,6 @@ public class FragmentAddMember extends Fragment {
     public void onStart() {
         super.onStart();
 
-        pDialog = new HomeyProgressDialog(this.getContext());
         dbManager = (DBManager) Services.GetService(DBManager.class);
 
         editTextEmail = (EditText) getView().findViewById(R.id.editTextEmail);
@@ -89,7 +87,8 @@ public class FragmentAddMember extends Fragment {
 
     private Group getSelectedGroup(String groupName) {
         for (int i = 0; i < myGroups.size(); i++) {
-            if (myGroups.get(i).GetName().equals(groupName)) {
+            if (myGroups.get(i).GetName().equals(groupName))
+            {
                 return myGroups.get(i);
             }
         }
@@ -100,7 +99,6 @@ public class FragmentAddMember extends Fragment {
     private void setSpinnerItems() {
         User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         Context context = getContext();
-        pDialog.showDialog();
         dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
                 new GroupsCallBack() {
                     @Override
@@ -110,7 +108,6 @@ public class FragmentAddMember extends Fragment {
                         groups.forEach(group -> items.add(group.GetName()));
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
                         groupSpinner.setAdapter(adapter);
-                        pDialog.hideDialog();
 
                         if (defaultGroupName != null) {
                             setSpinnerSelection(defaultGroupName);
@@ -120,7 +117,6 @@ public class FragmentAddMember extends Fragment {
                     @Override
                     public void onFailure(String error) {
                         Toast.makeText(getContext(), "Could not find groups you control.", Toast.LENGTH_SHORT).show();
-                        pDialog.hideDialog();
                     }
                 });
     }

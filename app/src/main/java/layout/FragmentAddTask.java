@@ -43,7 +43,6 @@ public class FragmentAddTask extends Fragment {
     private Spinner dropdown;
     private int spinnerPosition = 0;
     private boolean hasPicture = false;
-    private HomeyProgressDialog pDialog;
     private byte[] choosedPicture;
     private ArrayList<Group> userGroups;
     private int selectedGroupId;
@@ -62,25 +61,21 @@ public class FragmentAddTask extends Fragment {
         if (firstTime)
         {
             firstTime = false;
-            pDialog = new HomeyProgressDialog(this.getContext());
             dropdown = (Spinner) getView().findViewById(R.id.spinnerTaskGroups);
             taskImage = (CircleImageButton) getView().findViewById(R.id.imageViewAddTask);
             taskImage.setImage(R.mipmap.ic_task_default);
             taskImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-            pDialog.showDialog();
             ((GroupManager) Services.GetService(GroupManager.class)).GetUserGroups(new GroupsCallBack() {
                 @Override
                 public void onSuccess(ArrayList<Group> groups)
                 {
                     userGroups = groups;
                     setUserGroupsSpinner();
-                    pDialog.hideDialog();
                 }
 
                 @Override
                 public void onFailure(String error) {
-                    pDialog.hideDialog();
                     //TODO handle connection error
                 }
             });

@@ -34,8 +34,10 @@ public class PlusActivity extends ActivityWithHeaderBase {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
+        setScreenName("Manage");
 
         if (!isChoosePicture) {
             setDefaultFragment();
