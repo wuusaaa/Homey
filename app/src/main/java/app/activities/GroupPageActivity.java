@@ -82,7 +82,7 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         if (bitMapImage != null) {
             image.setImage(bitMapImage);
         } else {
-            image.setImage(R.mipmap.ic_group_default);
+            image.setImage(R.mipmap.ic_group_default); // mark
         }
 
         image.setScaleType(ImageView.ScaleType.FIT_CENTER);
