@@ -99,6 +99,7 @@ public class FragmentProfileEdit extends Fragment {
 
         if (hasPicture) {
             user.setImg(choosedPicture);
+            ((SessionManager) Services.GetService(SessionManager.class)).ResetUser(user);
             dataBaseManager.UpdateUser(user.GetUserId(), "profile_pic", Base64.encodeToString(user.GetImage(), Base64.DEFAULT), new UpdateCallBack() {
                 @Override
                 public void onSuccess() {

@@ -52,7 +52,6 @@ public class ProfileActivity extends ActivityWithHeaderBase
         }
 
         setImage();
-
     }
 
     private void setImage()
@@ -104,7 +103,6 @@ public class ProfileActivity extends ActivityWithHeaderBase
             circleImageProfile.setVisibility(View.INVISIBLE);
             Bundle bundle = new Bundle();
             bundle.putString("firstName", user.GetName());
-            bundle.putString("lastName", user.GetName()); //TODO: change to last name.
             Fragment editFragment;
             editFragment = new FragmentProfileEdit();
             editFragment.setArguments(bundle);
