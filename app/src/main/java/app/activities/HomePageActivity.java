@@ -104,9 +104,11 @@ public class HomePageActivity extends ActivityWithHeaderBase {
         pDialog.showDialog();
         Context context = this;
 
-        ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack() {
+        ((TaskManager) (Services.GetService(TaskManager.class))).GetUserTasks(new TasksCallBack()
+        {
             @Override
-            public void onSuccess(List<Task> tasks) {
+            public void onSuccess(List<Task> tasks)
+            {
                 scrollVerticalWithItems.SetTasks(
                         tasks,
                         t -> activityChangeManager.SetTaskActivity(context, t, () -> initPage()),

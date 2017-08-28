@@ -48,6 +48,7 @@ public class FragmentAddTask extends Fragment {
     private int selectedGroupId;
     boolean firstTime = true;
     private CircleImageButton taskImage;
+    private HomeyProgressDialog pDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,22 +61,30 @@ public class FragmentAddTask extends Fragment {
 
         if (firstTime)
         {
+            pDialog = new HomeyProgressDialog(getContext());
+            pDialog.setMessage("Loading...");
+            pDialog.setCancelable(false);
+
             firstTime = false;
             dropdown = (Spinner) getView().findViewById(R.id.spinnerTaskGroups);
             taskImage = (CircleImageButton) getView().findViewById(R.id.imageViewAddTask);
             taskImage.setImage(R.mipmap.ic_task_default);
             taskImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-            ((GroupManager) Services.GetService(GroupManager.class)).GetUserGroups(new GroupsCallBack() {
+            pDialog.showDialog();
+            ((GroupManager) Services.GetService(GroupManager.class)).GetUserGroups(new GroupsCallBack()
+            {
                 @Override
                 public void onSuccess(ArrayList<Group> groups)
                 {
                     userGroups = groups;
                     setUserGroupsSpinner();
+                    pDialog.hide();
                 }
 
                 @Override
                 public void onFailure(String error) {
+                    pDialog.hide();
                     //TODO handle connection error
                 }
             });

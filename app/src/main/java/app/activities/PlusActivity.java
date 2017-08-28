@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.project.homey.R;
@@ -22,11 +23,11 @@ public class PlusActivity extends ActivityWithHeaderBase {
 
     private Fragment currentFragment;
     private boolean isChoosePicture = false;
-    private boolean isFirst = true;
     private String defaultGroupName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus);
 
@@ -83,7 +84,11 @@ public class PlusActivity extends ActivityWithHeaderBase {
         currentFragment = fragment;
     }
 
-    public void setAddGroupFragment(View view) {
+    public void setAddGroupFragment(View view)
+    {
+        findViewById(R.id.buttonAddGroup).setEnabled(false);
+        findViewById(R.id.buttonAddTask).setEnabled(true);
+        findViewById(R.id.buttonPlusAddMember).setEnabled(true);
         Fragment addGroupFragment = new FragmentAddGroup();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -92,7 +97,11 @@ public class PlusActivity extends ActivityWithHeaderBase {
         currentFragment = addGroupFragment;
     }
 
-    public void setAddTaskFragment(View view) {
+    public void setAddTaskFragment(View view)
+    {
+        findViewById(R.id.buttonAddGroup).setEnabled(true);
+        findViewById(R.id.buttonAddTask).setEnabled(false);
+        findViewById(R.id.buttonPlusAddMember).setEnabled(true);
         Fragment addTaskFragment = new FragmentAddTask();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -101,7 +110,11 @@ public class PlusActivity extends ActivityWithHeaderBase {
         currentFragment = addTaskFragment;
     }
 
-    public void setAddMemberFragment(View view) {
+    public void setAddMemberFragment(View view)
+    {
+        findViewById(R.id.buttonAddGroup).setEnabled(true);
+        findViewById(R.id.buttonAddTask).setEnabled(true);
+        findViewById(R.id.buttonPlusAddMember).setEnabled(false);
         Fragment addMemberFragment = new FragmentAddMember();
         ((FragmentAddMember) addMemberFragment).SetDefaultGroupName(defaultGroupName);
         FragmentManager fragmentManager = getFragmentManager();

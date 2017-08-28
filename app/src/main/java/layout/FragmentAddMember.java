@@ -42,6 +42,7 @@ public class FragmentAddMember extends Fragment {
     private Group selectedGroup = null;
     private DBManager dbManager;
     private String defaultGroupName;
+    private HomeyProgressDialog pDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +52,10 @@ public class FragmentAddMember extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        pDialog = new HomeyProgressDialog(getContext());
+        pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
 
         dbManager = (DBManager) Services.GetService(DBManager.class);
 
@@ -99,10 +104,13 @@ public class FragmentAddMember extends Fragment {
     private void setSpinnerItems() {
         User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
         Context context = getContext();
+
+        pDialog.showDialog();
         dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
                 new GroupsCallBack() {
                     @Override
-                    public void onSuccess(ArrayList<Group> groups) {
+                    public void onSuccess(ArrayList<Group> groups)
+                    {
                         myGroups = groups;
                         List<String> items = new ArrayList<>();
                         groups.forEach(group -> items.add(group.GetName()));
@@ -112,10 +120,12 @@ public class FragmentAddMember extends Fragment {
                         if (defaultGroupName != null) {
                             setSpinnerSelection(defaultGroupName);
                         }
+                        pDialog.hide();
                     }
 
                     @Override
                     public void onFailure(String error) {
+                        pDialog.hide();
                         Toast.makeText(getContext(), "Could not find groups you control.", Toast.LENGTH_SHORT).show();
                     }
                 });

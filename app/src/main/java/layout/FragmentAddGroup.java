@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -52,7 +53,8 @@ public class FragmentAddGroup extends Fragment {
         }
     }
 
-    public void onCreateGroup() {
+    public void onCreateGroup()
+    {
         GroupManager groupManager = (GroupManager) Services.GetService(GroupManager.class);
         String name = ((EditText) getView().findViewById(R.id.editTextGroupName)).getText().toString();
 
@@ -80,7 +82,8 @@ public class FragmentAddGroup extends Fragment {
         });
     }
 
-    public void onChooseImageClicked() {
+    public void onChooseImageClicked()
+    {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
