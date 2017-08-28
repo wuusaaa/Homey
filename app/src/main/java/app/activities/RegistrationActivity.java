@@ -65,6 +65,12 @@ public class RegistrationActivity extends ActivityBase {
 
 
             if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confPassword.isEmpty()) {
+
+                if (!inputVerifier.isEmailOk(email)) {
+                    Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (confPassword.equals(password)) {
                     registerUser(name, email, password);
                 } else {

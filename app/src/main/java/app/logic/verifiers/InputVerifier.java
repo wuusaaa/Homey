@@ -9,7 +9,7 @@ public class InputVerifier {
 
     public boolean isNameFieldOk(String name) {
         if (name.isEmpty()) {
-            errorCollector.addError("You must fill task's name");
+            errorCollector.addError("You must insert a task's name");
             return false;
         }
 
