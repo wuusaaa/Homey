@@ -24,6 +24,7 @@ import app.customcomponents.HomeyProgressDialog;
 import app.logic.Notification.MyFirebaseMessagingService;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.User;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.Services;
 import app.logic.managers.SessionManager;
@@ -105,20 +106,28 @@ public class FragmentAddMember extends Fragment {
         Context context = getContext();
 
         pDialog.showDialog();
-        dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
-                new GroupsCallBack() {
+        dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(), new GroupsCallBack() {
                     @Override
-                    public void onSuccess(ArrayList<Group> groups) {
-                        myGroups = groups;
-                        List<String> items = new ArrayList<>();
-                        groups.forEach(group -> items.add(group.GetName()));
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
-                        groupSpinner.setAdapter(adapter);
-
-                        if (defaultGroupName != null) {
-                            setSpinnerSelection(defaultGroupName);
+                    public void onSuccess(ArrayList<Group> groups)
+                    {
+                        if (groups.isEmpty())
+                        {
+                            Toast.makeText(context, "You are not admin in any group. ", Toast.LENGTH_SHORT).show();
+                            ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetPlusActivity(context);
                         }
-                        pDialog.hide();
+                        else
+                        {
+                            myGroups = groups;
+                            List<String> items = new ArrayList<>();
+                            groups.forEach(group -> items.add(group.GetName()));
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+                            groupSpinner.setAdapter(adapter);
+
+                            if (defaultGroupName != null) {
+                                setSpinnerSelection(defaultGroupName);
+                            }
+                            pDialog.hide();
+                        }
                     }
 
                     @Override

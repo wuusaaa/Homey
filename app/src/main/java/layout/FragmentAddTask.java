@@ -26,6 +26,7 @@ import app.customcomponents.HomeyProgressDialog;
 import app.enums.TaskStatus;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
+import app.logic.managers.ActivityChangeManager;
 import app.logic.managers.DBManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
@@ -77,9 +78,17 @@ public class FragmentAddTask extends Fragment {
                 @Override
                 public void onSuccess(ArrayList<Group> groups)
                 {
-                    userGroups = groups;
-                    setUserGroupsSpinner();
-                    pDialog.hide();
+                    if (groups.isEmpty())
+                    {
+                        Toast.makeText(getContext(), "You need to have groups first. ", Toast.LENGTH_SHORT).show();
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetPlusActivity(getContext());
+                    }
+                    else
+                    {
+                        userGroups = groups;
+                        setUserGroupsSpinner();
+                        pDialog.hide();
+                    }
                 }
 
                 @Override
