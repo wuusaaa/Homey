@@ -17,7 +17,6 @@ import app.activities.PlusActivity;
 import app.activities.ProfileActivity;
 import app.activities.SettingsActivity;
 import app.activities.TaskActivity;
-import app.customcomponents.HomeyProgressDialog;
 import app.logic.appcomponents.Group;
 import app.logic.appcomponents.Task;
 import app.logic.appcomponents.User;
