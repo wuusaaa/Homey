@@ -138,10 +138,10 @@ public class LoginActivity extends ActivityBase {
             String email = inputEmailEditText.getText().toString().trim();
             String password = inputPasswordEditText.getText().toString().trim();
 
-//            if (!inputVerifier.isEmailOk(email)) {
-//                Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
-//                return;
-//            }
+            if (!inputVerifier.isEmailOk(email)) {
+                Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
 
             // Check for empty data in the form

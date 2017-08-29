@@ -7,18 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.homey.R;
 
-import app.activities.GroupPageActivity;
 import app.customcomponents.CircleImageButton;
 import app.logic.appcomponents.Group;
 import app.logic.managers.ActivityChangeManager;
-import app.logic.managers.EnvironmentManager;
 import app.logic.managers.GroupManager;
 import app.logic.managers.Services;
 import app.logic.verifiers.InputVerifier;
@@ -61,6 +58,7 @@ public class FragmentAddGroup extends Fragment {
 
         if (!inputVerifier.isNameFieldOk(name)) {
             Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+            return;
         }
 
 

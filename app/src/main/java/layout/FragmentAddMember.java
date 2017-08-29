@@ -92,8 +92,7 @@ public class FragmentAddMember extends Fragment {
 
     private Group getSelectedGroup(String groupName) {
         for (int i = 0; i < myGroups.size(); i++) {
-            if (myGroups.get(i).GetName().equals(groupName))
-            {
+            if (myGroups.get(i).GetName().equals(groupName)) {
                 return myGroups.get(i);
             }
         }
@@ -109,8 +108,7 @@ public class FragmentAddMember extends Fragment {
         dbManager.GetGroupsThatUserIsAdmin(self.GetUserId(),
                 new GroupsCallBack() {
                     @Override
-                    public void onSuccess(ArrayList<Group> groups)
-                    {
+                    public void onSuccess(ArrayList<Group> groups) {
                         myGroups = groups;
                         List<String> items = new ArrayList<>();
                         groups.forEach(group -> items.add(group.GetName()));
@@ -131,34 +129,28 @@ public class FragmentAddMember extends Fragment {
                 });
     }
 
-    public void onAddMemberClicked()
-    {
+    public void onAddMemberClicked() {
         String email = editTextEmail.getText().toString();
         String groupName = selectedGroup.GetName();
 
-//        if (!inputVerifier.isEmailOk(email)) {
-//            Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (!inputVerifier.isEmailOk(email)) {
+            Toast.makeText(getContext(), inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack()
-        {
+        dbManager.AddUserToGroup(email, selectedGroup.GetId(), new UpdateCallBack() {
             @Override
-            public void onSuccess()
-            {
+            public void onSuccess() {
                 Toast.makeText(getContext(), "Added user successfully.", Toast.LENGTH_SHORT).show();
                 //Todo: uncomment
-                dbManager.GetUserByEmail(email, new UserCallBack()
-                {
+                dbManager.GetUserByEmail(email, new UserCallBack() {
                     @Override
-                    public void onSuccess(User user)
-                    {
-                        MyFirebaseMessagingService.SendPushNotification(user.GetUserId(), "You joined group: "+selectedGroup.GetName());
+                    public void onSuccess(User user) {
+                        MyFirebaseMessagingService.SendPushNotification(user.GetUserId(), "You joined group: " + selectedGroup.GetName());
                     }
 
                     @Override
-                    public void onFailure(String error)
-                    {
+                    public void onFailure(String error) {
 
                     }
                 });

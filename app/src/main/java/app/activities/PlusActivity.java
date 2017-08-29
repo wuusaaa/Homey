@@ -5,8 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.project.homey.R;
 
@@ -26,8 +24,7 @@ public class PlusActivity extends ActivityWithHeaderBase {
     private String defaultGroupName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus);
 
@@ -35,8 +32,7 @@ public class PlusActivity extends ActivityWithHeaderBase {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         setScreenName("Manage");
 
@@ -129,9 +125,7 @@ public class PlusActivity extends ActivityWithHeaderBase {
     //************* On Click methods: *************
 
     public void onCreateGroupClicked(View view) {
-        if (!((EditText) findViewById(R.id.editTextGroupName)).getText().toString().isEmpty()) {
-            ((FragmentAddGroup) currentFragment).onCreateGroup();
-        }
+        ((FragmentAddGroup) currentFragment).onCreateGroup();
     }
 
     public void onGroupChooseImageClicked(View view) {
