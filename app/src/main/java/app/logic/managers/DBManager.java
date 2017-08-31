@@ -4,6 +4,8 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
@@ -45,40 +47,48 @@ public class DBManager extends ManagerBase {
         String tag_string_req = "req_login";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetLoginURL(), response -> {
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetLoginURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
 
-                // Check for error node in json
-                if (!error) {
+                    // Check for error node in json
+                    if (!error) {
 
-                    // Now store the user in SQLite
-                    JSONObject userObj = jObj.getJSONObject("user");
-                    String id = userObj.getString("id");
-                    String name = userObj.getString("name");
-                    String email1 = userObj.getString("email");
-                    String created_at = userObj.getString("created_at");
-                    String score = userObj.getString("score");
-                    String lvl = userObj.getString("level");
-                    String token = userObj.getString("token");
-                    byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
-                    // Inserting row in users table
-                    User user = new User(name, email1, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                        // Now store the user in SQLite
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        String id = userObj.getString("id");
+                        String name = userObj.getString("name");
+                        String email1 = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+                        String token = userObj.getString("token");
+                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                        // Inserting row in users table
+                        User user = new User(name, email1, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                    callBack.onSuccess(user);
-                } else {
-                    // Error in login. Get the error message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        callBack.onSuccess(user);
+                    } else {
+                        // Error in login. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                // JSON error
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -101,26 +111,34 @@ public class DBManager extends ManagerBase {
         String tag_string_req = "add-user-to-task";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddUserToTask(), response -> {
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddUserToTask(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
 
-                // Check for error node in json
-                if (!error) {
-                    callBack.onSuccess();
-                } else {
-                    // Error in adding the user to task. Get the error message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                    // Check for error node in json
+                    if (!error) {
+                        callBack.onSuccess();
+                    } else {
+                        // Error in adding the user to task. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                // JSON error
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -143,26 +161,34 @@ public class DBManager extends ManagerBase {
         String tag_string_req = "add-user-to-task";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddUserToGroup(), response -> {
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddUserToGroup(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
 
-                // Check for error node in json
-                if (!error) {
-                    callBack.onSuccess();
-                } else {
-                    // Error in adding the user to task. Get the error message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                    // Check for error node in json
+                    if (!error) {
+                        callBack.onSuccess();
+                    } else {
+                        // Error in adding the user to task. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                // JSON error
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -188,42 +214,50 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetRegistrationURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetRegistrationURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // User successfully stored in MySQL
-                    // Now store the user in sqlite
-                    String uid = jObj.getString("uid");
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        String uid = jObj.getString("uid");
 
-                    JSONObject userObj = jObj.getJSONObject("user");
-                    String name1 = userObj.getString("name");
-                    String email1 = userObj.getString("email");
-                    String created_at = userObj.getString("created_at");
-                    String score = userObj.getString("score");
-                    String lvl = userObj.getString("level");
-                    String token = userObj.getString("token");
-                    byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
-                    // Inserting row in users table
-                    User user = new User(name1, email1, created_at, uid, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        String name1 = userObj.getString("name");
+                        String email1 = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+                        String token = userObj.getString("token");
+                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                        // Inserting row in users table
+                        User user = new User(name1, email1, created_at, uid, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                    callBack.onSuccess(user);
+                        callBack.onSuccess(user);
 
-                } else {
+                    } else {
 
-                    // Error occurred in registration. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -249,29 +283,37 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_reset_pass";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIPassResetURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIPassResetURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // pass successfully reset
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // pass successfully reset
 
-                    callBack.onSuccess(new JSONObject().put("error", "false"));
+                        callBack.onSuccess(new JSONObject().put("error", "false"));
 
-                } else {
+                    } else {
 
-                    // Error occurred in reset password. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in reset password. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -334,27 +376,35 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIMakeUserAdminURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIMakeUserAdminURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully stored in MySQL
-                    //all OK, no need to do anything just go back to the called function
-                    callBack.onSuccess();
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess();
+                    } else {
 
-                    // Error occurred while adding a task. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("VOLLEY ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -376,27 +426,35 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIUpdateTableValueURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIUpdateTableValueURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully stored in MySQL
-                    //all OK, no need to do anything just go back to the called function
-                    callBack.onSuccess();
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess();
+                    } else {
 
-                    // Error occurred while adding a task. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("VOLLEY ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -420,27 +478,35 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPILeaveTaskURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPILeaveTaskURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully stored in MySQL
-                    //all OK, no need to do anything just go back to the called function
-                    callBack.onSuccess();
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess();
+                    } else {
 
-                    // Error occurred while adding a task. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("VOLLEY ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -461,27 +527,35 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIRemoveTaskURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIRemoveTaskURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully removed from MySQL
-                    //all OK, no need to do anything just go back to the called function
-                    callBack.onSuccess();
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully removed from MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess();
+                    } else {
 
-                    // Error occurred while removing a task. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while removing a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("VOLLEY ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -501,27 +575,35 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIRemoveGroupURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIRemoveGroupURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// group successfully removed from MySQL
-                    //all OK, no need to do anything just go back to the called function
-                    callBack.onSuccess();
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// group successfully removed from MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess();
+                    } else {
 
-                    // Error occurred while removing a group. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while removing a group. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("VOLLEY ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -542,27 +624,35 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "update_value";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPILeaveGroupURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPILeaveGroupURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully stored in MySQL
-                    //all OK, no need to do anything just go back to the called function
-                    callBack.onSuccess();
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        //all OK, no need to do anything just go back to the called function
+                        callBack.onSuccess();
+                    } else {
 
-                    // Error occurred while adding a task. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("VOLLEY ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("VOLLEY ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -583,42 +673,50 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "add_task";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddTaskURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddTaskURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                boolean error = jsonObject.getBoolean("error");
-                if (!error) {// Task successfully stored in MySQL
-                    Log.d("debug", jsonObject.toString());
-                    String name1 = jsonObject.getString("name");
-                    String id = jsonObject.getString("id");
-                    String description1 = jsonObject.getString("description");
-                    int creatorId1 = jsonObject.getInt("creator_id");
-                    int groupId1 = jsonObject.getInt("group_id");
-                    String status1 = jsonObject.getString("status");
-                    String location1 = jsonObject.getString("location");
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date startTime1 = dateFormat.parse(jsonObject.getString("start_time"));
-                    Date endTime1 = dateFormat.parse(jsonObject.getString("end_time"));
-                    int scoreIn = jsonObject.getInt("score");
-                    byte[] imgByteArr = Base64.decode(jsonObject.getString("img"), Base64.DEFAULT);
-                    callBack.onSuccess(new Task(id, name1, groupId1, description1, status1, location1, creatorId1, startTime1, endTime1, scoreIn,imgByteArr));
-                } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error) {// Task successfully stored in MySQL
+                        Log.d("debug", jsonObject.toString());
+                        String name1 = jsonObject.getString("name");
+                        String id = jsonObject.getString("id");
+                        String description1 = jsonObject.getString("description");
+                        int creatorId1 = jsonObject.getInt("creator_id");
+                        int groupId1 = jsonObject.getInt("group_id");
+                        String status1 = jsonObject.getString("status");
+                        String location1 = jsonObject.getString("location");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date startTime1 = dateFormat.parse(jsonObject.getString("start_time"));
+                        Date endTime1 = dateFormat.parse(jsonObject.getString("end_time"));
+                        int scoreIn = jsonObject.getInt("score");
+                        byte[] imgByteArr = Base64.decode(jsonObject.getString("img"), Base64.DEFAULT);
+                        callBack.onSuccess(new Task(id, name1, groupId1, description1, status1, location1, creatorId1, startTime1, endTime1, scoreIn, imgByteArr));
+                    } else {
 
-                    // Error occurred while adding a task. Get the error
-                    // message
-                    String errorMsg = jsonObject.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while adding a task. Get the error
+                        // message
+                        String errorMsg = jsonObject.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("PARSE ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-                callBack.onFailure("PARSE ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -648,41 +746,49 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetUserURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetUserURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // User successfully pulled from MySQL
-                    String id = jObj.getString("uid");
-                    JSONObject userObj = jObj.getJSONObject("user");
-                    String name = userObj.getString("name");
-                    String email = userObj.getString("email");
-                    String created_at = userObj.getString("created_at");
-                    String score = userObj.getString("score");
-                    String lvl = userObj.getString("level");
-                    String token = userObj.getString("token");
-                    byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        String id = jObj.getString("uid");
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        String name = userObj.getString("name");
+                        String email = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+                        String token = userObj.getString("token");
+                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
 
-                    // Inserting row in users table
-                    User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                        // Inserting row in users table
+                        User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                    callBack.onSuccess(user);
+                        callBack.onSuccess(user);
 
-                } else {
+                    } else {
 
-                    // Error occurred in getting user. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in getting user. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -703,41 +809,49 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user_by_email";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).getAPIGetUserByEmailURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).getAPIGetUserByEmailURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // User successfully pulled from MySQL
-                    String id = jObj.getString("uid");
-                    JSONObject userObj = jObj.getJSONObject("user");
-                    String name = userObj.getString("name");
-                    String mail = userObj.getString("email");
-                    String created_at = userObj.getString("created_at");
-                    String score = userObj.getString("score");
-                    String lvl = userObj.getString("level");
-                    String token = userObj.getString("token");
-                    byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        String id = jObj.getString("uid");
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        String name = userObj.getString("name");
+                        String mail = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+                        String token = userObj.getString("token");
+                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
 
-                    // Inserting row in users table
-                    User user = new User(name, mail, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                        // Inserting row in users table
+                        User user = new User(name, mail, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                    callBack.onSuccess(user);
+                        callBack.onSuccess(user);
 
-                } else {
+                    } else {
 
-                    // Error occurred in getting user. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in getting user. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -758,41 +872,49 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetCreatorFromTaskIdURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetCreatorFromTaskIdURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // User successfully pulled from MySQL
-                    String id = jObj.getString("uid");
-                    JSONObject userObj = jObj.getJSONObject("user");
-                    String name = userObj.getString("name");
-                    String email = userObj.getString("email");
-                    String created_at = userObj.getString("created_at");
-                    String score = userObj.getString("score");
-                    String lvl = userObj.getString("level");
-                    String token = userObj.getString("token");
-                    byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        String id = jObj.getString("uid");
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        String name = userObj.getString("name");
+                        String email = userObj.getString("email");
+                        String created_at = userObj.getString("created_at");
+                        String score = userObj.getString("score");
+                        String lvl = userObj.getString("level");
+                        String token = userObj.getString("token");
+                        byte[] imgByteArr = Base64.decode(userObj.getString("img"), Base64.DEFAULT);
 
-                    // Inserting row in users table
-                    User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                        // Inserting row in users table
+                        User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                    callBack.onSuccess(user);
+                        callBack.onSuccess(user);
 
-                } else {
+                    } else {
 
-                    // Error occurred in getting user. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in getting user. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -813,29 +935,37 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "add_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddGroupURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIAddGroupURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {// Group successfully stored in MySQL
-                    String name1 = jObj.getString("name");
-                    String id = jObj.getString("id");
-                    byte[] img1 = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
-                    callBack.onSuccess(new Group(id, name1, img1));
-                } else {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {// Group successfully stored in MySQL
+                        String name1 = jObj.getString("name");
+                        String id = jObj.getString("id");
+                        byte[] img1 = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
+                        callBack.onSuccess(new Group(id, name1, img1));
+                    } else {
 
-                    // Error occurred while adding a group. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred while adding a group. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -861,43 +991,51 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                Log.d("debug", jObj.toString());
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // User successfully pulled from MySQL
-                    String id = jObj.getString("id");
-                    String name = jObj.getString("name");
-                    String createdStr = jObj.getString("created");
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    Log.d("debug", jObj.toString());
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        String id = jObj.getString("id");
+                        String name = jObj.getString("name");
+                        String createdStr = jObj.getString("created");
 
-                    byte[] img = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
+                        byte[] img = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date created = dateFormat.parse(createdStr);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date created = dateFormat.parse(createdStr);
 
-                    Group group = new Group(id, name, img);
+                        Group group = new Group(id, name, img);
 
-                    callBack.onSuccess(group);
+                        callBack.onSuccess(group);
 
-                } else {
+                    } else {
 
-                    // Error occurred in getting group. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in getting group. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("debug", e.getMessage());
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.d("debug", e.getMessage());
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -918,42 +1056,50 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupByTaskIdURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupByTaskIdURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                Log.d("debug", jObj.toString());
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    // User successfully pulled from MySQL
-                    String id = jObj.getString("id");
-                    String name = jObj.getString("name");
-                    String createdStr = jObj.getString("created");
-                    byte[] img = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    Log.d("debug", jObj.toString());
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully pulled from MySQL
+                        String id = jObj.getString("id");
+                        String name = jObj.getString("name");
+                        String createdStr = jObj.getString("created");
+                        byte[] img = Base64.decode(jObj.getString("img"), Base64.DEFAULT);
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date created = dateFormat.parse(createdStr);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date created = dateFormat.parse(createdStr);
 
-                    Group group = new Group(id, name, img);
+                        Group group = new Group(id, name, img);
 
-                    callBack.onSuccess(group);
+                        callBack.onSuccess(group);
 
-                } else {
+                    } else {
 
-                    // Error occurred in getting group. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                        // Error occurred in getting group. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("debug", e.getMessage().toString());
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.d("debug", e.getMessage().toString());
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -974,54 +1120,62 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user_tasks";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTasksByUserIdURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTasksByUserIdURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    ArrayList<Task> tasks = new ArrayList<>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        Log.d("debug", obj.toString());
-                        String id = obj.getString("id");
-                        int groupId = obj.getInt("group_id");
-                        String name = obj.getString("name");
-                        String description = obj.getString("description");
-                        String status = obj.getString("status");
-                        int creatorId = obj.getInt("creator_id");
-                        String location = obj.getString("location");
-                        String startTimeStr = obj.getString("start_time");
-                        String endTimeStr = obj.getString("end_time");
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<Task> tasks = new ArrayList<>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            Log.d("debug", obj.toString());
+                            String id = obj.getString("id");
+                            int groupId = obj.getInt("group_id");
+                            String name = obj.getString("name");
+                            String description = obj.getString("description");
+                            String status = obj.getString("status");
+                            int creatorId = obj.getInt("creator_id");
+                            String location = obj.getString("location");
+                            String startTimeStr = obj.getString("start_time");
+                            String endTimeStr = obj.getString("end_time");
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Date startTime = dateFormat.parse(startTimeStr);
-                        Date endTime = dateFormat.parse(endTimeStr);
-                        Log.e("debug", obj.getString("start_time"));
-                        int scoreIn = obj.getInt("score");
-                        byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
-                        Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime, scoreIn, img);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date startTime = dateFormat.parse(startTimeStr);
+                            Date endTime = dateFormat.parse(endTimeStr);
+                            Log.e("debug", obj.getString("start_time"));
+                            int scoreIn = obj.getInt("score");
+                            byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
+                            Task task = new Task(id, name, groupId, description, status, location, creatorId, startTime, endTime, scoreIn, img);
 
-                        tasks.add(task);
+                            tasks.add(task);
+                        }
+                        callBack.onSuccess(tasks);
+
+                    } else {
+
+                        // Error occurred in getting tasks. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(tasks);
-
-                } else {
-
-                    // Error occurred in getting tasks. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -1043,54 +1197,62 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user_tasks_by_group";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTasksByGroupIdURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTasksByGroupIdURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
 
-                    ArrayList<Task> tasks = new ArrayList<Task>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    Log.d("debug:GetGroupTasks", resArr.toString());
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        String id = obj.getString("id");
-                        int groupId1 = obj.getInt("group_id");
-                        String name = obj.getString("name");
-                        String description = obj.getString("description");
-                        String status = obj.getString("status");
-                        int creatorId = obj.getInt("creator_id");
-                        String location = obj.getString("location");
-                        String startTimeStr = obj.getString("start_time");
-                        String endTimeStr = obj.getString("end_time");
+                        ArrayList<Task> tasks = new ArrayList<Task>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug:GetGroupTasks", resArr.toString());
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            String id = obj.getString("id");
+                            int groupId1 = obj.getInt("group_id");
+                            String name = obj.getString("name");
+                            String description = obj.getString("description");
+                            String status = obj.getString("status");
+                            int creatorId = obj.getInt("creator_id");
+                            String location = obj.getString("location");
+                            String startTimeStr = obj.getString("start_time");
+                            String endTimeStr = obj.getString("end_time");
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Date startTime = dateFormat.parse(startTimeStr);
-                        Date endTime = dateFormat.parse(endTimeStr);
-                        int scoreIn = obj.getInt("score");
-                        byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
-                        Task task = new Task(id, name, groupId1, description, status, location, creatorId, startTime, endTime, scoreIn, img);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date startTime = dateFormat.parse(startTimeStr);
+                            Date endTime = dateFormat.parse(endTimeStr);
+                            int scoreIn = obj.getInt("score");
+                            byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
+                            Task task = new Task(id, name, groupId1, description, status, location, creatorId, startTime, endTime, scoreIn, img);
 
-                        tasks.add(task);
+                            tasks.add(task);
+                        }
+                        callBack.onSuccess(tasks);
+
+                    } else {
+
+                        // Error occurred in getting tasks. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(tasks);
-
-                } else {
-
-                    // Error occurred in getting tasks. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -1110,46 +1272,54 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_user_groups";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetUserGroupsURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetUserGroupsURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    ArrayList<Group> groups = new ArrayList<>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    Log.d("debug", resArr.toString());
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        String id = obj.getString("id");
-                        String name = obj.getString("name");
-                        String createdStr = obj.getString("created");
-                        byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<Group> groups = new ArrayList<>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug", resArr.toString());
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            String id = obj.getString("id");
+                            String name = obj.getString("name");
+                            String createdStr = obj.getString("created");
+                            byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Date created = dateFormat.parse(createdStr);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date created = dateFormat.parse(createdStr);
 
-                        Group group = new Group(id, name, img);
+                            Group group = new Group(id, name, img);
 
-                        groups.add(group);
+                            groups.add(group);
+                        }
+                        callBack.onSuccess(groups);
+
+                    } else {
+
+                        // Error occurred in getting groups. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(groups);
-
-                } else {
-
-                    // Error occurred in getting groups. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -1170,46 +1340,54 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_groups_that_user_is_admin";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupsThatUserIsAdminURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupsThatUserIsAdminURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    ArrayList<Group> groups = new ArrayList<>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    Log.d("debug", resArr.toString());
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        String id = obj.getString("id");
-                        String name = obj.getString("name");
-                        String createdStr = obj.getString("created");
-                        byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<Group> groups = new ArrayList<>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug", resArr.toString());
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            String id = obj.getString("id");
+                            String name = obj.getString("name");
+                            String createdStr = obj.getString("created");
+                            byte[] img = Base64.decode(obj.getString("img"), Base64.DEFAULT);
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Date created = dateFormat.parse(createdStr);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date created = dateFormat.parse(createdStr);
 
-                        Group group = new Group(id, name, img);
+                            Group group = new Group(id, name, img);
 
-                        groups.add(group);
+                            groups.add(group);
+                        }
+                        callBack.onSuccess(groups);
+
+                    } else {
+
+                        // Error occurred in getting groups. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(groups);
-
-                } else {
-
-                    // Error occurred in getting groups. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -1230,47 +1408,55 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_groups_admins";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupAdminsURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupAdminsURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    ArrayList<User> users = new ArrayList<>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    Log.d("debug", resArr.toString());
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        // User successfully pulled from MySQL
-                        String id = obj.getString("id");
-                        String name = obj.getString("name");
-                        String email = obj.getString("email");
-                        String created_at = obj.getString("created_at");
-                        String score = obj.getString("score");
-                        String lvl = obj.getString("level");
-                        String token = obj.getString("token");
-                        byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<User> users = new ArrayList<>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug", resArr.toString());
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            // User successfully pulled from MySQL
+                            String id = obj.getString("id");
+                            String name = obj.getString("name");
+                            String email = obj.getString("email");
+                            String created_at = obj.getString("created_at");
+                            String score = obj.getString("score");
+                            String lvl = obj.getString("level");
+                            String token = obj.getString("token");
+                            byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
 
-                        // Inserting row in users table
-                        User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                            // Inserting row in users table
+                            User user = new User(name, email, created_at, id, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                        users.add(user);
+                            users.add(user);
+                        }
+                        callBack.onSuccess(users);
+
+                    } else {
+
+                        // Error occurred in getting users. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(users);
-
-                } else {
-
-                    // Error occurred in getting users. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -1290,48 +1476,56 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_task_users";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTaskUsersURL(), response -> {
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetTaskUsersURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    ArrayList<User> users = new ArrayList<>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
-                    Log.d("debug", resArr.toString());
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        // User successfully pulled from MySQL
-                        String userId = obj.getString("id");
-                        //JSONObject userObj = obj.getJSONObject("user");
-                        String name = obj.getString("name");
-                        String email = obj.getString("email");
-                        String created_at = obj.getString("created_at");
-                        String score = obj.getString("score");
-                        String lvl = obj.getString("level");
-                        String token = obj.getString("token");
-                        byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<User> users = new ArrayList<>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
+                        Log.d("debug", resArr.toString());
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            // User successfully pulled from MySQL
+                            String userId = obj.getString("id");
+                            //JSONObject userObj = obj.getJSONObject("user");
+                            String name = obj.getString("name");
+                            String email = obj.getString("email");
+                            String created_at = obj.getString("created_at");
+                            String score = obj.getString("score");
+                            String lvl = obj.getString("level");
+                            String token = obj.getString("token");
+                            byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
 
-                        // Inserting row in users table
-                        User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                            // Inserting row in users table
+                            User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                        users.add(user);
+                            users.add(user);
+                        }
+                        callBack.onSuccess(users);
+
+                    } else {
+
+                        // Error occurred in getting users. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(users);
-
-                } else {
-
-                    // Error occurred in getting users. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {
@@ -1352,47 +1546,55 @@ public class DBManager extends ManagerBase {
         // Tag used to cancel the request
         String tag_string_req = "req_get_group_users";
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupUsersURL(), response -> {
-            try {
-                JSONObject jObj = new JSONObject(response);
-                boolean error = jObj.getBoolean("error");
-                if (!error) {
-                    ArrayList<User> users = new ArrayList<>();
-                    JSONArray resArr = new JSONArray(jObj.getString("result"));
+                ((EnvironmentManager) (Services.GetService(EnvironmentManager.class))).GetAPIGetGroupUsersURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        ArrayList<User> users = new ArrayList<>();
+                        JSONArray resArr = new JSONArray(jObj.getString("result"));
 
-                    for (int i = 0; i < resArr.length(); i++) {
-                        JSONObject obj = resArr.getJSONObject(i);
-                        Log.d("debug-OBJ", obj.toString());
-                        // User successfully pulled from MySQL
-                        String userId = obj.getString("id");
-                        String name = obj.getString("name");
-                        String email = obj.getString("email");
-                        String created_at = obj.getString("created_at");
-                        String score = obj.getString("score");
-                        String lvl = obj.getString("level");
-                        String token = obj.getString("token");
-                        byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
+                        for (int i = 0; i < resArr.length(); i++) {
+                            JSONObject obj = resArr.getJSONObject(i);
+                            Log.d("debug-OBJ", obj.toString());
+                            // User successfully pulled from MySQL
+                            String userId = obj.getString("id");
+                            String name = obj.getString("name");
+                            String email = obj.getString("email");
+                            String created_at = obj.getString("created_at");
+                            String score = obj.getString("score");
+                            String lvl = obj.getString("level");
+                            String token = obj.getString("token");
+                            byte[] imgByteArr = Base64.decode(obj.getString("profile_pic"), Base64.DEFAULT);
 
-                        // Inserting row in users table
-                        User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl),imgByteArr,token);
+                            // Inserting row in users table
+                            User user = new User(name, email, created_at, userId, Integer.parseInt(score), Integer.parseInt(lvl), imgByteArr, token);
 
-                        users.add(user);
+                            users.add(user);
+                        }
+                        callBack.onSuccess(users);
+
+                    } else {
+
+                        // Error occurred in getting users. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        callBack.onFailure(errorMsg);
                     }
-                    callBack.onSuccess(users);
-
-                } else {
-
-                    // Error occurred in getting users. Get the error
-                    // message
-                    String errorMsg = jObj.getString("error_msg");
-                    callBack.onFailure(errorMsg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.onFailure("JSON ERROR");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                callBack.onFailure("JSON ERROR");
-            }
 
-        }, error -> callBack.onFailure("Volley ERROR")) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callBack.onFailure("Volley ERROR");
+            }
+        }) {
 
             @Override
             protected Map<String, String> getParams() {

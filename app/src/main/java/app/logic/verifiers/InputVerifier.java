@@ -1,5 +1,7 @@
 package app.logic.verifiers;
 
+import java.util.function.Consumer;
+
 /**
  * Created by barakm on 19/08/2017
  */
@@ -19,7 +21,12 @@ public class InputVerifier {
     public String getMessagesToPrint() {
         StringBuilder stringBuilder = new StringBuilder();
         errorCollector.getErrors()
-                .forEach(error -> stringBuilder.append(error).append(System.lineSeparator()));
+                .forEach(new Consumer<String>() {
+                    @Override
+                    public void accept(String error) {
+                        stringBuilder.append(error).append(System.lineSeparator());
+                    }
+                });
 
         errorCollector.clear();
         return stringBuilder.toString().trim();

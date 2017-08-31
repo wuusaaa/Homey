@@ -18,6 +18,7 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
@@ -112,9 +113,23 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         ((TaskManager) (Services.GetService(TaskManager.class))).GetGroupTasks(new TasksCallBack() {
             @Override
             public void onSuccess(List<Task> tasks) {
-                scrollVerticalWithItems.SetTasks(tasks, t ->
-                                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t, () -> refreshTasks()),
-                        c -> onCheckBoxClicked(c));
+                scrollVerticalWithItems.SetTasks(tasks, new Consumer<Task>() {
+                            @Override
+                            public void accept(Task t) {
+                                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetTaskActivity(context, t, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        refreshTasks();
+                                    }
+                                });
+                            }
+                        },
+                        new Consumer<TaskLayout>() {
+                            @Override
+                            public void accept(TaskLayout c) {
+                                onCheckBoxClicked(c);
+                            }
+                        });
 
                 if (isAdmin) {
                     scrollVerticalWithItems.AllotDragAndDrop();
@@ -340,16 +355,20 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
 
     private void cancelChecks()
     {
-        taskLayoutsChecked.forEach( taskLayout ->
-        {
-            taskLayout.setCheckBox(false);
+        taskLayoutsChecked.forEach(new Consumer<TaskLayout>() {
+            @Override
+            public void accept(TaskLayout taskLayout) {
+                taskLayout.setCheckBox(false);
+            }
         });
 
         taskLayoutsChecked.clear();
 
-        taskLayoutsUnchecked.forEach( taskLayout ->
-        {
-            taskLayout.setCheckBox(true);
+        taskLayoutsUnchecked.forEach(new Consumer<TaskLayout>() {
+            @Override
+            public void accept(TaskLayout taskLayout) {
+                taskLayout.setCheckBox(true);
+            }
         });
 
         taskLayoutsUnchecked.clear();
@@ -402,16 +421,20 @@ public class GroupPageActivity extends ActivityWithHeaderBase {
         UpdateCallBack updateCheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::refreshTasks);
         UpdateCallBack updateUncheckedTasks = new UpdateTask(this.getBaseContext(), taskLayoutsUnchecked.size(), this::refreshTasks);
 
-        taskLayoutsChecked.forEach(taskLayout ->
-        {
-            Task task = taskLayout.getTask();
-            ((TaskManager)Services.GetService(TaskManager.class)).CompleteTask(task, updateCheckedTasks);
+        taskLayoutsChecked.forEach(new Consumer<TaskLayout>() {
+            @Override
+            public void accept(TaskLayout taskLayout) {
+                Task task = taskLayout.getTask();
+                ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(task, updateCheckedTasks);
+            }
         });
 
-        taskLayoutsUnchecked.forEach(taskLayout ->
-        {
-            Task task = taskLayout.getTask();
-            ((TaskManager)Services.GetService(TaskManager.class)).UnCompleteTask(task, updateUncheckedTasks);
+        taskLayoutsUnchecked.forEach(new Consumer<TaskLayout>() {
+            @Override
+            public void accept(TaskLayout taskLayout) {
+                Task task = taskLayout.getTask();
+                ((TaskManager) Services.GetService(TaskManager.class)).UnCompleteTask(task, updateUncheckedTasks);
+            }
         });
     }
 

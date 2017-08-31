@@ -116,14 +116,22 @@ public class TaskLayout extends LinearLayout {
     public void SetTaskLayoutOnClick(Consumer<Task> callback) {
         this.setBackgroundResource(R.drawable.task_layout_selector);
 
-        this.setOnClickListener(event -> {
-            this.setPressed(true);
-            callback.accept(task);
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View event) {
+                TaskLayout.this.setPressed(true);
+                callback.accept(task);
+            }
         });
     }
 
     public void setCheckBoxOnClick(Consumer<TaskLayout> checkBoxCallBack) {
-        checkBox.setOnClickListener(c -> checkBoxCallBack.accept(this));
+        checkBox.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View c) {
+                checkBoxCallBack.accept(TaskLayout.this);
+            }
+        });
     }
 
     public Task getTask() {

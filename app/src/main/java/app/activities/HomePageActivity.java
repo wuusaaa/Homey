@@ -18,6 +18,8 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import app.activities.interfaces.IHasImage;
 import app.activities.interfaces.IHasText;
@@ -26,7 +28,6 @@ import app.customcomponents.HomeyProgressDialog;
 import app.customcomponents.ScrollHorizontalWithItems;
 import app.customcomponents.ScrollVerticalWithItems;
 import app.customcomponents.TaskLayout;
-import app.enums.TaskProperty;
 import app.enums.TaskStatus;
 import app.logic.Notification.FirebaseIDService;
 import app.logic.Notification.MyFirebaseMessagingService;
@@ -111,13 +112,33 @@ public class HomePageActivity extends ActivityWithHeaderBase {
             {
                 scrollVerticalWithItems.SetTasks(
                         tasks,
-                        t -> activityChangeManager.SetTaskActivity(context, t, () -> initPage()),
-                        c -> onCheckBoxClicked(c));
+                        new Consumer<Task>() {
+                            @Override
+                            public void accept(Task t) {
+                                activityChangeManager.SetTaskActivity(context, t, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initPage();
+                                    }
+                                });
+                            }
+                        },
+                        new Consumer<TaskLayout>() {
+                            @Override
+                            public void accept(TaskLayout c) {
+                                onCheckBoxClicked(c);
+                            }
+                        });
 
                 scrollVerticalWithItems.showIncompleteTasks();
 
                 // Active tasks number:
-                long activeTasksNumber = tasks.stream().filter(task -> !task.isCompleted()).count();
+                long activeTasksNumber = tasks.stream().filter(new Predicate<Task>() {
+                    @Override
+                    public boolean test(Task task) {
+                        return !task.isCompleted();
+                    }
+                }).count();
                 textViewActiveTasksNumber1.setText(Long.toString(activeTasksNumber));
                 pDialog.hideDialog();
             }
@@ -173,11 +194,13 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     }
 
     private void setProfileClick() {
-        imageButtonProfile.setOnClickListener(clickedButton ->
-        {
-            User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
+        imageButtonProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View clickedButton) {
+                User self = ((SessionManager) Services.GetService(SessionManager.class)).getUser();
 
-            activityChangeManager.SetProfileActivity(this, self);
+                activityChangeManager.SetProfileActivity(HomePageActivity.this, self);
+            }
         });
     }
 
@@ -202,8 +225,11 @@ public class HomePageActivity extends ActivityWithHeaderBase {
     {
         UpdateCallBack updateCallBack = new UpdateTask(this.getBaseContext(), taskLayoutsChecked.size(), this::initPage);
 
-        taskLayoutsChecked.forEach(taskLayout -> {
-            ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(taskLayout.getTask(), updateCallBack);
+        taskLayoutsChecked.forEach(new Consumer<TaskLayout>() {
+            @Override
+            public void accept(TaskLayout taskLayout) {
+                ((TaskManager) Services.GetService(TaskManager.class)).CompleteTask(taskLayout.getTask(), updateCallBack);
+            }
         });
     }
 

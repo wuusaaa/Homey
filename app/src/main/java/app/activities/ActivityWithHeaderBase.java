@@ -1,5 +1,6 @@
 package app.activities;
 
+import android.view.View;
 import android.widget.ImageButton;
 
 import com.project.homey.R;
@@ -23,14 +24,18 @@ public class ActivityWithHeaderBase extends ActivityBase
         buttonPlus = (ImageButton) findViewById(R.id.imageButtonPlus);
         buttonHomePage = (ImageButton) findViewById(R.id.imageViewHomePage);
 
-        buttonPlus.setOnClickListener(buttonPlus ->
-        {
-            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetPlusActivity(this);
+        buttonPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View buttonPlus) {
+                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetPlusActivity(ActivityWithHeaderBase.this);
+            }
         });
 
-        buttonHomePage.setOnClickListener(buttonSettings ->
-        {
-            ((ActivityChangeManager)Services.GetService(ActivityChangeManager.class)).SetHomeActivity(this);
+        buttonHomePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View buttonSettings) {
+                ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetHomeActivity(ActivityWithHeaderBase.this);
+            }
         });
     }
 }

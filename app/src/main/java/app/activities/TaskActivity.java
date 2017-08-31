@@ -2,6 +2,7 @@ package app.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import app.activities.interfaces.IHasImage;
@@ -67,8 +70,12 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 taskCreator = user;
                 ((TextView) findViewById(R.id.taskActivityCreatorLabel)).setText(taskCreator.GetName());
                 CircleImageButton creatorImage = (CircleImageButton) findViewById(R.id.taskActivityCreatorImage);
-                creatorImage.setOnClickListener(view ->
-                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, taskCreator));
+                creatorImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetProfileActivity(context, taskCreator);
+                    }
+                });
 
                 //CREATOR IMAGE
                 setButtonImage(creatorImage, taskCreator.GetImage(), R.mipmap.ic_profile_default);
@@ -88,8 +95,12 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 ((TextView) findViewById(R.id.taskActivityGroupLabel)).setText(taskGroup.GetName());
                 CircleImageButton groupImage = (CircleImageButton) findViewById(R.id.taskActivityGroupImage);
 
-                groupImage.setOnClickListener(view ->
-                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(context, taskGroup));
+                groupImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(context, taskGroup);
+                    }
+                });
 
                 //GROUP IMAGE
                 setButtonImage(groupImage, taskGroup.GetImage(), R.mipmap.ic_task_default);
@@ -169,7 +180,12 @@ public class TaskActivity extends ActivityWithHeaderBase {
 
     public void buttonTakeOnClicked(View view) {
         String userId = ((SessionManager) (Services.GetService(SessionManager.class))).getUser().GetUserId();
-        List<User> taskAssigneesStream = taskAssigneesList.stream().filter(user -> user.GetUserId().equals(userId)).collect(Collectors.toList());
+        List<User> taskAssigneesStream = taskAssigneesList.stream().filter(new Predicate<User>() {
+            @Override
+            public boolean test(User user) {
+                return user.GetUserId().equals(userId);
+            }
+        }).collect(Collectors.toList());
 
         if (taskAssigneesStream.size() == 0) {
             dbManager.AddUserToTask(userId, myTask.GetTaskId(), new UpdateCallBack() {
@@ -198,7 +214,12 @@ public class TaskActivity extends ActivityWithHeaderBase {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(TaskActivity.this, "Task Deleted!", Toast.LENGTH_SHORT).show();
-                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).back(() -> getAppCompatActivity());
+                    ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).back(new Supplier<AppCompatActivity>() {
+                        @Override
+                        public AppCompatActivity get() {
+                            return getAppCompatActivity();
+                        }
+                    });
 
                 }
 

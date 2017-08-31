@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import app.activities.HomePageActivity;
@@ -79,7 +80,12 @@ public class HomePageActivityTests extends ActivityTestBase {
         TimeUtils.busyWait(5000, is(true), atomicBoolean::get);
 
         List<Task> incompleteTasks = tasksFromDb.stream()
-                .filter(task -> !task.getStatus().equals(TaskStatus.COMPLETED.value()))
+                .filter(new Predicate<Task>() {
+                    @Override
+                    public boolean test(Task task) {
+                        return !task.getStatus().equals(TaskStatus.COMPLETED.value());
+                    }
+                })
                 .collect(Collectors.toList());
 
         ScrollVerticalWithItems scrollVerticalWithItems = (ScrollVerticalWithItems) (homePageActivityActivityTestRule.getActivity().findViewById(R.id.homePageActivityTasksHolder));

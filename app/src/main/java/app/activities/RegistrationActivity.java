@@ -3,6 +3,7 @@ package app.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -57,40 +58,46 @@ public class RegistrationActivity extends ActivityBase {
         }
 
         // Register Button Click event
-        registerButton.setOnClickListener(view -> {
-            String name = inputFullNameEditText.getText().toString().trim();
-            String email = inputEmailEditText.getText().toString().trim();
-            String password = inputPasswordEditText.getText().toString().trim();
-            String confPassword = confirmPasswordEditText.getText().toString().trim();
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = inputFullNameEditText.getText().toString().trim();
+                String email = inputEmailEditText.getText().toString().trim();
+                String password = inputPasswordEditText.getText().toString().trim();
+                String confPassword = confirmPasswordEditText.getText().toString().trim();
 
 
-            if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confPassword.isEmpty()) {
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confPassword.isEmpty()) {
 
-                if (!inputVerifier.isEmailOk(email)) {
-                    Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    if (!inputVerifier.isEmailOk(email)) {
+                        Toast.makeText(RegistrationActivity.this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                if (confPassword.equals(password)) {
-                    registerUser(name, email, password);
+                    if (confPassword.equals(password)) {
+                        RegistrationActivity.this.registerUser(name, email, password);
+                    } else {
+                        Toast.makeText(RegistrationActivity.this.getApplicationContext(),
+                                "Your passwords does not match!", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Your passwords does not match!", Toast.LENGTH_LONG)
+                    Toast.makeText(RegistrationActivity.this.getApplicationContext(),
+                            "Please enter all credentials!", Toast.LENGTH_LONG)
                             .show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Please enter all credentials!", Toast.LENGTH_LONG)
-                        .show();
             }
         });
 
         // Link to Login Screen
-        linkToLoginButton.setOnClickListener(view -> {
-            Intent i = new Intent(getApplicationContext(),
-                    LoginActivity.class);
-            startActivity(i);
-            finish();
+        linkToLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(RegistrationActivity.this.getApplicationContext(),
+                        LoginActivity.class);
+                RegistrationActivity.this.startActivity(i);
+                RegistrationActivity.this.finish();
+            }
         });
 
     }

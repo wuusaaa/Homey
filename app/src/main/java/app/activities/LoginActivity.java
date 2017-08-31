@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -127,41 +128,50 @@ public class LoginActivity extends ActivityBase {
         }
 
         //forgot password click event
-        forgotPassButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),
-                    ForgotPasswordActivity.class);
-            startActivity(intent);
+        forgotPassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this.getApplicationContext(),
+                        ForgotPasswordActivity.class);
+                LoginActivity.this.startActivity(intent);
+            }
         });
 
         // Login button Click Event
-        loginButton.setOnClickListener(view -> {
-            String email = inputEmailEditText.getText().toString().trim();
-            String password = inputPasswordEditText.getText().toString().trim();
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = inputEmailEditText.getText().toString().trim();
+                String password = inputPasswordEditText.getText().toString().trim();
 
-            if (!inputVerifier.isEmailOk(email)) {
-                Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
-                return;
-            }
+                if (!inputVerifier.isEmailOk(email)) {
+                    Toast.makeText(LoginActivity.this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
 
-            // Check for empty data in the form
-            if (!email.isEmpty() && !password.isEmpty()) {
-                // login user
-                checkLogin(email, password);
-            } else {
-                // Prompt user to enter credentials
-                Toast.makeText(getApplicationContext(),
-                        R.string.pleaseEnterTheCredentials, Toast.LENGTH_LONG)
-                        .show();
+                // Check for empty data in the form
+                if (!email.isEmpty() && !password.isEmpty()) {
+                    // login user
+                    LoginActivity.this.checkLogin(email, password);
+                } else {
+                    // Prompt user to enter credentials
+                    Toast.makeText(LoginActivity.this.getApplicationContext(),
+                            R.string.pleaseEnterTheCredentials, Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         });
 
         // Link to Register Screen
-        linkToRegisterButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(),
-                    RegistrationActivity.class);
-            startActivity(intent);
-            finish();
+        linkToRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this.getApplicationContext(),
+                        RegistrationActivity.class);
+                LoginActivity.this.startActivity(intent);
+                LoginActivity.this.finish();
+            }
         });
 
     }

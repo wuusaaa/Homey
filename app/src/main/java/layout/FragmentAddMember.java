@@ -18,6 +18,7 @@ import com.project.homey.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import app.customcomponents.CircleImageButton;
 import app.customcomponents.HomeyProgressDialog;
@@ -119,7 +120,12 @@ public class FragmentAddMember extends Fragment {
                         {
                             myGroups = groups;
                             List<String> items = new ArrayList<>();
-                            groups.forEach(group -> items.add(group.GetName()));
+                            groups.forEach(new Consumer<Group>() {
+                                @Override
+                                public void accept(Group group) {
+                                    items.add(group.GetName());
+                                }
+                            });
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
                             groupSpinner.setAdapter(adapter);
 

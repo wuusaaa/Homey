@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import app.enums.TaskProperty;
 import app.enums.TaskStatus;
@@ -77,7 +78,12 @@ public class TaskManager extends ManagerBase {
             @Override
             public void onSuccess(ArrayList<User> users)
             {
-                users.forEach(user -> changePoints(user, taskToComplete.getScore()));
+                users.forEach(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) {
+                        changePoints(user, taskToComplete.getScore());
+                    }
+                });
             }
 
             @Override
@@ -96,14 +102,15 @@ public class TaskManager extends ManagerBase {
             @Override
             public void onSuccess(ArrayList<User> admins)
             {
-                admins.forEach( admin ->
-                {
-                    if (!admin.GetId().equals(submittedUser.GetId()))
-                    {
-                        MyFirebaseMessagingService.SendPushNotification(admin.GetUserId(),
-                                submittedUser.GetName() + " Submitted task: '" + completedTask.GetName() + "'.");
-                    }
+                admins.forEach(new Consumer<User>() {
+                    @Override
+                    public void accept(User admin) {
+                        if (!admin.GetId().equals(submittedUser.GetId())) {
+                            MyFirebaseMessagingService.SendPushNotification(admin.GetUserId(),
+                                    submittedUser.GetName() + " Submitted task: '" + completedTask.GetName() + "'.");
+                        }
 
+                    }
                 });
             }
 
@@ -131,11 +138,13 @@ public class TaskManager extends ManagerBase {
         {
             @Override
             public void onSuccess(ArrayList<User> users) {
-                users.forEach(user ->
-                {
-                    changePoints(user, -1 * taskToUnComplete.getScore());
-                    MyFirebaseMessagingService.SendPushNotification(user.GetUserId(),
-                            "Task '" + taskToUnComplete.GetName() + "' unsubmitted and assigned back.");
+                users.forEach(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) {
+                        changePoints(user, -1 * taskToUnComplete.getScore());
+                        MyFirebaseMessagingService.SendPushNotification(user.GetUserId(),
+                                "Task '" + taskToUnComplete.GetName() + "' unsubmitted and assigned back.");
+                    }
                 });
             }
 

@@ -83,7 +83,12 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             textView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
             textView.setTextColor(Color.BLACK);
 
-            itemIcon.setOnClickListener(v -> callBack.onSuccess(item));
+            itemIcon.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callBack.onSuccess(item);
+                }
+            });
             LinearLayout.LayoutParams imageButtonLayoutParams = new LinearLayout.LayoutParams(getDpSize(95), getDpSize(95));
             itemIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
             itemIcon.setLayoutParams(imageButtonLayoutParams);
@@ -155,59 +160,60 @@ public class ScrollHorizontalWithItems extends HorizontalScrollView {
             Map.Entry<String, CircleImageButton> entry = (Map.Entry<String, CircleImageButton>) object;
             CircleImageButton image = entry.getValue();
 
-            image.setOnLongClickListener(view ->
-            {
-                PopupMenu popupMenu = new PopupMenu(getContext(), image);
-                popupMenu.getMenuInflater().inflate(R.menu.group_page_user_menu, popupMenu.getMenu());
+            image.setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(ScrollHorizontalWithItems.this.getContext(), image);
+                    popupMenu.getMenuInflater().inflate(R.menu.group_page_user_menu, popupMenu.getMenu());
 
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        String userId = entry.getKey();
-                        switch (item.getItemId()) {
-                            case R.id.promoteAdmin:
-                                // TODO: DBMANAGER. promote user (entry.getKey(), group.getId).
-                                ((DBManager) Services.GetService(DBManager.class)).MakeUserAdmin(group.GetId(), userId, new UpdateCallBack() {
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(getContext(), "Promotion success", Toast.LENGTH_SHORT).show();
-                                    }
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            String userId = entry.getKey();
+                            switch (item.getItemId()) {
+                                case R.id.promoteAdmin:
+                                    // TODO: DBMANAGER. promote user (entry.getKey(), group.getId).
+                                    ((DBManager) Services.GetService(DBManager.class)).MakeUserAdmin(group.GetId(), userId, new UpdateCallBack() {
+                                        @Override
+                                        public void onSuccess() {
+                                            Toast.makeText(getContext(), "Promotion success", Toast.LENGTH_SHORT).show();
+                                        }
 
-                                    @Override
-                                    public void onFailure(String errorMessage) {
-                                        Toast.makeText(getContext(), "Promotion failed", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                        @Override
+                                        public void onFailure(String errorMessage) {
+                                            Toast.makeText(getContext(), "Promotion failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                                break;
-                            case R.id.removeFromGroup:
-                                ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), userId, new UpdateCallBack() {
-                                    @Override
-                                    public void onSuccess()
-                                    {
-                                        Toast.makeText(getContext(), "Member has removed", Toast.LENGTH_SHORT).show();
-                                        MyFirebaseMessagingService.SendPushNotification(userId, "You have been removed from group: "+ group.GetName());
-                                        ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(getContext(), group);
-                                    }
+                                    break;
+                                case R.id.removeFromGroup:
+                                    ((DBManager) Services.GetService(DBManager.class)).LeaveGroup(group.GetId(), userId, new UpdateCallBack() {
+                                        @Override
+                                        public void onSuccess() {
+                                            Toast.makeText(getContext(), "Member has removed", Toast.LENGTH_SHORT).show();
+                                            MyFirebaseMessagingService.SendPushNotification(userId, "You have been removed from group: " + group.GetName());
+                                            ((ActivityChangeManager) Services.GetService(ActivityChangeManager.class)).SetGroupActivity(getContext(), group);
+                                        }
 
-                                    @Override
-                                    public void onFailure(String errorMessage) {
+                                        @Override
+                                        public void onFailure(String errorMessage) {
 
-                                    }
-                                });
-                                break;
-                            default:
-                                break;
+                                        }
+                                    });
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            return true;
                         }
+                    });
 
-                        return true;
-                    }
-                });
+                    popupMenu.show();
 
-                popupMenu.show();
-
-                //TODO: set long click.
-                return true;
+                    //TODO: set long click.
+                    return true;
+                }
             });
         }
     }

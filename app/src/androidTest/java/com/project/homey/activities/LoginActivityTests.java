@@ -1,5 +1,6 @@
 package com.project.homey.activities;
 
+import android.support.test.espresso.core.deps.guava.base.Supplier;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -72,7 +73,12 @@ public class LoginActivityTests extends ActivityTestBase {
         loginButton.click();
 
         //Verify home page has loaded.
-        TimeUtils.busyWait(5000, is(true), () -> getViewById(R.id.activity_home_page).isExists());
+        TimeUtils.busyWait(5000, is(true), new Supplier<Boolean>() {
+            @Override
+            public Boolean get() {
+                return LoginActivityTests.this.getViewById(R.id.activity_home_page).isExists();
+            }
+        });
         getViewById(R.id.activity_home_page).isDisplayed();
 
         logout();

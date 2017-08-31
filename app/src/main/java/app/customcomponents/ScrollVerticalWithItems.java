@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import app.activities.interfaces.IHasText;
@@ -60,23 +61,25 @@ public class ScrollVerticalWithItems extends ScrollView {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         AtomicInteger i = new AtomicInteger(0);
 
-        tasks.forEach(task ->
-        {
-            TaskLayout taskLayout = new TaskLayout(this.getContext());
-            taskLayout.setTask((Task) task);
-            taskLayout.SetTaskLayoutOnClick(callBack);
-            taskLayout.setCheckBoxOnClick(checkBoxCallBack);
-            linearLayout.addView(taskLayout);
+        tasks.forEach(new Consumer<T>() {
+            @Override
+            public void accept(T task) {
+                TaskLayout taskLayout = new TaskLayout(ScrollVerticalWithItems.this.getContext());
+                taskLayout.setTask((Task) task);
+                taskLayout.SetTaskLayoutOnClick(callBack);
+                taskLayout.setCheckBoxOnClick(checkBoxCallBack);
+                linearLayout.addView(taskLayout);
 
-            if (((Task) task).getStatus().equals(TaskStatus.COMPLETED.value()))
-                taskLayout.setCheckBox(true);
+                if (((Task) task).getStatus().equals(TaskStatus.COMPLETED.value()))
+                    taskLayout.setCheckBox(true);
 
-            taskLayouts.add(taskLayout);
-            spinnerOwner.add(taskLayout);
-            spinnerStatus.add(taskLayout);
+                taskLayouts.add(taskLayout);
+                spinnerOwner.add(taskLayout);
+                spinnerStatus.add(taskLayout);
 
-            if (i.getAndIncrement() != tasks.size() - 1) {
-                linearLayout.addView(new Spacer(getContext()));
+                if (i.getAndIncrement() != tasks.size() - 1) {
+                    linearLayout.addView(new Spacer(ScrollVerticalWithItems.this.getContext()));
+                }
             }
         });
     }
@@ -94,24 +97,28 @@ public class ScrollVerticalWithItems extends ScrollView {
 
         spinnerOwner.clear();
 
-        taskLayouts.forEach(taskLayout -> ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
+        taskLayouts.forEach(new Consumer<TaskLayout>() {
             @Override
-            public void onSuccess(ArrayList<User> users)
-            {
-                if (isUserAssignee(userId, users)) {
-                    spinnerOwner.add(taskLayout);
-                }
+            public void accept(TaskLayout taskLayout) {
+                ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
+                    @Override
+                    public void onSuccess(ArrayList<User> users) {
+                        if (isUserAssignee(userId, users)) {
+                            spinnerOwner.add(taskLayout);
+                        }
 
-                if (i.getAndIncrement() == taskLayouts.size()) {
-                    setFilteredTasks();
-                }
+                        if (i.getAndIncrement() == taskLayouts.size()) {
+                            setFilteredTasks();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
             }
-
-            @Override
-            public void onFailure(String error) {
-
-            }
-        }));
+        });
     }
 
     public void filterOthers() {
@@ -120,22 +127,27 @@ public class ScrollVerticalWithItems extends ScrollView {
 
         spinnerOwner.clear();
 
-        taskLayouts.forEach(taskLayout -> ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
+        taskLayouts.forEach(new Consumer<TaskLayout>() {
             @Override
-            public void onSuccess(ArrayList<User> users) {
-                if (!isUserAssignee(userId, users)) {
-                    spinnerOwner.add(taskLayout);
-                }
+            public void accept(TaskLayout taskLayout) {
+                ((DBManager) Services.GetService(DBManager.class)).GetTaskUsersByTaskId(Integer.parseInt(taskLayout.getTask().GetTaskId()), new UsersCallBack() {
+                    @Override
+                    public void onSuccess(ArrayList<User> users) {
+                        if (!isUserAssignee(userId, users)) {
+                            spinnerOwner.add(taskLayout);
+                        }
 
-                if (i.getAndIncrement() == taskLayouts.size()) {
-                    setFilteredTasks();
-                }
-            }
+                        if (i.getAndIncrement() == taskLayouts.size()) {
+                            setFilteredTasks();
+                        }
+                    }
 
-            @Override
-            public void onFailure(String error) {
+                    @Override
+                    public void onFailure(String error) {
+                    }
+                });
             }
-        }));
+        });
     }
     //-------------------------------------------//
 
@@ -151,7 +163,12 @@ public class ScrollVerticalWithItems extends ScrollView {
         spinnerStatus.clear();
 
         taskLayouts.stream()
-                .filter(taskLayout -> taskLayout.getTask().getStatus().equals(TaskStatus.COMPLETED.value()))
+                .filter(new Predicate<TaskLayout>() {
+                    @Override
+                    public boolean test(TaskLayout taskLayout) {
+                        return taskLayout.getTask().getStatus().equals(TaskStatus.COMPLETED.value());
+                    }
+                })
                 .forEach(spinnerStatus::add);
 
         setFilteredTasks();
@@ -161,7 +178,12 @@ public class ScrollVerticalWithItems extends ScrollView {
         spinnerStatus.clear();
 
         taskLayouts.stream()
-                .filter(taskLayout -> !taskLayout.getTask().getStatus().equals(TaskStatus.COMPLETED.value()))
+                .filter(new Predicate<TaskLayout>() {
+                    @Override
+                    public boolean test(TaskLayout taskLayout) {
+                        return !taskLayout.getTask().getStatus().equals(TaskStatus.COMPLETED.value());
+                    }
+                })
                 .forEach(spinnerStatus::add);
 
         setFilteredTasks();
@@ -172,9 +194,12 @@ public class ScrollVerticalWithItems extends ScrollView {
     private boolean isUserAssignee(String userId, ArrayList<User> users) {
         AtomicBoolean isIdFound = new AtomicBoolean(false);
 
-        users.forEach(user -> {
-            if (user.GetUserId().equals(userId))
-                isIdFound.set(true);
+        users.forEach(new Consumer<User>() {
+            @Override
+            public void accept(User user) {
+                if (user.GetUserId().equals(userId))
+                    isIdFound.set(true);
+            }
         });
 
         return isIdFound.get();
@@ -187,11 +212,14 @@ public class ScrollVerticalWithItems extends ScrollView {
         linearLayout.removeAllViews();
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        intersectTasks.forEach(taskLayout -> {
-            linearLayout.addView(taskLayout);
+        intersectTasks.forEach(new Consumer<TaskLayout>() {
+            @Override
+            public void accept(TaskLayout taskLayout) {
+                linearLayout.addView(taskLayout);
 
-            if (i.getAndIncrement() != spinnerOwner.size() - 1) {
-                linearLayout.addView(new Spacer(getContext()));
+                if (i.getAndIncrement() != spinnerOwner.size() - 1) {
+                    linearLayout.addView(new Spacer(ScrollVerticalWithItems.this.getContext()));
+                }
             }
         });
     }

@@ -2,6 +2,7 @@ package app.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,32 +33,35 @@ public class ForgotPasswordActivity extends ActivityBase {
         pDialog.setCancelable(false);
         pDialog.setTitle("Please wait.");
 
-        resetPassButton.setOnClickListener(v -> {
-            String email = emailEditText.getText().toString();
+        resetPassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailEditText.getText().toString();
 
-            if (!inputVerifier.isEmailOk(email)) {
-                Toast.makeText(this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
-                return;
+                if (!inputVerifier.isEmailOk(email)) {
+                    Toast.makeText(ForgotPasswordActivity.this, inputVerifier.getMessagesToPrint(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(email, new ServerCallBack() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        hideDialog();
+                        Toast.makeText(getApplicationContext(),
+                                "Password has been reset! Please check your email.", Toast.LENGTH_LONG)
+                                .show();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        hideDialog();
+                        Toast.makeText(getApplicationContext(),
+                                error, Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+                ForgotPasswordActivity.this.showDialog();
             }
-
-            ((DBManager) (Services.GetService(DBManager.class))).ResetPassword(email, new ServerCallBack() {
-                @Override
-                public void onSuccess(JSONObject result) {
-                    hideDialog();
-                    Toast.makeText(getApplicationContext(),
-                            "Password has been reset! Please check your email.", Toast.LENGTH_LONG)
-                            .show();
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    hideDialog();
-                    Toast.makeText(getApplicationContext(),
-                            error, Toast.LENGTH_LONG)
-                            .show();
-                }
-            });
-            showDialog();
         });
     }
 
